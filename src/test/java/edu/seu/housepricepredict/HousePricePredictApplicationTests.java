@@ -13,6 +13,7 @@ public class HousePricePredictApplicationTests {
     public void contextLoads() {
         System.out.println("success");
         System.out.println("branch01");
+        System.out.println("branch02");
     }
 
 }
