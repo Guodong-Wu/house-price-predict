@@ -12,6 +12,7 @@ public class HousePricePredictApplicationTests {
     @Test
     public void contextLoads() {
         System.out.println("success");
+        System.out.println("branch01");
     }
 
 }
