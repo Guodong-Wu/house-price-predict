@@ -7,11 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * @author guodonwu@163.com
  * @date 14:53 2019/2/26
- */
-
-/**
  * SpringMVC配置类
  */
+
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
 

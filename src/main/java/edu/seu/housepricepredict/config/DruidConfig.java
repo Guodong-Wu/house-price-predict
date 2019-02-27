@@ -17,11 +17,9 @@ import java.util.Map;
 /**
  * @author guodonwu@163.com
  * @date 15:12 2019/2/26
- */
-
-/**
  * Druid数据源配置
  */
+
 @Configuration
 public class DruidConfig {
     /**
