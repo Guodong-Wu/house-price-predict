@@ -20,7 +20,9 @@ public class MyBatisConfig {
         return new ConfigurationCustomizer() {
             @Override
             public void customize(org.apache.ibatis.session.Configuration configuration) {
+                //开启驼峰映射
                 configuration.setMapUnderscoreToCamelCase(true);
+                //开启懒加载
                 configuration.setLazyLoadingEnabled(true);
             }
         };
