@@ -8,7 +8,6 @@ package edu.seu.housepricepredict.pojo.month;
 
 public class CommunityMonthPrice {
     private int coId;
-    private int year;
     private int month;
     private int price;
 
@@ -16,7 +15,6 @@ public class CommunityMonthPrice {
     public String toString() {
         return "CommunityMonthPrice{" +
                 "coId=" + coId +
-                ", year=" + year +
                 ", month=" + month +
                 ", price=" + price +
                 '}';
@@ -28,14 +26,6 @@ public class CommunityMonthPrice {
 
     public void setCoId(int coId) {
         this.coId = coId;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public int getMonth() {

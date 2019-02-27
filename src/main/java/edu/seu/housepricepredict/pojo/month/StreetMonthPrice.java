@@ -8,7 +8,6 @@ package edu.seu.housepricepredict.pojo.month;
 
 public class StreetMonthPrice {
     private int sId;
-    private int year;
     private int month;
     private int price;
 
@@ -16,7 +15,6 @@ public class StreetMonthPrice {
     public String toString() {
         return "StreetMonthPrice{" +
                 "sId=" + sId +
-                ", year=" + year +
                 ", month=" + month +
                 ", price=" + price +
                 '}';
@@ -28,14 +26,6 @@ public class StreetMonthPrice {
 
     public void setsId(int sId) {
         this.sId = sId;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public int getMonth() {
