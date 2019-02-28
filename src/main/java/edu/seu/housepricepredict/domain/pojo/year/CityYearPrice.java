@@ -1,4 +1,4 @@
-package edu.seu.housepricepredict.pojo.year;
+package edu.seu.housepricepredict.domain.pojo.year;
 
 /**
  * @author guodonwu@163.com

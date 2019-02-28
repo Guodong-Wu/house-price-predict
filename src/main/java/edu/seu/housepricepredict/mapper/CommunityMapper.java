@@ -7,4 +7,6 @@ package edu.seu.housepricepredict.mapper;
  */
 
 public interface CommunityMapper {
+
+
 }

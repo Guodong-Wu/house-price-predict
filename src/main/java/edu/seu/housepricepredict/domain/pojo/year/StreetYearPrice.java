@@ -1,31 +1,31 @@
-package edu.seu.housepricepredict.pojo.year;
+package edu.seu.housepricepredict.domain.pojo.year;
 
 /**
  * @author guodonwu@163.com
- * @date 14:21 2019/2/27
- * 小区历史年份房价
+ * @date 14:22 2019/2/27
+ * 街道历史年份房价
  */
 
-public class CommunityYearPrice {
-    private int coId;
+public class StreetYearPrice {
+    private int sId;
     private int year;
     private int price;
 
     @Override
     public String toString() {
-        return "CommunityYearPrice{" +
-                "coId=" + coId +
+        return "StreetYearPrice{" +
+                "sId=" + sId +
                 ", year=" + year +
                 ", price=" + price +
                 '}';
     }
 
-    public int getCoId() {
-        return coId;
+    public int getsId() {
+        return sId;
     }
 
-    public void setCoId(int coId) {
-        this.coId = coId;
+    public void setsId(int sId) {
+        this.sId = sId;
     }
 
     public int getYear() {
