@@ -1,22 +1,45 @@
 package edu.seu.housepricepredict;
 
+import edu.seu.housepricepredict.domain.pojo.area.City;
+import edu.seu.housepricepredict.domain.vo.area.CityAreaVo;
+import edu.seu.housepricepredict.domain.vo.area.DistrictAreaVo;
+import edu.seu.housepricepredict.mapper.CityMapper;
+import edu.seu.housepricepredict.mapper.DistrictMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class HousePricePredictApplicationTests {
 
-    @Test
-    public void contextLoads() {
-        System.out.println("success");
-        System.out.println("branch01");
-        System.out.println("branch02");
-        System.out.println("branch01: day2");
-        System.out.println("branch guodong wu");
+    @Autowired
+    CityMapper cityMapper;
 
+    @Autowired
+    DistrictMapper districtMapper;
+
+    @Test
+    public void testCityMapper() {
+
+        CityAreaVo cityAreaVo = cityMapper.getCityAreaById(1);
+        City city = cityMapper.getCityByName("苏州");
+        List<City> cityList = cityMapper.getCityListExceptId(1);
+        System.out.println(cityAreaVo);
+        System.out.println(city);
+        System.out.println(cityList);
+
+    }
+
+    @Test
+    public void testDistrictMapper() {
+
+        DistrictAreaVo districtAreaVo = districtMapper.getDistrictAreaById(2);
+        System.out.println(districtAreaVo);
     }
 
 }
