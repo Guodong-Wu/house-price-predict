@@ -3,7 +3,9 @@ package edu.seu.housepricepredict.service.impl;
 import edu.seu.housepricepredict.mapper.CityMapper;
 import edu.seu.housepricepredict.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * @author guodonwu@163.com
@@ -11,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
  * 城市的Service实现类
  */
 @Transactional(rollbackFor = Exception.class)
+@Service
 public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityMapper cityMapper;
+
 
 }

@@ -2,10 +2,7 @@ package edu.seu.housepricepredict.mapper;
 
 import edu.seu.housepricepredict.domain.pojo.area.City;
 import edu.seu.housepricepredict.domain.vo.area.CityAreaVo;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
@@ -45,5 +42,18 @@ public interface CityMapper {
 
     )
     CityAreaVo getCityAreaById(int id);
+
+    /**
+     * 根据城市名，插入城市信息
+     */
+    @Options(useGeneratedKeys = true, keyColumn = "c_id", keyProperty = "cId")
+    @Insert("INSERT INTO city(c_name) values(#{cName})")
+    int insertCity(String cName);
+
+    /**
+     * 根据城市名，获取城市id
+     */
+    @Select("SELECT c_id FROM city WHERE c_name = #{name}")
+    int getCityIdByName(String name);
 
 }

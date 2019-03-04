@@ -2,12 +2,8 @@ package edu.seu.housepricepredict.mapper;
 
 import edu.seu.housepricepredict.domain.pojo.area.District;
 import edu.seu.housepricepredict.domain.vo.area.DistrictAreaVo;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
-
 import java.util.List;
 
 /**
@@ -40,5 +36,17 @@ public interface DistrictMapper {
     )
     DistrictAreaVo getDistrictAreaById(int id);
 
+    /**
+     * 插入行政区信息
+     */
+    @Options(useGeneratedKeys = true, keyColumn = "d_id", keyProperty = "dId")
+    @Insert("INSERT INTO district(d_name, c_id) VALUES(#{dName}, #{cId})")
+    int insertDistrict(@Param("dName")String dName, @Param("cId")int cId);
+
+    /**
+     * 根据行政区名和城市id，查询行政区id
+     */
+    @Select("SELECT d_id FROM district WHERE d_name = #{dName} AND c_id = #{cId}")
+    int getdIdbydNameAndcId(@Param("dName")String dName, @Param("cId")int cId);
 
 }

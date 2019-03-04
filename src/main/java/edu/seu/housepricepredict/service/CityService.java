@@ -7,4 +7,5 @@ package edu.seu.housepricepredict.service;
  */
 
 public interface CityService {
+
 }
