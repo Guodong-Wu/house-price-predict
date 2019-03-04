@@ -2,10 +2,7 @@ package edu.seu.housepricepredict.mapper;
 
 import edu.seu.housepricepredict.domain.pojo.area.Street;
 import edu.seu.housepricepredict.domain.vo.area.StreetAreaVo;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
@@ -39,4 +36,23 @@ public interface StreetMapper {
 
     )
     StreetAreaVo getStreetAreaById(int id);
+
+    /**
+     * 插入街道信息
+     */
+    @Options(useGeneratedKeys = true, keyColumn = "s_id", keyProperty = "sId")
+    @Insert("INSERT INTO street(s_name, d_id) VALUES(#{sName}, #{dId})")
+    int insertStreet(@Param("sName")String sName, @Param("dId")int dId);
+
+    /**
+     * 根据街道名和行政区id，查询街道id
+     */
+    @Select("SELECT s_id FROM street WHERE s_name = #{sName} AND d_id = #{dId}")
+    int getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
+
+    /**
+     * 插入街道每月房价
+     */
+    @Insert("INSERT INTO street_month_price VALUES(#{sId}, #{month}, #{price})")
+    int insertStreetMonthPrice(@Param("sId")int sId, @Param("month")int month, @Param("price")int price);
 }
