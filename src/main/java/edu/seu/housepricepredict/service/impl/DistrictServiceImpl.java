@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.service.impl;
 
-import edu.seu.housepricepredict.mapper.DistrictMapper;
+import edu.seu.housepricepredict.mapper.area.DistrictMapper;
 import edu.seu.housepricepredict.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

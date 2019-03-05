@@ -1,4 +1,4 @@
-package edu.seu.housepricepredict.mapper;
+package edu.seu.housepricepredict.mapper.area;
 
 import edu.seu.housepricepredict.domain.pojo.area.Street;
 import edu.seu.housepricepredict.domain.vo.area.StreetAreaVo;
@@ -18,24 +18,30 @@ public interface StreetMapper {
     /**
      * 根据行政区id，查找街道列表
      */
-    @Select("SELECT s_id, s_name, s_price FROM street WHERE d_id = #{id}")
-    List<Street> getStreetsBydId(int id);
+    @Select("SELECT s_id, s_name, s_price FROM street WHERE d_id = #{dId}")
+    List<Street> getStreetListBydId(int dId);
 
     /**
      * 根据街道id，查找街道信息以及其下的小区
      */
-    @Select("Select s_id, s_name, s_price FROM street WHERE s_id = #{id}")
+    @Select("Select s_id, s_name, s_price FROM street WHERE s_id = #{sId}")
     @Results({
             @Result(id = true, column ="s_id", property = "sId"),
             @Result(column = "s_id", property = "communities", javaType = List.class,
                     many = @Many(
-                            select = "edu.seu.housepricepredict.mapper.CommunityMapper.getCommunityBysId",
+                            select = "edu.seu.housepricepredict.mapper.area.CommunityMapper.getCommunityListBysId",
                             fetchType = FetchType.LAZY
                     )
             )}
 
     )
-    StreetAreaVo getStreetAreaById(int id);
+    StreetAreaVo getStreetAreaBysId(int sId);
+
+    /**
+     * 根据街道名和行政区id，查询街道id
+     */
+    @Select("SELECT s_id FROM street WHERE s_name = #{sName} AND d_id = #{dId}")
+    int getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
 
     /**
      * 插入街道信息
@@ -45,14 +51,9 @@ public interface StreetMapper {
     int insertStreet(@Param("sName")String sName, @Param("dId")int dId);
 
     /**
-     * 根据街道名和行政区id，查询街道id
+     * 更新街道当前月房价
      */
-    @Select("SELECT s_id FROM street WHERE s_name = #{sName} AND d_id = #{dId}")
-    int getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
-
-    /**
-     * 插入街道每月房价
-     */
-    @Insert("INSERT INTO street_month_price VALUES(#{sId}, #{month}, #{price})")
-    int insertStreetMonthPrice(@Param("sId")int sId, @Param("month")int month, @Param("price")int price);
+    @Update("UPDATE street s SET s_price = " +
+            "(SELECT price FROM street_month_price smp WHERE s.s_id = smp.s_id AND month = #{month})")
+    int updateStreetPrice(int month);
 }
