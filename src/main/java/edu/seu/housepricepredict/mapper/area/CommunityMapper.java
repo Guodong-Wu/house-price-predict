@@ -1,4 +1,4 @@
-package edu.seu.housepricepredict.mapper;
+package edu.seu.housepricepredict.mapper.area;
 
 import edu.seu.housepricepredict.domain.pojo.area.Community;
 import org.apache.ibatis.annotations.Select;
@@ -16,7 +16,7 @@ public interface CommunityMapper {
     /**
      * 根据街道id，查询小区列表
      */
-    @Select("SELECT co_id, co_name, co_price FROM community WHERE s_id = #{id}")
-    List<Community> getCommunityBysId(int id);
+    @Select("SELECT co_id, co_name, co_price FROM community WHERE s_id = #{sId}")
+    List<Community> getCommunityListBysId(int sId);
 
 }
