@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>城市房价柱状图</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="../js/jquery.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script>
+        $(function () {
+            $.post("/ajax", function(data) {
+                // $("#div01").html(data.toString());
+                var labelsx = new Array();
+                var labelsy1 = new Array();
+                var labelsy2 = new Array();
+                $(data).each(function (i, n) {
+                    labelsx.push(n.x);
+                    labelsy1.push(n.y1);
+                    labelsy2.push(n.y2);
+                })
+
+                // alert(data.cName);
+                var barChartData = {
+                    labels: labelsx,//横坐标
+                    datasets: [
+                        {
+                            label: "My First dataset",
+                            backgroundColor: "#fff3ae",
+                            borderColor: "#fff3ae",
+                            borderWidth: 1,
+                            data: labelsy1,//数据
+                        },
+                        // {
+                        //     label: "My First dataset",
+                        //     backgroundColor:  'rgba(255, 0, 0, 1)',
+                        //     borderColor: 'rgba(255,0,0,1)',
+                        //     borderWidth: 1,
+                        //     data: labelsy2,//数据
+                        // }
+                    ]
+                };
+
+                var ctx = document.getElementById("bars-graph").getContext("2d");
+                var BarChart = new Chart(ctx, {
+                    type: 'line',
+                    data: barChartData,
+                    responsive : true
+                });
+            },"json");
+        })
+    </script>
+    <script>
+        $(function () {
+            $.post("/ajax2", function(cityname) {
+                var cityname = cityname + "历史房价折线图"
+                $("#cityname").html(cityname.toString());
+                //     alert(cityname);
+            },"json");
+        })
+        $(function () {
+            $.post("/ajax3", function(cityname) {
+                $(cityname).each(function (index, value) {
+                    $("#hot" + index).html(value.toString());
+                })
+
+                //     alert(cityname);
+            },"json");
+        })
+    </script>
+
+</head>
+<body>
+<div class="search" >
+    <div class="container">
+        <div>
+            <img src="../img/logo.png" alt="" />
+            <div>
+                <input type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px；">
+                <a class="btn btn-info" href="#" style="width: 80px; height: 50px">搜索</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="container">
+    <div>
+        <span></span>
+    </div>
+    <div>热门房市:&nbsp;<a id="hot0" href="#">hot1</a>&nbsp;&nbsp;<a id="hot1" href="#">hot2</a>&nbsp;<a id="hot2" href="#">hot3</a></div>
+</div>
+<div id="div01" class="container" style="width: 800px; height: 500px">
+    <div class="col-sm-12">
+        <h2 id="cityname" class="text-center"></h2>
+        <canvas id="bars-graph"></canvas>
+    </div>
+</div>
+
+</body>
+</html>

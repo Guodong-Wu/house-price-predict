@@ -1,0 +1,357 @@
+body {
+    background: #fff;
+    font-size: 14px;
+    color: rgb(51, 51, 51);
+    font-family: "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei", 微软雅黑, "Segoe UI", Tahoma, 宋体b8b体, SimSun, sans-serif;
+    text-rendering: optimizelegibility;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+html{
+    background: #fff;
+    overflow-y: scroll;
+    display: block;
+}
+.wrapper{
+    width:1100px;
+    position:relative;
+    margin:0 auto;
+    padding:0;
+    display: block;
+}
+.city_search{
+    width:1100px;
+    margin:0 auto;
+    margin-top:14px;
+    position:relative;
+    z-index:2;
+    padding:0;
+    display: block;
+}
+.city_search .con{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+.city_search .con .logo {
+    display: inline-block;
+    width: 111px;
+    height: 32px;
+    margin-top: 30px;
+    margin-right: 30px;
+    background-image: url(../img/logo.png);
+    background-position:center;
+    background-repeat: no-repeat;
+
+}
+/*.city_search .con .logo img{*/
+    /*height:100%;*/
+    /*width:100%;*/
+/*}*/
+.city_search .search_wrapper {
+    display: inline-block;
+    width: 795px;
+    height: 68px;
+    position: relative;
+    margin:0;
+    padding:0;
+}
+.city_search input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    padding: 0 125px 0 50px;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(5,1,2,0.05);
+    resize: none;
+    font-family: "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei", 微软雅黑, "Segoe UI", Tahoma, 宋体b8b体, SimSun, sans-serif;
+    margin: 0px;
+    outline: none;
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    font: 400 13.3333px Arial;
+    -webkit-writing-mode: horizontal-tb !important;
+}
+.city_search .btn {
+    position: absolute;
+    width: 100px;
+    right: 10px;
+    top: 12px;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    background: #00ae66;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+.city_search .btn a{
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+}
+.city_search .icon_search {
+    display: inline-block;
+    position: absolute;
+    left: 25px;
+    top: 25px;
+    background-image: url(../img/search.jpg);
+    background-position: 0 0;
+    background-size: cover;
+    width: 17px;
+    height: 17px;
+}
+.city_search .icon_search i{
+    font-weight: 400;
+    font-style: normal;
+}
+/*整个搜索框*/
+.city_selection_section {
+    width: 1100px;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+div{
+    margin:0;
+    padding:0;
+}
+div{
+    display:block;
+}
+.city_selection_section .city_recommend {
+    margin: 20px 0;
+    font-size: 14px;
+}
+.c_b {
+    color: #101d37;
+}
+/*热门城市*/
+.city_selection_section .city_recommend .city_recommend_tit {
+    margin-right: 23px;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+}
+.city_selection_section .city_recommend .city_recommend_list {
+    display: inline-block;
+}
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+ul ul{
+    scroll-snap-margin-block-start: 0px;
+    scroll-snap-margin-block-end: 0px;
+}
+ul{
+    display:block;
+    list-style-type:disc;
+    scroll-snap-margin-block-start: 1em;
+    scroll-snap-margin-block-end: 1em;
+    scroll-snap-margin-inline-start: 0px;
+    scroll-snap-margin-inline-end: 0px;
+    scroll-padding-inline-start: 40px;
+}
+.city_selection_section .city_recommend .city_recommend_list li {
+    display: inline-block;
+    margin-right: 14px;
+    cursor: pointer;
+}
+li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+li{
+    display:list-item;
+    text-align: -webkit-match-parent;
+}
+.city_selection_section .city_recommend .city_recommend_list li a {
+    font-size: 16px;
+    font-weight: bolder;
+}
+html a,body a{
+    color: #101d37;
+}
+a{
+    cursor:pointer;
+}
+a{
+    text-decoration: none;
+    outline: none;
+}
+a:hover{
+   color:#00FF00;
+}
+/*城市选择*/
+.city_selection_section .city_recommend .select{
+    display: inline-block;
+    width: 184px;
+    height: 40px;
+    line-height: 39px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 0 14px;
+    position: relative;
+    vertical-align: -1px;
+    margin-right: 8px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.05);
+}
+.city_selection_section .city_recommend .select .chang-city span {
+    color: #9399a5;
+}
+.city_selection_section
+.city_recommend .select .chang-city i{
+    display: inline-block;
+    float: right;
+    margin-top: 16px;
+    /*background-image: url(../img/list1.jpg);*/
+    background-position: -17px 0;
+    width: 10px;
+    height: 6px;
+}
+i{
+    font-weight: 400;
+    font-style: normal;
+}
+.city_selection_section
+.city_recommend .select .chang-city i.icon_arrow_down{
+    /*background-image: url(../img/list2.jpg);*/
+    background-position: -17px -6px;
+    width: 10px;
+    height: 6px;
+}
+.city_selection_section
+.city_recommend .select .select_options_frame{
+    display: none;
+    left: -1px;
+    width: 184px;
+    max-height: 350px;
+    overflow-y: auto;
+    top: 37px;
+}
+.select_options_frame{
+    position: absolute;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    z-index: 2;
+    transform: translate(0, -1px);
+}
+.city_selection_section
+.city_recommend .select .select_options_frame li{
+    padding: 0 7px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+}
+.select_options_frame li{
+    color: #101d37;
+    cursor: pointer;
+}
+/*按照省份首字母选择*/
+.city-item {
+    margin-top: 38px;
+}
+.city_selection_section .city_recommend .city_list_section {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 18px;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li {
+    border-bottom: 1px solid #ededed;
+    position: relative;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_firstletter {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 55px;
+    background-color: #f8f8f9;
+    font-size: 18px;
+    color: #afb3bb;
+    text-align: center;
+    font-weight: bold;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_firstletter>span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    line-height: 24px;
+    margin: auto;
+    font-size: 24px;
+    color: #afb3bb;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_list {
+    margin-left: 55px;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_province {
+    clear: both;
+    padding: 20px 0;
+    line-height: 18px;
+    position: relative;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_province .city_list_tit {
+    float: left;
+    margin: 0 40px;
+    font-weight: bold;
+    font-size: 18px;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_province ul {
+    margin-left: 114px;
+    padding-right: 8px;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_province ul li {
+    display: inline-block;
+    margin-right: 17px;
+    cursor: pointer;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_province ul li a {
+    display: block;
+    color: #101d37;
+}
+.city_selection_section .city_recommend .city_list_section .city_list_li .city_province ul li a:hover{
+    color:#00FF00;
+}
+.top-cities {
+    width: 1005px;
+    margin: auto;
+    margin-bottom: 25px;
+    padding-top: 50px;
+}
+.clear{
+    display:block;
+}
+/*页面底部*/
+.footer{
+    margin-top:15px;
+    width:100%;
+    height:15px;
+    font-size:14px;
+    color:#FFFFFF;
+    text-align:center;
+    background-color: #000000;
+}

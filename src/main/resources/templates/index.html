@@ -1,6 +1,18 @@
 <!doctype html>
 <html class="no-js" lang="">
 <head>
+    <!--=========================
+    All script for this site
+============================== -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jPushMenu.js"></script>
+    <script src="../js/owl.carousel.js"></script>
+    <script src="../js/jquery.fancybox.js"></script>
+    <script src="../js/jquery.fancybox.pack.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
     <!-- =====================================
         Title of the site
     ========================================== -->
@@ -13,11 +25,6 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
-
-    <!-- =====================================
-        Favicon of the site
-    ========================================== -->
-    <!--<link rel="apple-touch-icon" href="/apple-touch-icon.png">-->
 
     <!-- =====================================
         Some importent css for the site
@@ -53,10 +60,8 @@
     <link rel="stylesheet" href="../css/media.css"><!--css for Responsive-->
     <script src="../js/vendor/modernizr-2.8.3.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    　　　　<title>自动获取定位访问者当前城市</title>
-    　　　　<!--不可省略-->
-    　　　　<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6yAoynmTPNlTBa8z1X4LfwGE"></script>
-    　　　　<!--不可省略-->
+    <!--　　　　<title>自动获取定位访问者当前城市</title>-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6yAoynmTPNlTBa8z1X4LfwGE"></script>
     <script type="text/javascript">
         // 百度地图API功能
         var map = new BMap.Map("bdMapBox");
@@ -72,17 +77,11 @@
 
 </head>
 <body>
-
-
-<div id="loader-wrapper">
-    <div id="loader"></div>
-
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-
-</div>
-
-
+<!--<div id="loader-wrapper">-->
+    <!--<div id="loader"></div>-->
+    <!--<div class="loader-section section-left"></div>-->
+    <!--<div class="loader-section section-right"></div>-->
+<!--</div>-->
 <!--=========================
     Start area for Menu
 ============================== -->
@@ -93,7 +92,6 @@
     <a href="#">登录</a>
     <a href="#">退出</a>
 </nav>
-
 <div class="manu_div toggle-menu menu-right push-body">
     <button class=""><i class="fa fa-indent"></i></button>
 </div><!-- End of menu area -->
@@ -106,7 +104,6 @@
     Start area for Header
 ============================== -->
 <header id="myCarousel" class="carousel slide">
-
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -114,14 +111,11 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
 
-
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
-
         <!-- Start Overlay heady -->
         <div class="header_overlay">
             <div class="container">
-
                 <!-- Site logo -->
                 <div class="row header_top">
                     <div class="col-md-12 col-sm-12 col-xs-12 logo_div">
@@ -130,7 +124,7 @@
                         <img src="../img/logo.png" alt="" />
                         </div>
                         <div class="col-md-1">
-                        <a><p><img height="16" width="16" src="../img/location.png"><span style="color:black;" id="atCity"></span></p></a>
+                        <a href="city"><p><img height="16" width="16" src="../img/location.png"><span style="color:black;" id="atCity"></span></p></a>
                         </div>
                         <div class="col-md-9"></div>
                         </div>
@@ -180,18 +174,7 @@
     </div>
 
 </header><!-- End of Header Area -->
-<!--=========================
-    All script for this site
-============================== -->
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/jPushMenu.js"></script>
-<script src="../js/owl.carousel.js"></script>
-<script src="../js/jquery.fancybox.js"></script>
-<script src="../js/jquery.fancybox.pack.js"></script>
-<script src="../js/wow.min.js"></script>
-<script src="../js/plugins.js"></script>
-<script src="../js/main.js"></script>
+
 
 </body>
 </html>
