@@ -9,6 +9,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TestController {
 
+    @RequestMapping("/map")
+    public String testmap(){
+        return "map";
+    }
+
+    @RequestMapping("/map-test")
+    public String studymap(){
+        return "map-test";
+    }
+
     @RequestMapping("/barimage")
     public String testbar(){
         return "barimage";

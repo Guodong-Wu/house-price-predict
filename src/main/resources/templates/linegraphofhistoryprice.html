@@ -53,7 +53,7 @@
     <script>
         $(function () {
             $.post("/ajax2", function(cityname) {
-                var cityname = cityname + "历史房价折线图"
+                var cityname = cityname + "历史房价"
                 $("#cityname").html(cityname.toString());
                 //     alert(cityname);
             },"json");
