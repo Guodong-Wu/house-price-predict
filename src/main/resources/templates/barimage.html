@@ -10,7 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script>
         $(function () {
-            $.post("/ajax", function(data) {
+            // 根据搜索结果获取其下一级区域的名字和平均房价，访问URL为：“/getPricesandNames”
+            //返回值类型为地区名与房价数组ValueOfxy[]其中 ValueOfxy(String name, Integer price)name为地区名，price为平均房价
+            $.post("/getPricesandNames", function(data) {
                 // $("#div01").html(data.toString());
                 var labelsx = new Array();
                 var labelsy1 = new Array();
@@ -26,19 +28,19 @@
                     labels: labelsx,//横坐标
                     datasets: [
                         {
-                            label: "My First dataset",
+                            label: "区域房价",
                             backgroundColor: 'rgba(255, 0, 0, 0)',
                             borderColor: "#fff3ae",
                             borderWidth: 1,
                             data: labelsy1,//数据
                         },
-                        {
-                            label: "My second dataset",
-                            backgroundColor:  'rgba(255, 0, 0, 0)',
-                            borderColor: 'rgba(255,0,0,1)',
-                            borderWidth: 1,
-                            data: labelsy2,//数据
-                        }
+                        // {
+                        //     label: "My second dataset",
+                        //     backgroundColor:  'rgba(255, 0, 0, 0)',
+                        //     borderColor: 'rgba(255,0,0,1)',
+                        //     borderWidth: 1,
+                        //     data: labelsy2,//数据
+                        // }
                     ]
                 };
 
@@ -53,16 +55,18 @@
     </script>
     <script>
         $(function () {
-            $.post("/ajax2", function(cityname) {
+            // 获取城市名，即要显示哪个区域的柱状图 访问URL：/getCityName 返回值为城市名
+            $.post("/getCityName", function(cityname) {
                 var cityname = cityname + "历史房价折线图"
                 $("#cityname").html(cityname.toString());
                 //     alert(cityname);
             },"json");
         })
         $(function () {
-            $.post("/ajax3", function(cityname) {
-                $("#hotcity").append("热门城市&nbsp;")
-                $(cityname).each(function (index, value) {
+            // 获取热门房市（可以暂取房价前五）,返回值为城市名数组 访问URL：getHotCity
+            $.post("/getHotCity", function(citynames) {
+                $("#hotcity").append("热门房市&nbsp;")
+                $(citynames).each(function (index, value) {
                     // $("#hot" + index).html(value.toString());
                     $("#hotcity").append("<a href='#'>" + value + "</a>&nbsp;")
                 })
@@ -78,13 +82,23 @@
     <br>
     <div class="city_search">
         <div class="con">
-            <span class="logo"><img href="../img/logo.png"></span>
+            <a href="index.html"><span class="logo"><img href="../img/logo.png"></span></a>
         </div>
-        <div class="search_wrapper">
-            <input class="sug-input" type="text" placeholder="搜索城市">
-            <a class="btn btn_blue search_btn" style="color: #FFFFFF;text-align: center;padding-top: 2px" >搜索</a>
-            <i class="icon icon_search"></i>
-            <div id="city_sug"></div>
+        <!--<div class="search_wrapper">-->
+            <!--&lt;!&ndash;<form id="search" action="/searchCity">&ndash;&gt;-->
+                <!--<input name="keyWord" class="sug-input" type="text" placeholder="搜索城市">-->
+                <!--<a class="btn btn_blue search_btn" style="color: #FFFFFF;text-align: center;padding-top: 2px" >搜索</a>-->
+                <!--&lt;!&ndash;<button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+            <!--<i class="icon icon_search"></i>-->
+            <!--<div id="city_sug"></div>-->
+        <!--</div>-->
+        <div class="search" >
+            <form id="search" action="/searchCity">
+                <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
+                <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>
+            </form>
         </div>
     </div>
 </div>

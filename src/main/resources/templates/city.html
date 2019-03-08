@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>房价预测-007</title>
+    <script src="../js/jquery.js"></script>
     <link href="/favicon.ico" type="image/x-icon" rel=icon>
     <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" href="../css/test.css">
@@ -30,6 +31,19 @@
             }
         }
     </script>
+    <!--改变session中的cityName，class=“changeCity”-->
+    <script>
+        $(function () {
+            $(".changCityName").click(function () {
+                var cityName = this.value;
+                // ----------城市名改变，将城市名传入Session。参数cityName，请求url为changeCityName
+                $.post("/changeCityName", cityName, function () {
+                })
+
+            })
+
+        })
+    </script>
 </head>
 <body>
 <!--搜索框所在div-->
@@ -54,7 +68,7 @@
                 热门城市
             </div>
             <ul class="city_recommend_list">
-                <li><a href="">北京&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a class="changCityName" href="">北京&nbsp;&nbsp;&nbsp;</a></li>
                 <li><a href="">上海&nbsp;&nbsp;&nbsp;</a></li>
                 <li><a href="">苏州</a></li>
             </ul>
