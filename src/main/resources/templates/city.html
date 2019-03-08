@@ -31,18 +31,16 @@
             }
         }
     </script>
+
     <!--改变session中的cityName，class=“changeCity”-->
     <script>
         $(function () {
-            $(".changCityName").click(function () {
-                var cityName = this.value;
-                // ----------城市名改变，将城市名传入Session。参数cityName，请求url为changeCityName
-                $.post("/changeCityName", cityName, function () {
-                })
-
-            })
-
-        })
+            $(".changeCity").click(function () {
+                var cityName = this.text.trim() + "市";
+                // 城市名改变，将城市名放到Session中
+                $.post("/session/cityName", {"cityName":cityName});
+            });
+        });
     </script>
 </head>
 <body>
@@ -68,9 +66,9 @@
                 热门城市
             </div>
             <ul class="city_recommend_list">
-                <li><a class="changCityName" href="">北京&nbsp;&nbsp;&nbsp;</a></li>
-                <li><a href="">上海&nbsp;&nbsp;&nbsp;</a></li>
-                <li><a href="">苏州</a></li>
+                <li><a class="changeCity" href="index.html">北京&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a class="changeCity" href="index.html">上海&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a class="changeCity" href="index.html">苏州</a></li>
             </ul>
         </div>
         <div class="city_recommend c_b">
@@ -313,15 +311,13 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">江苏</div>
                                 <ul>
-                                    <li><a href="">常州</a></li>
-                                    <li><a href="">淮安</a></li>
-                                    <li><a href="">南京</a></li>
-                                    <li><a href="">南通</a></li>
-                                    <li><a href="">苏州</a></li>
-                                    <li><a href="">无锡</a></li>
-                                    <li><a href="">徐州</a></li>
-                                    <li><a href="">盐城</a></li>
-                                    <li><a href="">镇江</a></li>
+                                    <li><a class="changeCity" href="/">常州</a></li>
+                                    <li><a class="changeCity" href="/">南京</a></li>
+                                    <li><a class="changeCity" href="/">南通</a></li>
+                                    <li><a class="changeCity" href="/">苏州</a></li>
+                                    <li><a class="changeCity" href="/">无锡</a></li>
+                                    <li><a class="changeCity" href="/">徐州</a></li>
+                                    <li><a class="changeCity" href="/">镇江</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
