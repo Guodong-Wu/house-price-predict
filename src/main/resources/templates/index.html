@@ -62,28 +62,36 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--　　　　<title>自动获取定位访问者当前城市</title>-->
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6yAoynmTPNlTBa8z1X4LfwGE"></script>
-    <script type="text/javascript">
+
+    <script type="text/javascript" th:inline="javascript">
         $(function () {
             // 查询Session中城市名是否为空，若城市名为空，则进行城市查询,
             // 访问URL：getCityNameOfSession。返回值为true表示已有城市名，无需定位
-            $.post("/getCityNameOfSession",function (date) {
-                if (date == false){
+            $.get("/session/cityName",function (data) {
+                if (data == "") {
                     // 百度地图API功能
                     var map = new BMap.Map("bdMapBox");
                     var nowCity = new BMap.LocalCity();
                     nowCity.get(bdGetPosition);
                     function bdGetPosition(result){
                         var cityName = result.name; //当前的城市名
-                        /*自定义代码*/
                         atCity.innerHTML = cityName;
-                        /*自定义代码*/
-                        // $("#cityName").val(cityName);
-                        // ----------将城市名传入Session。参数cityName，请求url为setCityName
-                        $.post("/setCityName",cityName,function () {
-                        })
+                        // 将城市名放到Session。
+                        $.post("/session/cityName", {"cityName":cityName}, function (id) {
+                            //更新搜索表单提交地址
+                            $("#search").attr("action", "/city/"+id);
+                        });
                     }
+                } else {
+                    //显示城市名
+                    atCity.innerHTML = data + "市";
+                    $.post("/session/cityName", {"cityName":data+"市"}, function (id) {
+                        //更新表单提交地址
+                        $("#search").attr("action", "/city/"+id);
+                    });
                 }
-            })
+
+            });
         })
     </script>
 
@@ -158,7 +166,7 @@
                         <br>
                         <br>
                         <div class="search" >
-                            <form id="search" action="/searchCity">
+                            <form id="search" action="/city/13" th:action="@{/city/}+${session.cityId}" method="get" >
                                 <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
                                 <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>
                             </form>
