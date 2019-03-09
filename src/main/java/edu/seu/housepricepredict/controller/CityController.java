@@ -83,6 +83,9 @@ public class CityController {
      */
     @GetMapping("/city/{id}")
     public String showCityInfo(@PathVariable("id") String id, String keyword, Model model) {
+        if (id == null) {
+            id = "13";
+        }
         City city = cityService.getCityBycId(Integer.parseInt(id));
         //将城市传到前端页面
         model.addAttribute("cId", id);
