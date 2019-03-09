@@ -1,10 +1,13 @@
 package edu.seu.housepricepredict.controller;
 
+import edu.seu.housepricepredict.domain.pojo.area.City;
 import edu.seu.housepricepredict.domain.pojo.area.District;
+import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
 import edu.seu.housepricepredict.domain.vo.area.CityAreaVo;
 import edu.seu.housepricepredict.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -46,16 +49,47 @@ public class CityController {
     }
 
     /**
-     * 根据城市id获取，城市及其下行政区信息
+     * 根据城市id，返回城市下的行政区（json）
      */
-    @GetMapping("city/{id}")
+    @GetMapping("/cityArea/{id}")
     @ResponseBody
-    public List<District> getCityArea(@PathVariable("id") String id, String keyWord) {
-        System.out.println("getCityId " + id);
+    public List<District> getCityArea(@PathVariable("id") String id) {
         CityAreaVo cityArea = cityService.getCityAreaBycId(Integer.parseInt(id));
-        List<District> districts = cityArea.getDistricts();
-        System.out.println(districts);
-        return districts;
+        List<District> areaList = cityArea.getDistricts();
+        return areaList;
+    }
+
+    /**
+     * 根据城市id 返回城市每月历史房价（json）
+     */
+    @GetMapping("/cityMonthPrice/{id}")
+    @ResponseBody
+    public List<CityMonthPrice> getCityMonthPrice(@PathVariable("id") String id) {
+        List<CityMonthPrice> monthPriceList = cityService.getCityMonthPriceBycId(Integer.parseInt(id));
+
+        //将2019年1月和2月，移动到表末尾
+        CityMonthPrice cmp1 = monthPriceList.get(0);
+        CityMonthPrice cmp2 = monthPriceList.get(1);
+        monthPriceList.remove(cmp1);
+        monthPriceList.remove(cmp2);
+        monthPriceList.add(cmp1);
+        monthPriceList.add(cmp2);
+
+        return monthPriceList;
+    }
+
+    /**
+     * 跳转至显示页面，并将城市id和城市名传过去
+     */
+    @GetMapping("/city/{id}")
+    public String showCityInfo(@PathVariable("id") String id, String keyword, Model model) {
+        City city = cityService.getCityBycId(Integer.parseInt(id));
+        //将城市传到前端页面
+        model.addAttribute("cId", id);
+        //将城市名传到前端页面
+        model.addAttribute("cName", city.getcName());
+
+        return "showInfo";
     }
 
 

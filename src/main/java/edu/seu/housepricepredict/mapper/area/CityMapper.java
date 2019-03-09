@@ -16,6 +16,12 @@ import java.util.List;
 public interface CityMapper {
 
     /**
+     * 根据城市id，查询城市信息
+     */
+    @Select("SELECT * FROM city WHERE c_id = #{cId}")
+    City getCityBycId(int cId);
+
+    /**
      * 根据城市名 查询城市信息
      */
     @Select("SELECT * FROM city WHERE c_name = #{cName}")

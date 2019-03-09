@@ -21,7 +21,7 @@ public class TestController {
 
     @RequestMapping("/barimage")
     public String testbar(){
-        return "barimage";
+        return "showInfo";
     }
 
     @RequestMapping("/test")
