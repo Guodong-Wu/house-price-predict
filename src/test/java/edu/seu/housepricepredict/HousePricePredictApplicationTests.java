@@ -1,5 +1,7 @@
 package edu.seu.housepricepredict;
 
+import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
+import edu.seu.housepricepredict.service.CityService;
 import edu.seu.housepricepredict.service.ImportDataService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -16,9 +19,21 @@ public class HousePricePredictApplicationTests {
     @Autowired
     ImportDataService importDataService;
 
+    @Autowired
+    CityService cityService;
+
     @Test
     public void testCityMapper() {
+        List<CityMonthPrice> monthPriceList = cityService.getCityMonthPriceBycId(Integer.parseInt("13"));
 
+        CityMonthPrice cmp1 = monthPriceList.get(0);
+        CityMonthPrice cmp2 = monthPriceList.get(1);
+        monthPriceList.remove(cmp1);
+        monthPriceList.remove(cmp2);
+        monthPriceList.add(cmp1);
+        monthPriceList.add(cmp2);
+
+        System.out.println(monthPriceList);
     }
 
     @Test
