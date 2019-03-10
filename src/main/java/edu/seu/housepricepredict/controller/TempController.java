@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 @Controller
 public class TempController {
 
@@ -40,7 +43,8 @@ public class TempController {
     //返回值类型为地区名与房价数组ValueOfxy[]其中 ValueOfxy(String name, Integer price)name为地区名，price为平均房价
     @RequestMapping("/getPricesandNames")
     public ValueOfxy [] getPricesandNames(){
-
+        Queue queue = new LinkedList();
+        ((LinkedList) queue).push(new Integer(1));
         return null;
     }
 
