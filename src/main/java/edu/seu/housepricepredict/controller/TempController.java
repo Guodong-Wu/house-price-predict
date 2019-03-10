@@ -11,11 +11,6 @@ import java.util.Queue;
 @Controller
 public class TempController {
 
-    // ----------将城市名传入Session。参数cityName，请求url为setCityName
-    @RequestMapping("/setCityName")
-    public void setCityName(@RequestBody String cityName){
-
-    }
 
     // ----------城市名改变，将城市名传入Session。参数cityName，请求url为changeCityName
     @RequestMapping("/changeCityName")

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>城市房价详情</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/test.css">
+    <script src="../js/jquery.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            //区域房价柱状图 填充数据
+            $.get("/cityArea/" + [[${cId}]], function(areaList) {
+                //区域名数组
+                var areaName = new Array();
+                //当前月房价数组
+                var monthPrice = new Array();
+                $(areaList).each(function (index, district) {
+                    //填充数据
+                    areaName.push(district.dName);
+                    monthPrice.push(district.dPrice);
+                })
+
+                //设置数据集
+                var barChartData = {
+                    labels: areaName,//横坐标
+                    datasets: [
+                        {
+                            label: "区域房价",
+                            backgroundColor: 'rgba(30, 144, 255, 0)',
+                            borderColor: "#1e90ff",
+                            borderWidth: 1,
+                            data: monthPrice//数据
+                        }
+                    ]
+                };
+
+                //获取柱状图的上下文元素
+                var ctx = document.getElementById("barGraph").getContext("2d");
+                //创建一个新的柱状图
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: barChartData,
+                    responsive : true
+                });
+            },"json");
+
+            //历史房价折线图，填充数据
+            $.get("/cityMonthPrice/" + [[${cId}]], function(monthPriceList) {
+                //月份
+                var monthList = new Array();
+                //每月房价数据
+                var monthPrice = new Array();
+                //填充数组
+                $(monthPriceList).each(function (index, data) {
+                    if (data.month >= 3) {
+                        monthList.push("2018年"+data.month+"月");
+                    } else {
+                        monthList.push("2019年"+data.month+"月");
+                    }
+                    monthPrice.push(data.price);
+                })
+
+                //设置数据集
+                var barChartData = {
+                    labels: monthList,//横坐标
+                    datasets: [
+                        {
+                            label: "每月房价",
+                            backgroundColor: 'rgba(255, 0, 0, 0)',
+                            borderColor: "#1e90ff",
+                            borderWidth: 1,
+                            data: monthPrice//数据
+                        }
+                    ]
+                };
+
+                //获取折线图上下文元素
+                var ctx = document.getElementById("lineGraph").getContext("2d");
+                //创建折线图
+                new Chart(ctx, {
+                    type: 'line',
+                    data: barChartData,
+                    responsive : true
+                });
+            },"json");
+
+            //获取城市名，设置柱状图和折线图标题
+            var cityName = [[${cName}]];
+            $("#barGraphHead").html(cityName.toString() + "各区当前月房价柱状图");
+            $("#lineGraphHead").html(cityName.toString() + "历史房价折线图");
+
+        })
+    </script>
+
+    <!--<script>-->
+        <!--$(function () {-->
+            <!--// 获取热门房市（可以暂取房价前五）,返回值为城市名数组 访问URL：getHotCity-->
+            <!--$.post("/getHotCity", function(citynames) {-->
+                <!--$("#hotcity").append("热门房市&nbsp;")-->
+                <!--$(citynames).each(function (index, value) {-->
+                    <!--// $("#hot" + index).html(value.toString());-->
+                    <!--$("#hotcity").append("<a href='#'>" + value + "</a>&nbsp;")-->
+                <!--})-->
+
+                <!--//     alert(cityname);-->
+            <!--},"json");-->
+        <!--})-->
+    <!--</script>-->
+
+</head>
+<body>
+<div class="wrapper">
+    <br>
+    <div class="city_search">
+        <div class="con">
+            <a href="index.html"><span class="logo"><img href="../img/logo.png"></span></a>
+        </div>
+        <!--<div class="search_wrapper">-->
+            <!--&lt;!&ndash;<form id="search" action="/searchCity">&ndash;&gt;-->
+                <!--<input name="keyWord" class="sug-input" type="text" placeholder="搜索城市">-->
+                <!--<a class="btn btn_blue search_btn" style="color: #FFFFFF;text-align: center;padding-top: 2px" >搜索</a>-->
+                <!--&lt;!&ndash;<button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+            <!--<i class="icon icon_search"></i>-->
+            <!--<div id="city_sug"></div>-->
+        <!--</div>-->
+        <div class="search" >
+            <form id="search" action="/searchCity">
+                <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
+                <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="city_selection_section">
+    <div>
+        <!--<div class="city_recommend c_b">-->
+            <!--<div class="city_recommend_tit">-->
+                <!--区域选择-->
+            <!--</div>-->
+            <!--<ul class="city_recommend_list">-->
+                <!--<li>-->
+                    <!--<form name="form1" action="" method="get" style="display:block">-->
+                        <!--<select name="province" onChange="set_city(this, this.form.city);" style="font-size:14px;color:#9399a5;width:184px;height:40px; ">-->
+                            <!--<option value="0">选择区域</option>-->
+                            <!--<option value="吴中">吴中区</option>-->
+                            <!--<option value="虎丘">虎丘区</option>-->
+                            <!--<option value="相城">相城区</option>-->
+                            <!--<option value="姑苏">姑苏区</option>-->
+                            <!--<option value="吴江">吴江区</option>-->
+                        <!--</select>-->
+                    <!--</form>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <div style="height: 50px" id="hotcity">
+        </div>
+    </div>
+</div>
+
+<!-- 柱状图div -->
+<div id="div01" class="container" style="width: 1200px; height: 500px;margin:0 auto ">
+    <div class="col-md-10" style="text-align: center">
+        <h2 id="barGraphHead" class="text-center"></h2>
+        <canvas id="barGraph" height="480px" width="1200px "></canvas>
+    </div>
+    <div  class="col-md-2"></div>
+</div>
+
+<br/>
+
+<!-- 折线图div -->
+<div id="div02" class="container" style="width: 1200px; height: 500px;margin:0 auto ">
+    <div class="col-md-10" style="text-align: center">
+        <h2 id="lineGraphHead" class="text-center"></h2>
+        <canvas id="lineGraph" height="480px" width="1200px "></canvas>
+    </div>
+    <div  class="col-md-2"></div>
+</div>
+
+
+</body>
+</html>
