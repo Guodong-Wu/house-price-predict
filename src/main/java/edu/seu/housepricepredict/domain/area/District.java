@@ -1,4 +1,4 @@
-package edu.seu.housepricepredict.domain.pojo.area;
+package edu.seu.housepricepredict.domain.area;
 
 
 /**

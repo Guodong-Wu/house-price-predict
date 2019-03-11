@@ -1,6 +1,5 @@
 package edu.seu.housepricepredict;
 
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
 import edu.seu.housepricepredict.service.CityService;
 import edu.seu.housepricepredict.service.ImportDataService;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

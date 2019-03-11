@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.service;
 
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
+import edu.seu.housepricepredict.domain.month.CityMonthPrice;
 
 import java.util.List;
 

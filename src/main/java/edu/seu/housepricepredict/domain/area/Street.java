@@ -1,15 +1,25 @@
-package edu.seu.housepricepredict.domain.pojo.area;
+package edu.seu.housepricepredict.domain.area;
+
 
 /**
  * @author guodonwu@163.com
- * @date 10:41 2019/2/27
- * 小区
+ * @date 10:39 2019/2/27
+ * 街道
  */
 
-public class Community {
+public class Street {
     private int id;
     private String name;
     private int price;
+
+    @Override
+    public String toString() {
+        return "Street{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -33,14 +43,5 @@ public class Community {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "Community{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
     }
 }

@@ -37,33 +37,5 @@ public interface CityMapper {
             "(SELECT cmp.price FROM city_month_price cmp WHERE c.id = cmp.c_id AND month = #{month})")
     int updateCityPrice(int month);
 
-//    /**
-//     * 根据城市名 查询城市信息
-//     */
-//    @Select("SELECT * FROM city WHERE c_name = #{cName}")
-//    City getCityBycName(String cName);
-//
-//    /**
-//     * 查询所有城市信息，除了某个id的城市
-//     */
-//    @Select("SELECT * FROM city WHERE c_id != #{cId}")
-//    List<City> getCityListExceptcId(int cId);
-//
-//    /**
-//     * 根据城市id 查询城市信息以及其下的行政区
-//     */
-//    @Select("SELECT * FROM city WHERE c_id = #{cId}")
-//    @Results({
-//            @Result(id = true, column ="c_id", property = "cId"),
-//            @Result(column = "c_id", property = "districts", javaType = List.class,
-//                    many = @Many(
-//                            select = "edu.seu.housepricepredict.mapper.area.DistrictMapper.getDistrictListBycId",
-//                            fetchType = FetchType.LAZY
-//                    )
-//            )}
-//
-//    )
-//    CityAreaVo getCityAreaBycId(int cId);
-
 
 }

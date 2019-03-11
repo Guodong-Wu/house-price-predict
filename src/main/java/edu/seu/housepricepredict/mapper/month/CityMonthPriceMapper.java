@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.mapper.month;
 
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
+import edu.seu.housepricepredict.domain.month.CityMonthPrice;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 

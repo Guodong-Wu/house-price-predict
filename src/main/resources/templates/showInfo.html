@@ -10,13 +10,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
         $(function () {
-            //获取城市名，设置柱状图和折线图标题
-            var cityName = [[${cName}]];
-            $("#barGraphHead").html(cityName.toString() + "各区当前月房价柱状图");
-            $("#lineGraphHead").html(cityName.toString() + "历史房价折线图");
+            //获取区域名，设置柱状图和折线图标题
+            var name = [[${areaName}]];
+            var barGraphName;
+            //下级区域等级
+            var subAreaLevel;
+            if ([[${areaLevel}]] == "city") {
+                barGraphName = name.toString() + "各区当前月房价柱状图";
+                subAreaLevel = "district";
+            } else if ([[${areaLevel}]] == "district") {
+                barGraphName = name.toString() + "各街道当前月房价柱状图";
+                subAreaLevel = "street";
+            } else {
+                barGraphName = name.toString() + "各小区当前月房价柱状图";
+                subAreaLevel = "community";
+            }
+
+            $("#barGraphHead").html(barGraphName.toString());
+            $("#lineGraphHead").html(name.toString() + "历史房价折线图");
 
             //区域房价柱状图 填充数据
-            $.get("/cityArea/" + [[${cId}]], function(areaList) {
+            $.get("/" + [[${areaLevel}]] + "Area/" + [[${areaId}]], function(areaList) {
+
                 //区域名数组
                 var areaName = new Array();
                 //当前月房价数组
@@ -25,7 +40,10 @@
                     //填充数据
                     areaName.push(area.name);
                     monthPrice.push(area.price);
-                })
+                    //设置区域超链接
+                    $("#areaList").append("<li><a href='/"+subAreaLevel+"/"+area.id+"'>"+area.name+"</a></li>")
+                    // <li><a href="">安庆</a></li>
+                });
 
                 //设置数据集
                 var barChartData = {
@@ -49,10 +67,12 @@
                     data: barChartData,
                     responsive : true
                 });
+
+
             },"json");
 
             //历史房价折线图，填充数据
-            $.get("/cityMonthPrice/" + [[${cId}]], function(monthPriceList) {
+            $.get("/" + [[${areaLevel}]] + "MonthPrice/" + [[${areaId}]], function(monthPriceList) {
                 //月份
                 var monthList = new Array();
                 //每月房价数据
@@ -143,17 +163,14 @@
                 区域选择
             </div>
             <ul class="city_recommend_list">
-                <li>
-                    <form name="form1" action="" method="get" style="display:block">
-                        <select name="province" onChange="set_city(this, this.form.city);" style="font-size:14px;color:#9399a5;width:184px;height:40px; ">
-                            <option value="0">选择区域</option>
-                            <option value="吴中">吴中区</option>
-                            <option value="虎丘">虎丘区</option>
-                            <option value="相城">相城区</option>
-                            <option value="姑苏">姑苏区</option>
-                            <option value="吴江">吴江区</option>
-                        </select>
-                    </form>
+                <li class="city_list_li city_list_li_selected">
+                    <div class="city_list">
+                        <div class="city_province">
+                            <ul id="areaList">
+
+                            </ul>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

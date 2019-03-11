@@ -1,7 +1,7 @@
 package edu.seu.housepricepredict.controller;
 
-import edu.seu.housepricepredict.domain.pojo.area.District;
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
+import edu.seu.housepricepredict.domain.area.District;
+import edu.seu.housepricepredict.domain.month.CityMonthPrice;
 import edu.seu.housepricepredict.service.CityService;
 import edu.seu.housepricepredict.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class CityController {
     }
 
     /**
-     * 根据城市id，返回城市下的行政区（json）
+     * 根据城市id，返回城市下的行政区(json)
      */
     @GetMapping("/cityArea/{id}")
     @ResponseBody
@@ -58,7 +58,7 @@ public class CityController {
     }
 
     /**
-     * 根据城市id 返回城市每月历史房价（json）
+     * 根据城市id 返回城市每月历史房价(json)
      */
     @GetMapping("/cityMonthPrice/{id}")
     @ResponseBody
@@ -68,10 +68,14 @@ public class CityController {
         //将2019年1月和2月，移动到表末尾
         CityMonthPrice cmp1 = monthPriceList.get(0);
         CityMonthPrice cmp2 = monthPriceList.get(1);
-        monthPriceList.remove(cmp1);
-        monthPriceList.remove(cmp2);
-        monthPriceList.add(cmp1);
-        monthPriceList.add(cmp2);
+        if (cmp1.getMonth() < 3) {
+            monthPriceList.remove(cmp1);
+            monthPriceList.add(cmp1);
+        }
+        if (cmp2.getMonth() < 3) {
+            monthPriceList.remove(cmp2);
+            monthPriceList.add(cmp2);
+        }
 
         return monthPriceList;
     }
@@ -87,9 +91,11 @@ public class CityController {
         }
         String cName = cityService.getCityNameBycId(Integer.parseInt(id));
         //将城市传到前端页面
-        model.addAttribute("cId", id);
+        model.addAttribute("areaId", id);
         //将城市名传到前端页面
-        model.addAttribute("cName", cName);
+        model.addAttribute("areaName", cName);
+        //传递地区等级
+        model.addAttribute("areaLevel", "city");
 
         return "showInfo";
     }

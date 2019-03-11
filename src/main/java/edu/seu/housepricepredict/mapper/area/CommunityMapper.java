@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.mapper.area;
 
-import edu.seu.housepricepredict.domain.pojo.area.Community;
+import edu.seu.housepricepredict.domain.area.Community;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

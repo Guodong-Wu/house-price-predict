@@ -1,8 +1,8 @@
 package edu.seu.housepricepredict.service.impl;
 
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
-import edu.seu.housepricepredict.domain.pojo.month.DistrictMonthPrice;
-import edu.seu.housepricepredict.domain.pojo.month.StreetMonthPrice;
+import edu.seu.housepricepredict.domain.month.CityMonthPrice;
+import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
+import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 import edu.seu.housepricepredict.mapper.area.CityMapper;
 import edu.seu.housepricepredict.mapper.area.DistrictMapper;
 import edu.seu.housepricepredict.mapper.area.StreetMapper;

@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.mapper.area;
 
-import edu.seu.housepricepredict.domain.pojo.area.District;
+import edu.seu.housepricepredict.domain.area.District;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
@@ -18,21 +18,11 @@ public interface DistrictMapper {
     @Select("Select id, name, price FROM district WHERE c_id = #{cId}")
     List<District> getDistrictListBycId(int cId);
 
-//    /**
-//     * 根据行政区id 查询行政区信息以及其下的街道
-//     */
-//    @Select("Select d_id, d_name, d_price FROM district WHERE d_id = #{dId}")
-//    @Results({
-//            @Result(id = true, column ="d_id", property = "dId"),
-//            @Result(column = "d_id", property = "streets", javaType = List.class,
-//                    many = @Many(
-//                            select = "edu.seu.housepricepredict.mapper.area.StreetMapper.getStreetListBydId",
-//                            fetchType = FetchType.LAZY
-//                    )
-//            )}
-//
-//    )
-//    DistrictAreaVo getDistrictAreaBydId(int dId);
+    /**
+     * 根据行政区id，查询行政区名
+     */
+    @Select("SELECT name FROM district WHERE id = #{dId}")
+    String getDistrictNameById(int dId);
 
     /**
      * 根据行政区名和城市id，查询行政区id

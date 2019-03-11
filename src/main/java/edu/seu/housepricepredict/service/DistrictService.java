@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.service;
 
-import edu.seu.housepricepredict.domain.pojo.area.District;
+import edu.seu.housepricepredict.domain.area.District;
+import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 
 import java.util.List;
 
@@ -13,4 +14,9 @@ import java.util.List;
 public interface DistrictService {
 
     List<District> getDistrictListBycId(int cId);
+
+    String getDistrictNameById(int dId);
+
+    List<DistrictMonthPrice> getDistrictMonthPriceBydId(int dId);
+
 }
