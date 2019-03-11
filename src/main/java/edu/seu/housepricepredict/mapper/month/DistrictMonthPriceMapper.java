@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.mapper.month;
 
-import edu.seu.housepricepredict.domain.pojo.month.DistrictMonthPrice;
+import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,7 +18,7 @@ public interface DistrictMonthPriceMapper {
      * 从其他表获取行政区每月房价
      */
     @Select("SELECT d_id, month, AVG(price) AS price FROM street s, street_month_price smp " +
-            "WHERE s.s_id = smp.s_id GROUP BY d_id, month")
+            "WHERE s.id = smp.s_id GROUP BY d_id, month")
     List<DistrictMonthPrice> getDistrictMonthPriceFromOthers();
 
     /**
