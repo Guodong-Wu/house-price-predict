@@ -8,41 +8,40 @@ package edu.seu.housepricepredict.domain.pojo.area;
  */
 
 public class Street {
-    private int sId;
-    private String sName;
-    private int sPrice;
+    private int id;
+    private String name;
+    private int price;
 
     @Override
     public String toString() {
         return "Street{" +
-                "sId=" + sId +
-                ", sName='" + sName + '\'' +
-                ", sPrice=" + sPrice +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
                 '}';
     }
 
-    public int getsId() {
-        return sId;
+    public int getId() {
+        return id;
     }
 
-    public void setsId(int sId) {
-        this.sId = sId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getsName() {
-        return sName;
+    public String getName() {
+        return name;
     }
 
-    public void setsName(String sName) {
-        this.sName = sName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getsPrice() {
-        return sPrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setsPrice(int sPrice) {
-        this.sPrice = sPrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
-
 }

@@ -7,41 +7,40 @@ package edu.seu.housepricepredict.domain.pojo.area;
  */
 
 public class Community {
-    private int coId;
-    private String coName;
-    private int coPrice;
+    private int id;
+    private String name;
+    private int price;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     @Override
     public String toString() {
         return "Community{" +
-                "coId=" + coId +
-                ", coName='" + coName + '\'' +
-                ", coPrice=" + coPrice +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
                 '}';
     }
-
-    public int getCoId() {
-        return coId;
-    }
-
-    public void setCoId(int coId) {
-        this.coId = coId;
-    }
-
-    public String getCoName() {
-        return coName;
-    }
-
-    public void setCoName(String coName) {
-        this.coName = coName;
-    }
-
-    public int getCoPrice() {
-        return coPrice;
-    }
-
-    public void setCoPrice(int coPrice) {
-        this.coPrice = coPrice;
-    }
-
 }

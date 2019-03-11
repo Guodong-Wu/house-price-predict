@@ -18,8 +18,8 @@ public interface CityMonthPriceMapper {
      * 从其他表获取所有城市每月房价
      */
     @Select("SELECT c_id, month, AVG(price) AS price FROM district d, district_month_price dmp " +
-            "WHERE d.d_id = dmp.d_id GROUP BY c_id, month")
-    List<CityMonthPrice> getCityMonthPriceFromOnthers();
+            "WHERE d.id = dmp.d_id GROUP BY c_id, month")
+    List<CityMonthPrice> getCityMonthPriceFromOthers();
 
     /**
      * 根据cid，获取指定城市每月房价

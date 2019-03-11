@@ -101,7 +101,7 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     @Override
     public void insertCityMonthPrice() {
-        List<CityMonthPrice> list = cityMonthPriceMapper.getCityMonthPriceFromOnthers();
+        List<CityMonthPrice> list = cityMonthPriceMapper.getCityMonthPriceFromOthers();
         for (CityMonthPrice cmp : list) {
             System.out.println(cmp);
 //            cityMonthPriceMapper.insertCityMonthPrice(cmp);

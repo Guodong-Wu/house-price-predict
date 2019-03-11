@@ -8,41 +8,40 @@ package edu.seu.housepricepredict.domain.pojo.area;
  */
 
 public class District {
-    private int dId;
-    private String dName;
-    private int dPrice;
+    private int id;
+    private String name;
+    private int price;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     @Override
     public String toString() {
         return "District{" +
-                "dId=" + dId +
-                ", dName='" + dName + '\'' +
-                ", dPrice=" + dPrice +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
                 '}';
     }
-
-    public int getdId() {
-        return dId;
-    }
-
-    public void setdId(int dId) {
-        this.dId = dId;
-    }
-
-    public String getdName() {
-        return dName;
-    }
-
-    public void setdName(String dName) {
-        this.dName = dName;
-    }
-
-    public int getdPrice() {
-        return dPrice;
-    }
-
-    public void setdPrice(int dPrice) {
-        this.dPrice = dPrice;
-    }
-
 }

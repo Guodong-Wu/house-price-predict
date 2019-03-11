@@ -24,16 +24,7 @@ public class HousePricePredictApplicationTests {
 
     @Test
     public void testCityMapper() {
-        List<CityMonthPrice> monthPriceList = cityService.getCityMonthPriceBycId(Integer.parseInt("13"));
 
-        CityMonthPrice cmp1 = monthPriceList.get(0);
-        CityMonthPrice cmp2 = monthPriceList.get(1);
-        monthPriceList.remove(cmp1);
-        monthPriceList.remove(cmp2);
-        monthPriceList.add(cmp1);
-        monthPriceList.add(cmp2);
-
-        System.out.println(monthPriceList);
     }
 
     @Test

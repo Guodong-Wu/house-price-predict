@@ -16,7 +16,7 @@ public interface CommunityMapper {
     /**
      * 根据街道id，查询小区列表
      */
-    @Select("SELECT co_id, co_name, co_price FROM community WHERE s_id = #{sId}")
+    @Select("SELECT id, name, price FROM community WHERE s_id = #{sId}")
     List<Community> getCommunityListBysId(int sId);
 
 }
