@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <script src="../jquery.js" ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Chart.js - Html5 chart plugins</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Hello, World</title>
+    <style type="text/css">
+        html{height:90%}
+        body{height:90%;margin:0px;padding:0px}
+        #allmap{height:90%}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=nrdcDfWI5090AxFeGrRdDzym0XCfh4a6"></script>
+    <!--地图js-->
+    <script type="text/javascript">
+        // 根据位置显示附近地图
+        $(function () {
+            // 百度地图API功能
+            var map = new BMap.Map("allmap");
+            var point = new BMap.Point(116.331398,39.897445);
+            map.centerAndZoom(point,12);
+            map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+            map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+            // 获取城市名-->
+            var cityName = "";
+            $.post("/getCityName", function(data) {
+                $(data).each(function (index, value) {
+                    cityName = value
+                    alert(value)
+                })
+                // 获取详细地址：街道名+区名。
+                var address = "";
+                $.post("/getAddress", function (data) {
+                    $(data).each(function (value) {
+                        address = data;
+                        alert(address)
+                        // 创建地址解析器实例
+                        var myGeo = new BMap.Geocoder();
+                        // 将地址解析结果显示在地图上,并调整地图视野
+                        myGeo.getPoint(address, function(point){
+                            if (point) {
+                                map.centerAndZoom(point, 16);
+                                map.addOverlay(new BMap.Marker(point));
+                            }else{
+                                alert("您选择地址没有解析到结果!");
+                            }
+                        }, cityName);
+                    })
+
+                }, "json")
+            },"json");
+        })
+    </script>
+    <!--折线图js-->
+    <script th:inline="javascript">
+        // 获取两个小区的历史房价，并以折线图的方式显示出来。
+        $(function () {
+            // alert([[${city1}]])
+            //两个小区的小区名
+            var comm1 = [[${city1}]];
+            var comm2 = [[${city2}]];
+            //对比折线图横坐标，即月份
+            var labels = new Array();
+            //对比折线图纵坐标数据1，即第一个小区的房价数据
+            var datay1 = new Array();
+            //对比折线图纵坐标数据2，即第二个小区的房价数据
+            var datay2 = new Array();
+            $.post("/getPriceOfComm", {"comm1" : comm1, "comm2" : comm2}, function(data) {
+                $(data).each(function (index, value) {//index是索引，n是值
+                    labels.push(value.dataOfx);
+                    datay1.push(value.dataOfy1);
+                    datay2.push(value.dataOfy2);
+                })
+            },"json");
+
+            // 折线图绘制
+            var barChartData = {
+                // labels: ["January", "February", "March", "April", "May", "June", "July"],//横坐标
+                labels: labels,
+                datasets: [
+                    {
+                        label: comm1 + "房价",
+                        backgroundColor: 'rgba(255, 0, 0, 0)',
+                        borderColor: 'rgba(255, 0, 0, 1)',
+                        borderWidth: 1,
+                        // data: [65, 59, 80, 81, 56, 55, 40],//数据
+                        data: datay1,
+                    },
+                    {
+                        label: comm2 + "房价",
+                        backgroundColor: 'rgba(0, 0, 255, 0)',
+                        borderColor: 'rgba(0,0,255,1)',
+                        borderWidth: 1,
+                        // data: [75, 49, 90, 71, 66, 45, 50],//数据
+                        data: datay2,
+                    }
+                ]
+            };
+            var ctx = document.getElementById("lines-graph").getContext("2d");
+            var BarChart = new Chart(ctx, {
+                type: 'line',
+                data: barChartData,
+                responsive : true
+            });
+        })
+    </script>
+</head>
+<body>
+
+<div id="allmap"></div>
+
+<div class="container">
+        <h2 class="text-center">[[${city1}]]-[[${city2}]]房价对比折线图</h2>
+        <canvas id="lines-graph"></canvas>
+</div>
+
+</body>
+</html>
