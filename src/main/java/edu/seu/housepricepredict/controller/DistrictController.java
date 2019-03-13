@@ -41,7 +41,7 @@ public class DistrictController {
         //传递地区等级
         model.addAttribute("areaLevel", "district");
 
-        return "showInfo";
+        return "info/showInfo";
     }
 
     /**

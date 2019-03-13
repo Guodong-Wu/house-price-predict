@@ -1,6 +1,8 @@
 package edu.seu.housepricepredict.config;
 
+import edu.seu.housepricepredict.interceptor.AdminHandlerInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -21,8 +23,16 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         //浏览器发送 / 请求来到index(classpath:/template/index.html)
         registry.addViewController("/").setViewName("index");
-        registry.addViewController("/index.html").setViewName("index");
-        registry.addViewController("/city").setViewName("city");
-        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/info/city").setViewName("/info/city");
+    }
+
+    /**
+     * 注册拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //注册管理员拦截器，并设置拦截地址
+//        registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns();
     }
 }

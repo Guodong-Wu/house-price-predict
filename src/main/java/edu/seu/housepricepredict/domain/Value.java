@@ -1,4 +1,4 @@
-package edu.seu.housepricepredict.utils;
+package edu.seu.housepricepredict.domain;
 
 /**
  * @author xg_song
