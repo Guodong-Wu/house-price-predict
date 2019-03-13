@@ -20,10 +20,10 @@ import java.util.List;
 @Controller
 public class CityController {
     @Autowired
-    CityService cityService;
+    private CityService cityService;
 
     @Autowired
-    DistrictService districtService;
+    private DistrictService districtService;
 
     /**
      * 返回session中存放的当前城市名

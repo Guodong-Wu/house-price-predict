@@ -28,22 +28,22 @@ import java.util.Set;
 @Service
 public class ImportDataServiceImpl implements ImportDataService {
     @Autowired
-    CityMapper cityMapper;
+    private CityMapper cityMapper;
 
     @Autowired
-    DistrictMapper districtMapper;
+    private DistrictMapper districtMapper;
 
     @Autowired
-    StreetMapper streetMapper;
+    private StreetMapper streetMapper;
 
     @Autowired
-    CityMonthPriceMapper cityMonthPriceMapper;
+    private CityMonthPriceMapper cityMonthPriceMapper;
 
     @Autowired
-    DistrictMonthPriceMapper districtMonthPriceMapper;
+    private DistrictMonthPriceMapper districtMonthPriceMapper;
 
     @Autowired
-    StreetMonthPriceMapper streetMonthPriceMapper;
+    private StreetMonthPriceMapper streetMonthPriceMapper;
 
     @Override
     public void insertCity() throws IOException {
