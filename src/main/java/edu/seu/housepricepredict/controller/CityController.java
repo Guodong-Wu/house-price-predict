@@ -97,7 +97,7 @@ public class CityController {
         //传递地区等级
         model.addAttribute("areaLevel", "city");
 
-        return "showInfo";
+        return "info/showInfo";
     }
 
 
