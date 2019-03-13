@@ -10,6 +10,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Hello, World</title>
+    <!--地图样式-->
     <style type="text/css">
         html{height:90%}
         body{height:90%;margin:0px;padding:0px}
@@ -79,7 +80,7 @@
             },"json");
 
             // 折线图绘制
-            var barChartData = {
+            var lineChartData = {
                 // labels: ["January", "February", "March", "April", "May", "June", "July"],//横坐标
                 labels: labels,
                 datasets: [
@@ -102,9 +103,9 @@
                 ]
             };
             var ctx = document.getElementById("lines-graph").getContext("2d");
-            var BarChart = new Chart(ctx, {
+            var LineChart = new Chart(ctx, {
                 type: 'line',
-                data: barChartData,
+                data: lineChartData,
                 responsive : true
             });
         })

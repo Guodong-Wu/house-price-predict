@@ -25,7 +25,7 @@ public class TestController {
     public String toComparePage(String commName1,  String commName2, Model model){
         model.addAttribute("commName1", commName1);
         model.addAttribute("commName2", commName2);
-        return "infopages/lineChart";
+        return "info/lineChart";
     }
 
     @RequestMapping("/choose")
