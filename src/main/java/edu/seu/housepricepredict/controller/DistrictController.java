@@ -22,10 +22,10 @@ import java.util.List;
 public class DistrictController {
 
     @Autowired
-    DistrictService districtService;
+    private DistrictService districtService;
 
     @Autowired
-    StreetService streetService;
+    private StreetService streetService;
 
     /**
      * 跳转至显示页面，并将行政区id和行政区名传过去
