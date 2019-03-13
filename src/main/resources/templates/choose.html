@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../jquery.js" ></script>
+    <title>choose</title>
+    <script>
+        $(function () {
+            $.post("/ajax", function(data) {
+                $(data).each(function (index, value) {//index是索引，n是值
+                    $("#city1").append("<option value=" + value + ">" + value + "</option>")
+                    $("#city2").append("<option value=" + value + ">" + value + "</option>")
+                })
+            },"json");
+        })
+    </script>
+</head>
+<body>
+<form action="/lineChart">
+    请选择要进行对比的小区：
+    <select id="city1" name="city1" >
+        <option value="0">请选择</option>
+    </select>
+    <select id="city2" name="city2" >
+        <option>请选择</option>
+    </select>
+    <input type="submit" value="确认对比">
+</form>
+</body>
+</html>

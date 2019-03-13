@@ -22,5 +22,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         //浏览器发送 / 请求来到index(classpath:/template/index.html)
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/index.html").setViewName("index");
+        registry.addViewController("/city").setViewName("city");
     }
 }

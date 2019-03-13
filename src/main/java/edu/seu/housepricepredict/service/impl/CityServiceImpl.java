@@ -1,8 +1,6 @@
 package edu.seu.housepricepredict.service.impl;
 
-import edu.seu.housepricepredict.domain.pojo.area.City;
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
-import edu.seu.housepricepredict.domain.vo.area.CityAreaVo;
+import edu.seu.housepricepredict.domain.month.CityMonthPrice;
 import edu.seu.housepricepredict.mapper.area.CityMapper;
 import edu.seu.housepricepredict.mapper.month.CityMonthPriceMapper;
 import edu.seu.housepricepredict.service.CityService;
@@ -35,19 +33,18 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public CityAreaVo getCityAreaBycId(int cId) {
-        return cityMapper.getCityAreaBycId(cId);
-    }
-
-    @Override
     public List<CityMonthPrice> getCityMonthPriceBycId(int cId) {
         return cityMonthPriceMapper.getCityMonthPriceBycId(cId);
     }
 
     @Override
-    public City getCityBycId(int cId) {
-        return cityMapper.getCityBycId(cId);
+    public String getCityNameBycId(int cId) {
+        return cityMapper.getCityNameBycId(cId);
     }
 
+    //    @Override
+//    public CityAreaVo getCityAreaBycId(int cId) {
+//        return cityMapper.getCityAreaBycId(cId);
+//    }
 
 }

@@ -1,10 +1,13 @@
 package edu.seu.housepricepredict.service.impl;
 
+import edu.seu.housepricepredict.domain.area.Street;
 import edu.seu.housepricepredict.mapper.area.StreetMapper;
 import edu.seu.housepricepredict.service.StreetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author guodonwu@163.com
@@ -18,4 +21,9 @@ public class StreetServiceImpl implements StreetService {
 
     @Autowired
     private StreetMapper streetMapper;
+
+    @Override
+    public List<Street> getStreetListBydId(int dId) {
+        return streetMapper.getStreetListBydId(dId);
+    }
 }

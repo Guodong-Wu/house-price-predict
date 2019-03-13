@@ -1,10 +1,9 @@
 package edu.seu.housepricepredict.controller;
 
-import edu.seu.housepricepredict.domain.pojo.area.City;
-import edu.seu.housepricepredict.domain.pojo.area.District;
-import edu.seu.housepricepredict.domain.pojo.month.CityMonthPrice;
-import edu.seu.housepricepredict.domain.vo.area.CityAreaVo;
+import edu.seu.housepricepredict.domain.area.District;
+import edu.seu.housepricepredict.domain.month.CityMonthPrice;
 import edu.seu.housepricepredict.service.CityService;
+import edu.seu.housepricepredict.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +22,16 @@ public class CityController {
     @Autowired
     CityService cityService;
 
+    @Autowired
+    DistrictService districtService;
+
     /**
      * 返回session中存放的当前城市名
      */
     @GetMapping("/session/cityName")
     @ResponseBody
     public String getCityNameFromSession(HttpSession session) {
-        System.out.println("getCityName " + session.getAttribute("cityName"));
+
         return (String) session.getAttribute("cityName");
     }
 
@@ -43,24 +45,20 @@ public class CityController {
         int cId = cityService.getCityIdBycName(cityName);
         session.setAttribute("cityName", cityName);
         session.setAttribute("cityId", cId);
-        System.out.println("setCityName " + cityName);
-        System.out.println("setCityId " + cId);
         return String.valueOf(cId);
     }
 
     /**
-     * 根据城市id，返回城市下的行政区（json）
+     * 根据城市id，返回城市下的行政区(json)
      */
     @GetMapping("/cityArea/{id}")
     @ResponseBody
-    public List<District> getCityArea(@PathVariable("id") String id) {
-        CityAreaVo cityArea = cityService.getCityAreaBycId(Integer.parseInt(id));
-        List<District> areaList = cityArea.getDistricts();
-        return areaList;
+    public List<District> getDistrictListBycId(@PathVariable("id") String id) {
+        return districtService.getDistrictListBycId(Integer.parseInt(id));
     }
 
     /**
-     * 根据城市id 返回城市每月历史房价（json）
+     * 根据城市id 返回城市每月历史房价(json)
      */
     @GetMapping("/cityMonthPrice/{id}")
     @ResponseBody
@@ -70,10 +68,14 @@ public class CityController {
         //将2019年1月和2月，移动到表末尾
         CityMonthPrice cmp1 = monthPriceList.get(0);
         CityMonthPrice cmp2 = monthPriceList.get(1);
-        monthPriceList.remove(cmp1);
-        monthPriceList.remove(cmp2);
-        monthPriceList.add(cmp1);
-        monthPriceList.add(cmp2);
+        if (cmp1.getMonth() < 3) {
+            monthPriceList.remove(cmp1);
+            monthPriceList.add(cmp1);
+        }
+        if (cmp2.getMonth() < 3) {
+            monthPriceList.remove(cmp2);
+            monthPriceList.add(cmp2);
+        }
 
         return monthPriceList;
     }
@@ -83,14 +85,17 @@ public class CityController {
      */
     @GetMapping("/city/{id}")
     public String showCityInfo(@PathVariable("id") String id, String keyword, Model model) {
+        //如果id为空，则赋值为13
         if (id == null) {
             id = "13";
         }
-        City city = cityService.getCityBycId(Integer.parseInt(id));
+        String cName = cityService.getCityNameBycId(Integer.parseInt(id));
         //将城市传到前端页面
-        model.addAttribute("cId", id);
+        model.addAttribute("areaId", id);
         //将城市名传到前端页面
-        model.addAttribute("cName", city.getcName());
+        model.addAttribute("areaName", cName);
+        //传递地区等级
+        model.addAttribute("areaLevel", "city");
 
         return "showInfo";
     }
