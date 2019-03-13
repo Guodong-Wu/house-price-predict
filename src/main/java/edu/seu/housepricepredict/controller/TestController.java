@@ -14,15 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class TestController {
 
-    @RequestMapping("/map")
-    public String toMapPage(){
-        return "map";
-    }
-
-    @RequestMapping("/test-map")
-    public String toTestPage(){
-        return "test-map";
-    }
 
     /**
      * 获取表单选择的两个城市名，并跳转到折线图页面。
@@ -34,7 +25,7 @@ public class TestController {
     public String toComparePage(String commName1,  String commName2, Model model){
         model.addAttribute("commName1", commName1);
         model.addAttribute("commName2", commName2);
-        return "lineChart";
+        return "infopages/lineChart";
     }
 
     @RequestMapping("/choose")
