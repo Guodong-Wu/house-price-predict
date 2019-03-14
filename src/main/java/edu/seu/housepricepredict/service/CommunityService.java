@@ -1,5 +1,9 @@
 package edu.seu.housepricepredict.service;
 
+import edu.seu.housepricepredict.domain.area.Community;
+
+import java.util.List;
+
 /**
  * @author guodonwu@163.com
  * @date 10:30 2019/2/27
@@ -7,4 +11,6 @@ package edu.seu.housepricepredict.service;
  */
 
 public interface CommunityService {
+
+    List<Community> getCommunityListBysId(int sId);
 }

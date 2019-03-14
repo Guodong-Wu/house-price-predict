@@ -1,5 +1,6 @@
 package edu.seu.housepricepredict;
 
+
 import edu.seu.housepricepredict.service.CityService;
 import edu.seu.housepricepredict.service.ImportDataService;
 import org.junit.Test;
@@ -20,64 +21,9 @@ public class HousePricePredictApplicationTests {
     @Autowired
     CityService cityService;
 
-    @Test
-    public void testCityMapper() {
-
-    }
 
     @Test
-    public void testDistrictMapper() {
-
-    }
-
-    @Test
-    public void testStreetMapper() {
-
-    }
-
-    @Test
-    public void insertCity() throws IOException {
-
-    }
-
-    @Test
-    public void insertDistrict() throws IOException {
-
-    }
-
-    @Test
-    public void insertStreet() throws IOException {
-
-    }
-
-    @Test
-    public void insertStreetMonthPrice() throws IOException {
-        importDataService.insertStreetMonthPrice();
-    }
-
-    @Test
-    public void insertDistrictMonthPrice() {
-
-    }
-
-    @Test
-    public void insertCityMonthPrice() {
-
-    }
-
-    @Test
-    public void updateCityPrice() {
-
-    }
-
-    @Test
-    public void updateDistrictPrice() {
-
-    }
-
-    @Test
-    public void updateStreetPrice() {
-
+    public void test() throws IOException {
     }
 
 

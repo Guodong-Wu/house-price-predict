@@ -41,8 +41,12 @@
                     areaName.push(area.name);
                     monthPrice.push(area.price);
                     //设置区域超链接
-                    $("#areaList").append("<li><a href='/"+subAreaLevel+"/"+area.id+"'>"+area.name+"</a></li>")
-                    // <li><a href="">安庆</a></li>
+                    if (subAreaLevel == "community") {
+                        $("#areaList").append("<li><a href='#'>"+area.name+"</a></li>");
+                    } else {
+                        $("#areaList").append("<li><a href='/"+subAreaLevel+"/"+area.id+"'>"+area.name+"</a></li>")
+                        // <li><a href="">安庆</a></li>
+                    }
                 });
 
                 //设置数据集
@@ -79,10 +83,10 @@
                 var monthPrice = new Array();
                 //填充数组
                 $(monthPriceList).each(function (index, data) {
-                    if (data.month >= 3) {
-                        monthList.push("2018年"+data.month+"月");
+                    if (data.month < 10) {
+                        monthList.push("0"+data.month+"月");
                     } else {
-                        monthList.push("2019年"+data.month+"月");
+                        monthList.push(data.month+"月");
                     }
                     monthPrice.push(data.price);
                 })
@@ -129,16 +133,16 @@
         <!--})-->
     <!--</script>-->
     <!--选择要对比的小区名js-->
-    <script>
-        $(function () {
-            $.post("/getCityNames", function(data) {
-                $(data).each(function (index, value) {//index是索引，n是值
-                    $("#commName1").append("<option value=" + value + ">" + value + "</option>")
-                    $("#commName2").append("<option value=" + value + ">" + value + "</option>")
-                })
-            },"json");
-        })
-    </script>
+    <!--<script>-->
+        <!--$(function () {-->
+            <!--$.post("/getCityNames", function(data) {-->
+                <!--$(data).each(function (index, value) {//index是索引，n是值-->
+                    <!--$("#commName1").append("<option value=" + value + ">" + value + "</option>")-->
+                    <!--$("#commName2").append("<option value=" + value + ">" + value + "</option>")-->
+                <!--})-->
+            <!--},"json");-->
+        <!--})-->
+    <!--</script>-->
 </head>
 
 <!--2.22-->
@@ -186,19 +190,19 @@
                 </li>
             </ul>
         </div>
-        <div>
-            <!--选择要进行房价对比的两个小区-->
-            <form action="/lineChart">
-                请选择要进行对比的小区：
-                <select id="commName1" name="commName1" >
-                    <option value="0">请选择</option>
-                </select>
-                <select id="commName2" name="commName2" >
-                    <option>请选择</option>
-                </select>
-                <input type="submit" value="确认对比">
-            </form>
-        </div>
+        <!--<div>-->
+            <!--&lt;!&ndash;选择要进行房价对比的两个小区&ndash;&gt;-->
+            <!--<form action="/lineChart">-->
+                <!--请选择要进行对比的小区：-->
+                <!--<select id="commName1" name="commName1" >-->
+                    <!--<option value="0">请选择</option>-->
+                <!--</select>-->
+                <!--<select id="commName2" name="commName2" >-->
+                    <!--<option>请选择</option>-->
+                <!--</select>-->
+                <!--<input type="submit" value="确认对比">-->
+            <!--</form>-->
+        <!--</div>-->
     </div>
 </div>
 

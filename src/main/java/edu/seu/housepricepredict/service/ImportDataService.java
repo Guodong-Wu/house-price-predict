@@ -16,6 +16,8 @@ public interface ImportDataService {
 
     void insertStreet() throws IOException;
 
+    void insertCommunity() throws IOException;
+
     void insertStreetMonthPrice() throws IOException;
 
     void insertDistrictMonthPrice();

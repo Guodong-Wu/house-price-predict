@@ -45,7 +45,7 @@ public class DistrictController {
     }
 
     /**
-     * 根据行政区id，返回行政区下的街道（json）
+     * 根据行政区id，返回行政区下的街道(json)
      */
     @GetMapping("/districtArea/{id}")
     @ResponseBody

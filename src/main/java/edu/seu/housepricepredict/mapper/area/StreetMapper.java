@@ -26,6 +26,12 @@ public interface StreetMapper {
     int getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
 
     /**
+     * 根据街道id，返回街道名
+     */
+    @Select("SELECT name FROM street WHERE id = #{sId}")
+    String getStreetNameById(int sId);
+
+    /**
      * 插入街道信息
      */
     @Options(useGeneratedKeys = true, keyColumn = "id")

@@ -1,6 +1,9 @@
 package edu.seu.housepricepredict.mapper.area;
 
 import edu.seu.housepricepredict.domain.area.Community;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -19,4 +22,11 @@ public interface CommunityMapper {
     @Select("SELECT id, name, price FROM community WHERE s_id = #{sId}")
     List<Community> getCommunityListBysId(int sId);
 
+
+    /**
+     * 插入街道信息
+     */
+    @Options(useGeneratedKeys = true, keyColumn = "id")
+    @Insert("INSERT INTO community(name, price, s_id) VALUES(#{coName}, #{price}, #{sId})")
+    int insertCommunity(@Param("coName")String coName, @Param("price")int price, @Param("sId")int sId);
 }
