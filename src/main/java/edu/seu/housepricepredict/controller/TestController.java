@@ -1,6 +1,6 @@
 package edu.seu.housepricepredict.controller;
 
-import edu.seu.housepricepredict.utils.Value;
+import edu.seu.housepricepredict.domain.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
