@@ -6,7 +6,9 @@
     <title>房价详情</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/test.css">
-    <script src="../js/jquery.js" ></script>
+    <!--公共页面的js和样式表引入-->
+    <div th:replace="common/common::commonjs"></div>
+    <div th:replace="common/common::commonstyle"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
         $(function () {
@@ -110,9 +112,10 @@
                     responsive : true
                 });
             },"json");
-
         })
     </script>
+    <!--查看用户是否登录js来添加修改用户信息-->
+    <script th:replace="index::addinfojs"></script>
 
     <!--<script>-->
         <!--$(function () {-->
@@ -143,6 +146,10 @@
 
 <!--2.22-->
 <body>
+<!--右侧用户公共nav页面引用-->
+<nav th:replace="common/common::sidenav" ></nav>
+<!--用户菜单按钮引用-->
+<div th:replace="common/common::meaubutton" ></div>
 <div class="wrapper">
     <br>
     <div class="city_search">

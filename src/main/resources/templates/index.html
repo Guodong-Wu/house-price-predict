@@ -1,22 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <!--=========================
-    All script for this site
-============================== -->
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jPushMenu.js"></script>
-    <script src="../js/owl.carousel.js"></script>
-    <script src="../js/jquery.fancybox.js"></script>
-    <script src="../js/jquery.fancybox.pack.js"></script>
-    <script src="../js/wow.min.js"></script>
-    <script src="../js/plugins.js"></script>
-    <script src="../js/main.js"></script>
-    <!-- =====================================
-        Title of the site
-    ========================================== -->
-    <title>房价预测-007</title>
     <!-- =====================================
         Some of mata tag
     ========================================== -->
@@ -25,24 +9,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <!-- =====================================
-        Some importent css for the site
-        #Bootstrap
-        #Font-awesome
-        #Fonts
-    ========================================== -->
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="../css/font-awesome.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="../css/fonts.css" media="all" />
+
+    All script for this site
+============================== -->
+    <!--公共页面的js和样式表引入-->
+    <div th:replace="common/common::commonjs"></div>
+    <div th:replace="common/common::commonstyle"></div>
     <!-- =====================================
-        Some of extra effict css
+        Title of the site
     ========================================== -->
-    <link rel="stylesheet" href="../css/owl.carousel.css">
-    <link rel="stylesheet" href="../css/owl.theme.css">
-    <link rel="stylesheet" type="text/css" href="../css/full-slider.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="../css/jPushMenu.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="../css/hover.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="../css/preload.css" media="all" />
+    <title>房价预测-007</title>
     <!--=========================
         Favicon of this site
     ============================== -->
@@ -53,7 +29,7 @@
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/main.css"><!--css for Main sayle-->
     <link rel="stylesheet" href="../css/media.css"><!--css for Responsive-->
-    <script src="../js/vendor/modernizr-2.8.3.min.js"></script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6yAoynmTPNlTBa8z1X4LfwGE"></script>
     <!--城市定位js-->
@@ -84,8 +60,16 @@
                         $("#search").attr("action", "/city/"+id);
                     });
                 }
-
             });
+        })
+    </script>
+    <!--查看用户是否登录js来添加修改用户信息-->
+    <script th:fragment="addinfojs">
+        $(function () {
+            $.post("/getUserInfo", function (data) {
+                if (data != null)
+                    $("#img").after("<a href=/edit/" + data + ">修改信息</a>")
+            },"json")
         })
     </script>
 </head>
@@ -99,16 +83,10 @@
 <!--=========================
     Start area for Menu
 ============================== -->
-<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
-    <img src="../img/logo.png" alt="" />
-    <a href="#myCarousel">首页</a>
-    <a href="#">注册</a>
-    <a href="#">登录</a>
-    <a href="#">退出</a>
-</nav>
-<div class="manu_div toggle-menu menu-right push-body">
-    <button class=""><i class="fa fa-indent"></i></button>
-</div><!-- End of menu area -->
+<!--右侧用户公共nav页面引用-->
+<nav th:replace="common/common::sidenav" ></nav>
+<!--用户菜单按钮引用-->
+<div th:replace="common/common::meaubutton" ></div>
 
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

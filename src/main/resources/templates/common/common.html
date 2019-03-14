@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--主页菜单和右侧弹页中公共js抽取-->
+    <div th:fragment="commonjs">
+        <script src="../js/jquery.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jPushMenu.js"></script>
+        <script src="../js/owl.carousel.js"></script>
+        <script src="../js/jquery.fancybox.js"></script>
+        <script src="../js/jquery.fancybox.pack.js"></script>
+        <script src="../js/wow.min.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/main.js"></script>
+        <script src="../js/vendor/modernizr-2.8.3.min.js"></script>
+    </div>
+    <div th:fragment="commonstyle">
+        <!--=========================
+           Some importent css for the site
+           #Bootstrap
+           #Font-awesome
+           #Fonts
+       ========================================== -->
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../css/font-awesome.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../css/fonts.css" media="all" />
+        <!-- =====================================
+            Some of extra effict css
+        ========================================== -->
+        <link rel="stylesheet" href="../css/owl.carousel.css">
+        <link rel="stylesheet" href="../css/owl.theme.css">
+        <link rel="stylesheet" type="text/css" href="../css/full-slider.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../css/jPushMenu.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../css/hover.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../css/preload.css" media="all" />
+    </div>
 </head>
 <body>
-
+<!--右侧用户公共nav页面抽取-->
+<nav id="sidenav" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" th:fragment="sidenav">
+    <img id="img" src="../img/logo.png" alt="" />
+    <a href="/index">首页</a>
+    <a href="#">注册</a>
+    <a href="/login">登录</a>
+    <a href="#">退出</a>
+</nav>
+<!--主页菜单按钮抽取按钮抽取-->
+<div class="manu_div toggle-menu menu-right push-body" th:fragment="meaubutton">
+    <button class=""><i class="fa fa-indent"></i></button>
+</div><!-- End of menu area -->
 </body>
 </html>
