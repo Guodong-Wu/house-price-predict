@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.mapper.area;
 
 
+import edu.seu.housepricepredict.domain.area.City;
 import org.apache.ibatis.annotations.*;
 
 /**
@@ -22,6 +23,12 @@ public interface CityMapper {
      */
     @Select("SELECT id FROM city WHERE name = #{cName}")
     int getCityIdBycName(String cName);
+
+    /**
+     * 根据城市名，获取城市
+     */
+    @Select("SELECT * FROM city WHERE name = #{cName}")
+    City getCityBycName(String cName);
 
     /**
      * 插入城市信息

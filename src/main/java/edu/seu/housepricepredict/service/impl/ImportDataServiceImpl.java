@@ -4,13 +4,15 @@ import edu.seu.housepricepredict.domain.month.CityMonthPrice;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 import edu.seu.housepricepredict.mapper.area.CityMapper;
+import edu.seu.housepricepredict.mapper.area.CommunityMapper;
 import edu.seu.housepricepredict.mapper.area.DistrictMapper;
 import edu.seu.housepricepredict.mapper.area.StreetMapper;
 import edu.seu.housepricepredict.mapper.month.CityMonthPriceMapper;
 import edu.seu.housepricepredict.mapper.month.DistrictMonthPriceMapper;
 import edu.seu.housepricepredict.mapper.month.StreetMonthPriceMapper;
 import edu.seu.housepricepredict.service.ImportDataService;
-import edu.seu.housepricepredict.utils.CsvReaderUtil;
+import edu.seu.housepricepredict.utils.CommunityCsvReaderUtil;
+import edu.seu.housepricepredict.utils.HistoryCsvReaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,9 @@ public class ImportDataServiceImpl implements ImportDataService {
     private StreetMapper streetMapper;
 
     @Autowired
+    private CommunityMapper communityMapper;
+
+    @Autowired
     private CityMonthPriceMapper cityMonthPriceMapper;
 
     @Autowired
@@ -47,7 +52,7 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     @Override
     public void insertCity() throws IOException {
-        Set<String> set = CsvReaderUtil.readAreaName(0);
+        Set<String> set = HistoryCsvReaderUtil.readAreaName(0);
         for (String cName : set) {
             System.out.println(cName);
 //            cityMapper.insertCity(cName);
@@ -56,7 +61,7 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     @Override
     public void insertDistrict() throws IOException {
-        Set<String> set = CsvReaderUtil.readDistrict(cityMapper);
+        Set<String> set = HistoryCsvReaderUtil.readDistrict(cityMapper);
         for (String str : set) {
             String[] split = str.split(" ");
             int cId = Integer.parseInt(split[1]);
@@ -67,7 +72,7 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     @Override
     public void insertStreet() throws IOException {
-        Set<String> set = CsvReaderUtil.readStreet(cityMapper, districtMapper);
+        Set<String> set = HistoryCsvReaderUtil.readStreet(cityMapper, districtMapper);
         for (String str : set) {
             String[] split = str.split(" ");
             int dId = Integer.parseInt(split[1]);
@@ -77,8 +82,20 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     @Override
+    public void insertCommunity() throws IOException {
+        Set<String> set = CommunityCsvReaderUtil.readCommunity(cityMapper, districtMapper, streetMapper);
+        for (String str : set) {
+            String[] split = str.split(" ");
+            String coName = split[0];
+            int price = Integer.parseInt(split[1]);
+            int sId = Integer.parseInt(split[2]);
+            communityMapper.insertCommunity(coName, price, sId);
+        }
+    }
+
+    @Override
     public void insertStreetMonthPrice() throws IOException {
-        Set<String> set = CsvReaderUtil.readStreetMonthPrice(cityMapper, districtMapper, streetMapper);
+        Set<String> set = HistoryCsvReaderUtil.readStreetMonthPrice(cityMapper, districtMapper, streetMapper);
         for (String str : set) {
             String[] split = str.split(" ");
             StreetMonthPrice smp = new StreetMonthPrice();

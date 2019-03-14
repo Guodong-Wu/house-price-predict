@@ -13,10 +13,11 @@ import java.util.Set;
 /**
  * @author guodonwu@163.com
  * @date 10:04 2019/3/4
- * 读取csv文件的工具类
+ * 读取csv文件的工具类、
+ * 读取历史数据
  */
 
-public class CsvReaderUtil {
+public class HistoryCsvReaderUtil {
 
     private static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\week1部分数据汇总\\江苏\\jiangsu_street.csv";
 

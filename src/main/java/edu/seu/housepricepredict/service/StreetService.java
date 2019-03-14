@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.service;
 
 import edu.seu.housepricepredict.domain.area.Street;
+import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
 public interface StreetService {
 
     List<Street> getStreetListBydId(int dId);
+    String getStreetNameById(int sId);
+    List<StreetMonthPrice> getStreetMonthPriceBysId(int sId);
 }
