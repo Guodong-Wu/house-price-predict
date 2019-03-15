@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>城市列表</title>
-    <script src="../js/jquery.js"></script>
+    <!--<script src="../js/jquery.js"></script>-->
+    <!--公共页面的js和样式表引入-->
+    <div th:replace="common/common::commonjs"></div>
+    <div th:replace="common/common::commonstyle"></div>
     <link href="/favicon.ico" type="image/x-icon" rel=icon>
     <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" href="../css/test.css">
@@ -42,8 +45,14 @@
             });
         });
     </script>
+    <!--查看用户是否登录js来添加修改用户信息-->
+    <script th:replace="index::addinfojs"></script>
 </head>
 <body>
+<!--右侧用户公共nav页面引用-->
+<nav th:replace="common/common::sidenav" ></nav>
+<!--用户菜单按钮引用-->
+<div th:replace="common/common::meaubutton" ></div>
 <!--搜索框所在div-->
 <div class="wrapper">
     <br>
