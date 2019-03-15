@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author xg_song
@@ -99,13 +100,14 @@ public class TestController {
      */
     @RequestMapping("/getUserInfo")
     @ResponseBody
-    public String getUserInfo(){
+    public Integer getUserInfo(){
         User user = null;
         user = new User();
         user.setUserId(1);
         int userId = user.getUserId();
-        System.out.println("user: " + user);
-        return userId + "";
+        System.out.println("get User info--user: " + user);
+//        return userId + "";
+        return -1;
     }
 
     /**
@@ -134,6 +136,7 @@ public class TestController {
      */
     @RequestMapping("/update/{userId}")
     public String updateInfo(@PathVariable("userId") Integer userId, User user){
+        System.out.println("update user info");
         System.out.println(user);
         return "index";
     }
@@ -143,13 +146,16 @@ public class TestController {
     }
 
     /**
+     * 用户修改信息
      * 验证用户信息若用户信息通过，则返回首页，否则返回登录页
      * @param user
      * @return
      */
     @RequestMapping("/userVerify")
-    public String userVerify(User user){
+    public String userVerify(User user, HttpSession session){
         System.out.println("user: " + user);
+        user.setUserId(1);
+        session.setAttribute("user", user);
         return "index";
     }
 
@@ -158,9 +164,24 @@ public class TestController {
         return "user/register";
     }
 
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
     @RequestMapping("/userRegister")
     public String userRegister(User user){
         System.out.println("user: " + user);
+        return "index";
+    }
+
+    /**
+     * 用户退出后返回主页面
+     * @return
+     */
+    @RequestMapping("/quit")
+    public String userQuit(){
+        System.out.println("quit--");
         return "index";
     }
 }

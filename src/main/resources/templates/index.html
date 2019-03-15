@@ -65,13 +65,18 @@
     </script>
     <!--查看用户是否登录js来添加修改用户信息-->
     <script th:fragment="addinfojs">
-        $(function () {
-            $.post("/getUserInfo", function (data) {
-                if (data != null)
-                    $("#img").after("<a href=/edit/" + data + ">修改信息</a>")
-            },"json")
-        })
-    </script>
+    $(function () {
+        $.post("/getUserInfo", function (data) {
+            if (data != -1){
+                $("#sidenav").append("<a href=/edit/" + data + ">修改信息</a>")
+                $("#sidenav").append("<a href=/quit>退出登录</a>")
+            }else {
+                $("#sidenav").append("<a href=/login>登录</a>")
+                $("#sidenav").append("<a href=/register>注册</a>")
+            }
+        },"json")
+    })
+</script>
 </head>
 <body>
 <!--<input type="hidden" id="cityName" >-->
