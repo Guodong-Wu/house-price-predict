@@ -6,6 +6,8 @@ import edu.seu.housepricepredict.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author guodonwu@163.com
  * @date 17:21 2019/3/13
@@ -30,6 +32,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByName(String userName) {
         return userMapper.getUserByName(userName);
+    }
+
+    @Override
+    public User getUserByEmail(String userEmail) {
+        return userMapper.getUserByEmail(userEmail);
     }
 
 
