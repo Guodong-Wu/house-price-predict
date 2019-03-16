@@ -22,6 +22,19 @@ public interface UserMapper {
                                  @Param("pageSize") int pageSize,
                                  @Param("userName") String userName);
 
+
+    /**
+     * 根据用户名和密码，获取用户
+     */
+    @Select("SELECT * FROM user WHERE user_name = #{userName} AND user_password = #{userPassword}")
+    User getUserByNameAndPassword(User user);
+
+    /**
+     * 根据用户名获取用户
+     */
+    @Select("SELECT * FROM user WHERE user_name = #{userName}")
+    User getUserByName(String userName);
+
     /**
      * 根据用户id获取用户信息
      */
@@ -32,7 +45,7 @@ public interface UserMapper {
      * 插入用户信息
      */
     @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "user_id")
-    @Insert("INSERT INTO user VALUES(#{userName}, #{userPassword}, #{userEmail})")
+    @Insert("INSERT INTO user VALUES(null, #{userName}, #{userPassword}, #{userEmail}, 0)")
     int insertUser(User user);
 
     /**

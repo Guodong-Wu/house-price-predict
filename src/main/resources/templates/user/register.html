@@ -45,16 +45,58 @@
         }
 
     </style>
+    
+    <script>
+        $(function () {
+            $("#submit").click(function () {
+                // 用户名验证
+                if ($("#userName").val()=="") {
+                    alert("用户名不能为空");
+                    return false;
+                }
+
+                // 密码验证
+                var password1 = $("#userPassword").val();
+                var password2 = $("#confirmPassword").val();
+                if (password1 != password2 && password1 != null && password2 != null) {
+                    alert("两次密码不一致")
+                    return false;
+                }
+                // 邮箱验证
+                if ($("#userEmail").val()=="") {
+                    alert("邮箱不能为空");
+                    return false;
+                }
+                var email=$("#userEmail").val();
+                if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+                    alert("邮箱格式不正确！请重新输入");
+                    return false;
+                }
+
+                //校验用户名是否存在
+                var userName = $("#userName").val();
+                $.post("/user/isExist", {"userName":userName}, function (data) {
+                    if (data != null){
+                        alert("用户名已存在");
+                    } else {
+                        $("#form1").submit();
+                    }
+                },"json");
+
+            })
+        })
+    </script>
+    
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" th:object="user" action="/userRegister">
+    <form id="form1" class="form-signin" method="post" action="/user/register">
         <h2 class="form-signin-heading" style="text-align: center">注册</h2>
-        <input type="text" name="username" th:field="*{userName}" class="input-block-level" placeholder="用户名">
-        <input type="text" name="email" th:field="*{userEmail}" class="input-block-level" placeholder="邮件">
-        <input type="password" name="password" th:field="*{userPassword}" class="input-block-level" placeholder="密码">
-        <input type="password" name="password"  class="input-block-level" placeholder="确认密码">
-        <p style="text-align: center"><button class="btn btn-large btn-primary" type="submit">注册</button></p>
+        <input id="userName" type="text" name="userName" class="input-block-level" placeholder="用户名">
+        <input id="userEmail" type="text" name="userEmail" class="input-block-level" placeholder="邮件">
+        <input id="userPassword" type="password" name="userPassword" class="input-block-level" placeholder="密码">
+        <input id="confirmPassword" type="password" name="password"  class="input-block-level" placeholder="确认密码">
+        <p style="text-align: center"><button id="submit" class="btn btn-large btn-primary">注册</button></p>
     </form>
 
 </div>
