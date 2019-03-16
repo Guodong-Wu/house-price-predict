@@ -1,184 +1,64 @@
 <!DOCTYPE html>
-<html>
-<!--后台子页，用户信息显示页面-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title></title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.css" />
-    <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>Title</title>
     <script type="text/javascript" src="../js/jquery.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.js"></script>
-    <script type="text/javascript" src="../js/ckform.js"></script>
-    <script type="text/javascript" src="../js/common.js"></script>
-    <style type="text/css">
-        body {
-            padding-bottom: 40px;
-        }
-        .sidebar-nav {
-            padding: 9px 0;
-        }
-        @media (max-width: 980px) {
-            /* Enable use of floated navbar text */
-            .navbar-text.pull-right {
-                float: none;
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        }
-    </style>
+    <!--表单中将文本框内容交给链接js-->
+    <!--搜索用户js，目标url："/select/key"-->
+    <script>
+        $(function () {
+            $("#submit").click(function () {
+                if ($("#key").val() == ""){
+                    alert("请输入用户名")
+                    return false;
+                }
+                var action = $("#key").val()
+                $("#form").attr("action", "/select/" + action)
+            })
+        })
+    </script>
 </head>
 <body>
-<form class="form-inline definewidth m20" action="userList.html" method="get">
-    用户名称：
-    <input type="text" name="username" id="username"class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
-    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp;
+<!--搜索表单-->
+<form id="form" action="#">
+    用户名称：<input type="text" id="key" />
+    <input id="submit" type="submit" value="查询">
 </form>
-<table class="table table-bordered table-hover definewidth m10" id="mytable">
+<!--显示用户信息表格-->
+<table  th:cellspacing="0" th:cellpadding="10" th:border="1">
     <thead>
     <tr>
-        <th>用户id</th>
-        <th>用户名称</th>
-        <th>邮件</th>
-        <th>操作</th>
+        <td>用户id</td>
+        <td style="width: 40px">用户名</td>
+        <td>用户邮箱</td>
+        <td>操作</td>
     </tr>
-    </thead>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            <button type="submit" class="btn btn-primary"
-                    onclick="{if(confirm('确定删除吗?')){this.document.formname.submit();return true;}return false;}">删除
-            </button>
-        </td>
+    </thead >
+    <tr  th:each="person:${persons}">
+        <td th:text="${person.userId}"></td>
+        <td style="width: 40px" th:text="${person.userName}"></td>
+        <td th:text="${person.userEmail}"></td>
+        <td><a th:href="@{/delete/}+${person.userId}">删除</a></td>
+        <!--<td><a th:href="/delete/">删除</a></td>-->
     </tr>
+
 </table>
-<br>
-<div style="text-align: center">
-    <a id="btn0"></a>
-    <a id="sjzl"></a>
-    <a  href="#" id="btn1">首页</a>
-    <a  href="#" id="btn2">上一页</a>
-    <a  href="#" id="btn3">下一页</a>
-    <a  href="#" id="btn4">尾页</a>
-    <a>转到 </a>
-    <input id="changePage" type="text" size="1" maxlength="4"/>
-    <a>页 </a>
-    <a  href="#" id="btn5">跳转</a>
+<div>
+    <!--页码-->
+    <a th:href="@{/testfenye(number=1)}">1</a>
+    <!--<a th:href="@{/testfenye(number=2)}">2</a>-->
+    <!--<a th:href="@{/testfenye(number=3)}">3</a>-->
+    <span th:if="${number} ge 10">...</span>
+    <!--<span th:each="i :${#numbers.sequence(1,top1)}">-->
+    <!--<a th:if="(${i} le ${number}+3 and ${i} le ${top1}-3) and (${i} ge ${number}-3 and ${i} ge 4)" th:href="@{/testfenye(number=${i})}" th:text="${i}"></a>-->
+<!--</span>-->
+    <span th:if="${number} le ${top1}-10">...</span>
+    <!--<a th:href="@{/testfenye(number=${top1}-2)}" th:text="${top1}-2">1</a>-->
+    <!--<a th:href="@{/testfenye(number=${top1}-1)}" th:text="${top1}-1">1</a>-->
+    <a th:href="@{/testfenye(number=${top1})}" th:text="${top1}"></a>
+    <a th:href="@{/testfenye(number=${number}-1)}">上一页</a>
+    <a th:href="@{/testfenye(number=${number}+1)}">下一页</a>
 </div>
 </body>
 </html>
-<script language="javascript">
-    function confirmDel(str){
-        return confirm(str);
-    }
-</script>
-<script type="text/javascript">
-    var pageSize = 10;    //每页显示的记录条数
-    var curPage=0;        //当前页
-    var lastPage;        //最后页
-    var direct=0;        //方向
-    var len;            //总行数
-    var page;            //总页数
-    var begin;
-    var end;
-
-
-    $(document).ready(function display(){
-        len =$("#mytable tr").length - 1;    // 求这个表的总行数，剔除第一行介绍
-        page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
-        // alert("page==="+page);
-        curPage=1;    // 设置当前为第一页
-        displayPage(1);//显示第一页
-
-        document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页   ";    // 显示当前多少页
-        document.getElementById("sjzl").innerHTML="数据总量 " + len + "";        // 显示数据量
-        document.getElementById("pageSize").value = pageSize;
-
-
-
-        $("#btn1").click(function firstPage(){    // 首页
-            curPage=1;
-            direct = 0;
-            displayPage();
-        });
-        $("#btn2").click(function frontPage(){    // 上一页
-            direct=-1;
-            displayPage();
-        });
-        $("#btn3").click(function nextPage(){    // 下一页
-            direct=1;
-            displayPage();
-        });
-        $("#btn4").click(function lastPage(){    // 尾页
-            curPage=page;
-            direct = 0;
-            displayPage();
-        });
-        $("#btn5").click(function changePage(){    // 转页
-            curPage=document.getElementById("changePage").value * 1;
-            if (!/^[1-9]\d*$/.test(curPage)) {
-                alert("请输入正整数");
-                return ;
-            }
-            if (curPage > page) {
-                alert("超出数据页面");
-                return ;
-            }
-            direct = 0;
-            displayPage();
-        });
-
-
-        $("#pageSizeSet").click(function setPageSize(){    // 设置每页显示多少条记录
-            pageSize = document.getElementById("pageSize").value;    //每页显示的记录条数
-            if (!/^[1-9]\d*$/.test(pageSize)) {
-                alert("请输入正整数");
-                return ;
-            }
-            len =$("#mytable tr").length - 1;
-            page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
-            curPage=1;        //当前页
-            direct=0;        //方向
-            firstPage();
-        });
-    });
-
-    function displayPage(){
-        if(curPage <=1 && direct==-1){
-            direct=0;
-            alert("已经是第一页了");
-            return;
-        } else if (curPage >= page && direct==1) {
-            direct=0;
-            alert("已经是最后一页了");
-            return ;
-        }
-
-        lastPage = curPage;
-
-        // 修复当len=1时，curPage计算得0的bug
-        if (len > pageSize) {
-            curPage = ((curPage + direct + len) % len);
-        } else {
-            curPage = 1;
-        }
-
-
-        document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页    每页 ";        // 显示当前多少页
-
-        begin=(curPage-1)*pageSize + 1;// 起始记录号
-        end = begin + 1*pageSize - 1;    // 末尾记录号
-
-
-        if(end > len ) end=len;
-        $("#mytable tr").hide();    // 首先，设置这行为隐藏
-        $("#mytable tr").each(function(i){    // 然后，通过条件判断决定本行是否恢复显示
-            if((i>=begin && i<=end) || i==0 )//显示begin<=x<=end的记录
-                $(this).show();
-        });
-    }
-</script>
-
