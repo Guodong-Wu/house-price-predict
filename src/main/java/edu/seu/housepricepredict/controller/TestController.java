@@ -140,10 +140,7 @@ public class TestController {
         System.out.println(user);
         return "index";
     }
-    @RequestMapping("/login")
-    public String login(User user){
-        return "user/login";
-    }
+
 
     /**
      * 用户修改信息
