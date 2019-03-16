@@ -46,22 +46,26 @@
 
     </style>
     <script>
-        $("#submit").click(function () {
-            if ($("#userName").val() == ""){
-                alert("用户名不能为空！")
-                return false;
-            }
-            if ($("#userPassword").val() == ""){
-                alert("密码不能为空！")
-                return false;
-            }
+        $(function () {
+            $("#submit").click(function () {
+                if ($("#userName").val() == ""){
+                    alert("用户名不能为空！")
+                    return false;
+                }
+                if ($("#userPassword").val() == ""){
+                    alert("密码不能为空！")
+                    return false;
+                }
+            })
         })
     </script>
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" action="/userVerify">
+    <form class="form-signin" method="post"  action="/user/login">
         <h2 class="form-signin-heading" style="text-align: center">登录</h2>
+        <!-- 判断 -->
+        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
         <input id="userName" type="text" name="userName" class="input-block-level" placeholder="用户名">
         <input id="userPassword" type="password" name="userPassword" class="input-block-level" placeholder="密码">
         <!--<p style="text-align: center"><input id="submit" class="btn btn-large btn-primary" type="submit">登录</input></p>-->

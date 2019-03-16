@@ -23,7 +23,15 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         //浏览器发送 / 请求来到index(classpath:/template/index.html)
         registry.addViewController("/").setViewName("index");
-        registry.addViewController("/info/city").setViewName("/info/city");
+        registry.addViewController("/index").setViewName("index");
+        //跳转至城市页面
+        registry.addViewController("/info/city").setViewName("info/city");
+        //用户跳转至登录页面
+        registry.addViewController("/login").setViewName("user/login");
+        //后台登录页面
+        registry.addViewController("/adminIndex").setViewName("user/adminIndex");
+        //用户注册页面
+        registry.addViewController("/register").setViewName("user/register");
     }
 
     /**
@@ -33,6 +41,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //注册管理员拦截器，并设置拦截地址
-//        registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns();
+        registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns("/adminIndex");
     }
 }
