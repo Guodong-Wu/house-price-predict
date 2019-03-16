@@ -95,20 +95,6 @@ public class TestController {
         return address;
     }
 
-    /**
-     * 查询用户是否登录，若登录则返回用户信息，否则返回空
-     */
-    @RequestMapping("/getUserInfo")
-    @ResponseBody
-    public Integer getUserInfo(){
-        User user = null;
-        user = new User();
-        user.setUserId(1);
-        int userId = user.getUserId();
-        System.out.println("get User info--user: " + user);
-//        return userId + "";
-        return -1;
-    }
 
     /**
      * 传入参数为用户id，然后获取用户信息，最后进入表单页面并进行信息回显
@@ -142,43 +128,4 @@ public class TestController {
     }
 
 
-    /**
-     * 用户修改信息
-     * 验证用户信息若用户信息通过，则返回首页，否则返回登录页
-     * @param user
-     * @return
-     */
-    @RequestMapping("/userVerify")
-    public String userVerify(User user, HttpSession session){
-        System.out.println("user: " + user);
-        user.setUserId(1);
-        session.setAttribute("user", user);
-        return "index";
-    }
-
-    @RequestMapping("/register")
-    public String register(){
-        return "user/register";
-    }
-
-    /**
-     * 用户注册
-     * @param user
-     * @return
-     */
-    @RequestMapping("/userRegister")
-    public String userRegister(User user){
-        System.out.println("user: " + user);
-        return "index";
-    }
-
-    /**
-     * 用户退出后返回主页面
-     * @return
-     */
-    @RequestMapping("/quit")
-    public String userQuit(){
-        System.out.println("quit--");
-        return "index";
-    }
 }

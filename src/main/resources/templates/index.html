@@ -66,15 +66,16 @@
     <!--查看用户是否登录js来添加修改用户信息-->
     <script th:fragment="addinfojs">
     $(function () {
-        $.post("/getUserInfo", function (data) {
-            if (data != -1){
-                $("#sidenav").append("<a href=/edit/" + data + ">修改信息</a>")
-                $("#sidenav").append("<a href=/quit>退出登录</a>")
-            }else {
-                $("#sidenav").append("<a href=/login>登录</a>")
-                $("#sidenav").append("<a href=/register>注册</a>")
+        $.get("/session/user", function (data) {
+            if (data != "no") {
+                $("#sidenav").append("<a href=/user/" + data + ">修改信息</a>")
+                $("#sidenav").append("<a href='/user/quit' " +
+                    "onclick=\"{if(confirm('确定退出吗?')){this.document.formname.submit();return true;}return false;}\">退出登录</a>")
+            } else {
+                $("#sidenav").append("<a href=/user/login>登录</a>")
+                $("#sidenav").append("<a href=/user/register>注册</a>")
             }
-        },"json")
+        })
     })
 </script>
 </head>
