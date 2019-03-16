@@ -48,12 +48,12 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" th:object="user" action="/userRegister">
+    <form class="form-signin" method="post"  action="/userRegister">
         <h2 class="form-signin-heading" style="text-align: center">注册</h2>
-        <input type="text" name="username" th:field="*{userName}" class="input-block-level" placeholder="用户名">
-        <input type="text" name="email" th:field="*{userEmail}" class="input-block-level" placeholder="邮件">
-        <input type="password" name="password" th:field="*{userPassword}" class="input-block-level" placeholder="密码">
-        <input type="password" name="password"  class="input-block-level" placeholder="确认密码">
+        <input type="text" name="userName"  class="input-block-level" placeholder="用户名">
+        <input type="text" name="userEmail" class="input-block-level" placeholder="邮件">
+        <input type="password" name="userPassword" class="input-block-level" placeholder="密码">
+        <input type="password" name="Password2"  class="input-block-level" placeholder="确认密码">
         <p style="text-align: center"><button class="btn btn-large btn-primary" type="submit">注册</button></p>
     </form>
 

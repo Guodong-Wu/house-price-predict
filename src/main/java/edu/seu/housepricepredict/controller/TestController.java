@@ -106,8 +106,8 @@ public class TestController {
         user.setUserId(1);
         int userId = user.getUserId();
         System.out.println("get User info--user: " + user);
-//        return userId + "";
-        return -1;
+        return userId;
+//        return -1;
     }
 
     /**

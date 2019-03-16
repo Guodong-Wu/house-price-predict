@@ -60,10 +60,10 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" th:object="${user}" action="/userVerify">
+    <form class="form-signin" method="post" action="/userVerify">
         <h2 class="form-signin-heading" style="text-align: center">登录</h2>
-        <input id="userName" type="text" th:field="*{userName}" name="userName" class="input-block-level" placeholder="用户名">
-        <input id="userPassword" type="password" th:field="*{userPassword}" name="userPassword" class="input-block-level" placeholder="密码">
+        <input id="userName" type="text" name="userName" class="input-block-level" placeholder="用户名">
+        <input id="userPassword" type="password" name="userPassword" class="input-block-level" placeholder="密码">
         <!--<p style="text-align: center"><input id="submit" class="btn btn-large btn-primary" type="submit">登录</input></p>-->
         <input id="submit" class="btn btn-large btn-primary center-block" type="submit" value="登录"></form>
     </form>
