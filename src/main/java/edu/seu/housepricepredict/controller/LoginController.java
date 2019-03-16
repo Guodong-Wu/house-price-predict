@@ -4,11 +4,13 @@ import edu.seu.housepricepredict.domain.user.User;
 import edu.seu.housepricepredict.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author guodonwu@163.com
@@ -20,6 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
     @Autowired
     private UserService userService;
+
+    /**
+     * 来到用户登录页
+     */
+    @GetMapping("/user/login")
+    public String userLogin() {
+        return "user/login";
+    }
 
     /**
      * 验证用户信息
@@ -51,12 +61,11 @@ public class LoginController {
     }
 
     /**
-     * 判断用户名是否存在
+     * 来到用户注册页面
      */
-    @PostMapping("/user/isExist")
-    @ResponseBody
-    public User isExist(String userName) {
-        return userService.getUserByName(userName);
+    @GetMapping("/user/register")
+    public String userRegister() {
+        return "user/register";
     }
 
     /**
@@ -65,11 +74,36 @@ public class LoginController {
     @PostMapping("/user/register")
     public String userRegister(User user) {
         if (user == null) {
-            return "redirect:/register";
+            return "redirect:/user/register";
         } else {
             userService.insertUser(user);
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
     }
+
+
+    /**
+     * 获取session中user
+     */
+    @GetMapping("/session/user")
+    @ResponseBody
+    public String getUserInfo(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "no";
+        } else {
+            return String.valueOf(user.getUserId());
+        }
+    }
+
+    /**
+     * 退出登录
+     */
+    @GetMapping("/user/quit")
+    public String userQuit(HttpSession session) {
+        session.removeAttribute("user");
+        return "index";
+    }
+
 
 }

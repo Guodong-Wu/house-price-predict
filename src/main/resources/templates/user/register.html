@@ -48,13 +48,12 @@
     
     <script>
         $(function () {
-            $("#submit").click(function () {
+            $("#userSubmit").click(function () {
                 // 用户名验证
                 if ($("#userName").val()=="") {
                     alert("用户名不能为空");
                     return false;
                 }
-
                 // 密码验证
                 var password1 = $("#userPassword").val();
                 var password2 = $("#confirmPassword").val();
@@ -73,30 +72,57 @@
                     return false;
                 }
 
-                //校验用户名是否存在
-                var userName = $("#userName").val();
-                $.post("/user/isExist", {"userName":userName}, function (data) {
-                    if (data != null){
-                        alert("用户名已存在");
-                    } else {
-                        $("#form1").submit();
-                    }
-                },"json");
 
-            })
+                //校验用户名和邮箱是否存在
+                //ajax同步嵌套
+                var userName = $("#userName").val();
+                var userEmail = $("#userEmail").val();
+                $.ajax({
+                    type : "post",
+                    url : "/isExistByUserName",
+                    data : {"userName":userName},
+                    //同步
+                    async : false,
+                    success : function(user1){
+                        alert("jiji");
+                        if (user1 != "no") {
+                            alert("用户名已存在");
+                        } else {
+                            $.ajax({
+                                type: "post",
+                                url: "/isExistByUserEmail",
+                                data: {"userEmail":userEmail},
+                                //同步
+                                async: false,
+                                success: function (user2) {
+                                    alert(user2);
+                                    if (user2 != "no") {
+                                        alert("邮箱已存在");
+                                    } else {
+                                        alert("hah");
+                                        $("#userForm").submit();
+                                    }
+                                }
+                            })
+                        }
+                    }
+                });
+
+            });
         })
     </script>
     
 </head>
 <body>
 <div class="container">
-    <form id="form1" class="form-signin" method="post" action="/user/register">
+    <form id="userForm" class="form-signin" method="post" action="/user/register">
         <h2 class="form-signin-heading" style="text-align: center">注册</h2>
         <input id="userName" type="text" name="userName" class="input-block-level" placeholder="用户名">
         <input id="userEmail" type="text" name="userEmail" class="input-block-level" placeholder="邮件">
         <input id="userPassword" type="password" name="userPassword" class="input-block-level" placeholder="密码">
         <input id="confirmPassword" type="password" name="password"  class="input-block-level" placeholder="确认密码">
-        <p style="text-align: center"><button id="submit" class="btn btn-large btn-primary">注册</button></p>
+        <p style="text-align: center"><button id="userSubmit" class="btn btn-large btn-primary" type="button">注册</button></p>
+
     </form>
 
 </div>

@@ -36,6 +36,13 @@ public interface UserMapper {
     User getUserByName(String userName);
 
     /**
+     * 根据邮箱获取用户
+     */
+    @Select("SELECT * FROM user WHERE user_email = #{userEmail}")
+    User getUserByEmail(String userEmail);
+
+
+    /**
      * 根据用户id获取用户信息
      */
     @Select("SELECT * FROM user WHERE user_id = #{uId}")
