@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,25 @@ public class UserController {
         } else {
             return user.toString();
         }
+    }
+
+    /**
+     * 来到修改页面
+     */
+    @GetMapping("/user/{id}")
+    public String updateUser() {
+        return "user/updateUserInfo";
+    }
+
+    /**
+     * 修改员工
+     */
+    @PutMapping("/user/{id}")
+    public String updateUser(User user, HttpServletRequest request) {
+        userService.updateUser(user);
+        request.getSession().setAttribute("user", user);
+        request.setAttribute("msg", "修改成功，请重新登录");
+        return "user/login";
     }
 
 }
