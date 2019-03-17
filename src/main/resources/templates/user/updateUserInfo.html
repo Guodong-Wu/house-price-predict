@@ -10,45 +10,6 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <!--根据用户id修改目标地址js-->
     <!--首先验证两个密码是否相同，若相同，则修改目标地址,否则停留在原页面-->
-    <script>
-        $(function () {
-            $("#submit").click(function () {
-                // 用户名验证
-                if($("#userName").val()=="")
-                {
-                    alert("用户名不能为空");
-                    return false;
-                }
-                // 密码验证
-                var password1 = $("#password1").val();
-                var password2 = $("#password2").val();
-                if (password1 != password2 && password1 != null && password2 != null) {
-                    alert("两次密码不一致")
-                    // $("#password2").val("")
-                    return false
-                }else {
-                    $("#form").attr("action", "/update/" + $("#userId").val())
-                }
-                // 邮箱验证
-                if($("#email").val()=="")
-                {
-                    alert("邮箱不能为空");
-                    return false;
-                }
-                if($("#email").val()=="")
-                {
-                    alert("邮箱不能为空");
-                    return false;
-                }
-                var email=$("#email").val();
-                if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/))
-                {
-                    alert("邮箱格式不正确！请重新输入");
-                    return false;
-                }
-            })
-        })
-    </script>
     <style type="text/css">
         body {
             padding-top: 40px;
@@ -82,39 +43,100 @@
             margin-bottom:15px;
         }
     </style>
+
+    <script th:inline="javascript">
+        $(function () {
+            $("#userSubmit").click(function () {
+                // 用户名验证
+                if ($("#userName").val()=="") {
+                    alert("用户名不能为空");
+                    return false;
+                }
+                // 密码验证
+                var password1 = $("#userPassword").val();
+                var password2 = $("#confirmPassword").val();
+                if (password1 != password2 && password1 != null && password2 != null) {
+                    alert("两次密码不一致")
+                    return false;
+                }
+                // 邮箱验证
+                if ($("#userEmail").val()=="") {
+                    alert("邮箱不能为空");
+                    return false;
+                }
+                var email=$("#userEmail").val();
+                if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+                    alert("邮箱格式不正确！请重新输入");
+                    return false;
+                }
+
+
+                //校验用户名和邮箱是否存在
+                //ajax同步嵌套
+                var userName = $("#userName").val();
+                var userEmail = $("#userEmail").val();
+                var userId = $("#userId").val();
+                var sessionName = [[${session.user.userName}]];
+                var sessionEmail = [[${session.user.userEmail}]];
+
+                $.ajax({
+                    type : "post",
+                    url : "/isExistByUserName",
+                    data : {"userName":userName},
+                    //同步
+                    async : false,
+                    success : function(user1){
+                        if (user1 != "no" && userName != sessionName) {
+                            alert("用户名已存在");
+                        } else {
+                            $.ajax({
+                                type: "post",
+                                url: "/isExistByUserEmail",
+                                data: {"userEmail":userEmail},
+                                //同步
+                                async: false,
+                                success: function (user2) {
+                                    if (user2 != "no" && userEmail != sessionEmail) {
+                                        alert("邮箱已存在");
+                                    } else {
+                                        $("#userForm").attr("action", "/user/"+userId);
+                                        $("#userForm").submit();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+            });
+        })
+    </script>
+
 </head>
 <body>
 <div>
-    <!--<form id="form" action="/update/">-->
-        <!--<input id="userId" type="hidden" name="userId" th:value="${user.userId}">-->
-        <!--用户名：<input id="userName" type="text" name="userName" th:value="${user.userName}"/>-->
-        <!--<br>-->
-        <!--密码：<input id="password1" type="password" name="userPassword" th:value="${user.userPassword}" />-->
-        <!--<br>-->
-        <!--确认密码：<input id="password2" type="password" name="userPassword2" th:value="${user.userPassword}" />-->
-        <!--<br>-->
-        <!--email:<input id="email" type="email" name="userEmail" th:value="${user.userEmail}"/>-->
-        <!--<br>-->
-        <!--<input id="submit" type="submit" name="submit" value="确认修改信息">-->
-        <!--<input type="button" href="/index" name="index" value="取消修改，返回首页">-->
-    <!--</form>-->
-
-    <form id="form" action="/update/" class="form-signin">
+    <form id="userForm" action="#" method="post" class="form-signin">
+        <!-- 以put方式提交表单 -->
+        <input type="hidden" name="_method" value="put"/>
         <h2 class="form-signin-heading" style="text-align: center">用户信息修改</h2>
         <br>
         <br>
-        <input id="userId" type="hidden" name="userId" th:value="${user.userId}" >
-        <span class="comm1">用户名：&nbsp;&nbsp;&nbsp;</span><input type="text" id="userName" name="userName" th:value="${user.userName}"  class="input-block-level comm2" placeholder="用户名" >
+        <input id="userId" type="hidden" name="userId" th:value="${session.user.userId}" >
+        <span class="comm1">用户名：&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="userName" name="userName" th:value="${session.user.userName}"  class="input-block-level comm2" placeholder="用户名" >
         <br>
-        <span class="comm1">密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="password" id="password1" name="userPassword" th:value="${user.userPassword}" class="input-block-level comm2" placeholder="密码">
+        <span class="comm1">email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="userEmail" name="userEmail" th:value="${session.user.userEmail}" class="input-block-level comm2" placeholder="邮件">
         <br>
-        <span class="comm1">确认密码：</span><input type="password" id="password2" name="userPassword2" th:value="${user.userPassword}" class="input-block-level comm2" placeholder="确认密码">
+        <span class="comm1">密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="password" id="userPassword" name="userPassword" th:value="${session.user.userPassword}" class="input-block-level comm2" placeholder="密码">
         <br>
-        <span class="comm1">email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="email" id="email" name="userEmail" th:value="${user.userEmail}" class="input-block-level comm2" placeholder="邮件">
+        <span class="comm1">确认密码：</span>
+        <input type="password" id="confirmPassword" name="confirmPassword" th:value="${session.user.userPassword}" class="input-block-level comm2" placeholder="确认密码">
         <br><br>
         <div style="text-align: center">
-            <input id="submit" type="submit" name="submit" value="确定" class="btn btn-primary">&nbsp;&nbsp;&nbsp;
-            <input type="button" href="/index" name="index" value="取消" class="btn btn-default" >
+            <input id="userSubmit" type="button" value="确定" class="btn btn-primary">&nbsp;&nbsp;&nbsp;
+            <a href="/index" class="btn btn-default">取消</a>
         </div>
     </form>
 </div>

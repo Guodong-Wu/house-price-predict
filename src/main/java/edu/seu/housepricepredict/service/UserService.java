@@ -18,4 +18,6 @@ public interface UserService {
     User getUserByName(String userName);
 
     User getUserByEmail(String userEmail);
+
+    int updateUser(User user);
 }

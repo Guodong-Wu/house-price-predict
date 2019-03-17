@@ -72,12 +72,13 @@ public class LoginController {
      * 用户注册
      */
     @PostMapping("/user/register")
-    public String userRegister(User user) {
+    public String userRegister(User user, HttpServletRequest request) {
         if (user == null) {
             return "redirect:/user/register";
         } else {
             userService.insertUser(user);
-            return "redirect:/user/login";
+            request.setAttribute("msg", "注册成功，请登录");
+            return "user/login";
         }
     }
 
@@ -87,12 +88,12 @@ public class LoginController {
      */
     @GetMapping("/session/user")
     @ResponseBody
-    public String getUserInfo(HttpSession session) {
+    public User getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
-            return "no";
+            return new User();
         } else {
-            return String.valueOf(user.getUserId());
+            return user;
         }
     }
 
