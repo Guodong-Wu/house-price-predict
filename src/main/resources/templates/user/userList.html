@@ -3,62 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <!--表单中将文本框内容交给链接js-->
     <!--搜索用户js，目标url："/select/key"-->
     <script>
         $(function () {
-            $("#submit").click(function () {
+            $("#userNameSubmit").click(function () {
                 if ($("#key").val() == ""){
                     alert("请输入用户名")
                     return false;
                 }
-                var action = $("#key").val()
-                $("#form").attr("action", "/select/" + action)
+                var keyWord = $("#key").val()
+                $("#searchForm").attr("action", "/select/" + keyWord)
             })
         })
     </script>
 </head>
 <body>
-<!--搜索表单-->
-<form id="form" action="#">
-    用户名称：<input type="text" id="key" />
-    <input id="submit" type="submit" value="查询">
-</form>
-<!--显示用户信息表格-->
-<table  th:cellspacing="0" th:cellpadding="10" th:border="1">
-    <thead>
-    <tr>
-        <td>用户id</td>
-        <td style="width: 40px">用户名</td>
-        <td>用户邮箱</td>
-        <td>操作</td>
-    </tr>
-    </thead >
-    <tr  th:each="person:${persons}">
-        <td th:text="${person.userId}"></td>
-        <td style="width: 40px" th:text="${person.userName}"></td>
-        <td th:text="${person.userEmail}"></td>
-        <td><a th:href="@{/delete/}+${person.userId}">删除</a></td>
-        <!--<td><a th:href="/delete/">删除</a></td>-->
-    </tr>
+<div class="container" style="margin-left: 0px">
+    <!--<div class="row" style="font-size: 35px">用户管理</div>-->
+    <div class="row">&nbsp;</div>
+    <!--查询内容-->
+    <div class="row" style="font-size: 18px">
+        <form id="searchForm" action="#">
+            用户名称：<input type="text" id="key" />
+            <input class="btn btn-info" id="userNameSubmit" type="submit" value="查询">
+        </form>
+    </div>
+    <div class="row">&nbsp;</div>
+    <!--显示表格信息-->
+    <div class="row" >
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>userID</th>
+                    <th>userName</th>
+                    <th>userEmail</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody th:each="user : ${pageInfo.list}">
+                    <tr>
+                        <td th:text="${user.userId}">id</td>
+                        <td th:text="${user.userPassword}">Username</td>
+                        <td th:href="${user.userEmail}">Email</td>
+                        <td>
+                            <a class="btn btn-success" th:href="@{/delete/}+${user.userId}" onclick="if (confirm('确定要删除该用户吗')==false)return false ">
+                            删除
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
 
-</table>
-<div>
-    <!--页码-->
-    <a th:href="@{/testfenye(number=1)}">1</a>
-    <!--<a th:href="@{/testfenye(number=2)}">2</a>-->
-    <!--<a th:href="@{/testfenye(number=3)}">3</a>-->
-    <span th:if="${number} ge 10">...</span>
-    <!--<span th:each="i :${#numbers.sequence(1,top1)}">-->
-    <!--<a th:if="(${i} le ${number}+3 and ${i} le ${top1}-3) and (${i} ge ${number}-3 and ${i} ge 4)" th:href="@{/testfenye(number=${i})}" th:text="${i}"></a>-->
-<!--</span>-->
-    <span th:if="${number} le ${top1}-10">...</span>
-    <!--<a th:href="@{/testfenye(number=${top1}-2)}" th:text="${top1}-2">1</a>-->
-    <!--<a th:href="@{/testfenye(number=${top1}-1)}" th:text="${top1}-1">1</a>-->
-    <a th:href="@{/testfenye(number=${top1})}" th:text="${top1}"></a>
-    <a th:href="@{/testfenye(number=${number}-1)}">上一页</a>
-    <a th:href="@{/testfenye(number=${number}+1)}">下一页</a>
+            </table>
+    </div>
+    <!--显示分页信息-->
+    <div class="row">
+        <div class="col-md-6" style="font-size: 14px">
+            当前为第<span style="color: blue">[[${pageInfo.pageNum}]]</span>页，
+            共有<span style="color: blue">[[${pageInfo.pages}]]</span>页，
+            总计<span style="color: blue">[[${pageInfo.total}]]</span>条信息
+        </div>
+        <div class="col-md-6">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" >
+                    <li class="page-item"><a class="page-link" href="/touserList/1">首页</a></li>
+                    <li class="page-item" th:if="${pageInfo.isFirstPage eq false}">
+                        <a class="page-link" href="#" th:href="@{/touserList/}+${pageInfo.pageNum-1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="pagination" th:each="page_num : ${pageInfo.navigatepageNums}" th:if="${page_num eq pageInfo.pageNum - 1 || page_num eq pageInfo.pageNum || page_num eq pageInfo.pageNum + 1 }" >
+                    <li  th:if="${ page_num eq pageInfo.pageNum}" class="active">
+                        <a class="page-link"  href="#" th:href="@{/touserList/}+${page_num}">
+                            [[${page_num}]]
+                        </a>
+                    </li>
+                    <li  th:if="${ page_num ne pageInfo.pageNum}">
+                        <a class="page-link"  href="#" th:href="@{/touserList/}+${page_num}">
+                            [[${page_num}]]
+                        </a>
+                    </li>
+
+                </ul>
+                <ul class="pagination" >
+                    <li class="page-item" th:if="${pageInfo.isLastPage eq false}" >
+                        <a class="page-link" href="#" th:href="@{/touserList/}+${pageInfo.pageNum+1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" th:href="@{/touserList/}+${pageInfo.pages} ">尾页</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
 </div>
+
 </body>
 </html>
