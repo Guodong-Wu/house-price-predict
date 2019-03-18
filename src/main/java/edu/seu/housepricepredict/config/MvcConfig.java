@@ -27,7 +27,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/index").setViewName("index");
 
         //跳转至城市页面
-        registry.addViewController("/info/city").setViewName("info/city");
+        registry.addViewController("/city").setViewName("info/city");
 
         //后台登录页面
         registry.addViewController("/adminIndex").setViewName("user/adminIndex");
