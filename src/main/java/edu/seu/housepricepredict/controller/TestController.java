@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author xg_song
@@ -95,7 +97,20 @@ public class TestController {
         return address;
     }
 
-
+    /**
+     * 查询用户是否登录，若登录则返回用户信息，否则返回空
+     */
+    @RequestMapping("/getUserInfo")
+    @ResponseBody
+    public Integer getUserInfo(){
+        User user = null;
+        user = new User();
+        user.setUserId(1);
+        int userId = user.getUserId();
+        System.out.println("get User info--user: " + user);
+        return userId;
+//        return -1;
+    }
 
     /**
      * 传入参数为用户id，然后获取用户信息，最后进入表单页面并进行信息回显
@@ -116,4 +131,131 @@ public class TestController {
 
 
 
+    /**
+     * 用户修改信息
+     * 验证用户信息若用户信息通过，则返回首页，否则返回登录页
+     * @param user
+     * @return
+     */
+    @RequestMapping("/userVerify")
+    public String userVerify(User user, HttpSession session){
+        System.out.println("user: " + user);
+        user.setUserId(1);
+        session.setAttribute("user", user);
+        return "index";
+    }
+
+    @RequestMapping("/register")
+    public String register(){
+        return "user/register";
+    }
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    @RequestMapping("/userRegister")
+    public String userRegister(User user){
+        System.out.println("user: " + user);
+        return "index";
+    }
+
+    /**
+     * 用户退出后返回主页面
+     * @return
+     */
+    @RequestMapping("/quit")
+    public String userQuit(){
+        System.out.println("quit--");
+        return "index";
+    }
+
+    @RequestMapping("/mIndex")
+    public String toIndex(){
+        return "user/mIndex";
+    }
+
+    /**
+     * 分页显示用户映射
+     * @param number
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/testfenye")
+    public String fenye(@RequestParam(value="number",defaultValue = "1") long number,
+                        Model model){
+//        List<Person> person=personRepository.findAll();
+        List<User> users = new ArrayList<>();
+        for (int i = 1; i <= 200; i++){
+            User user = new User();
+            user.setUserId(i);
+            user.setUserName("name" + i);
+            users.add(user);
+        }
+//        long top=(long) person.size();
+//        long top1=top/5+1;
+        long top = users.size();
+        long top1 = top % 5 != 0 ? top/ 5 + 1 : top / 5;
+        if(number==0)
+            number=1L;
+        if(number==top1+1)
+            number=top1;
+        long di=(number-1)*5;
+        long gao=number*5;
+//        List<Person> persons=personRepository.findByIdBetween(di,gao);
+//        model.addAttribute("persons",persons);
+        List<User> user = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++){
+            if (i < gao && i >= di){
+                user.add(users.get(i));
+            }
+        }
+        model.addAttribute("number",number);
+        model.addAttribute("persons",user);
+        model.addAttribute("top1",top1);
+        System.out.println(number);
+        return "user/userList";
+    }
+
+    /**
+     * 根据关键词搜索相关用户映射
+     * @param number
+     * @param model
+     * @param key
+     * @return
+     */
+    @RequestMapping(value="/select/{key}")
+    public String chaxun(@RequestParam(value="number",defaultValue = "1") long number,
+                        Model model,@PathVariable("key") String key){
+        System.out.println(key);
+        List<User> users = new ArrayList<>();
+        for (int i = 1; i <= 20; i++){
+            User user = new User();
+            user.setUserName("name" + i);
+            user.setUserId(i);
+            users.add(user);
+        }
+        long top = users.size();
+        long top1 = top % 5 != 0 ? top/ 5 + 1 : top / 5;
+        if(number==0)
+            number=1L;
+        if(number==top1+1)
+            number=top1;
+        long di=(number-1)*5;
+        long gao=number*5;
+//        List<Person> persons=personRepository.findByIdBetween(di,gao);
+//        model.addAttribute("persons",persons);
+        List<User> user = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++){
+            if (i < gao && i >= di){
+                user.add(users.get(i));
+            }
+        }
+        model.addAttribute("persons",user);
+        model.addAttribute("number",number);
+        model.addAttribute("top1",top1);
+        System.out.println(number);
+        return "user/userList";
+    }
 }
