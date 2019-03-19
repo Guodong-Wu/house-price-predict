@@ -51,38 +51,39 @@ public class ImportDataServiceImpl implements ImportDataService {
     private StreetMonthPriceMapper streetMonthPriceMapper;
 
     @Override
-    public void insertCity() throws IOException {
+    public void insertCity(String fileName) throws IOException {
+        HistoryCsvReaderUtil.fileName = fileName;
         Set<String> set = HistoryCsvReaderUtil.readAreaName(0);
         for (String cName : set) {
-            System.out.println(cName);
-//            cityMapper.insertCity(cName);
+            cityMapper.insertCity(cName);
         }
     }
 
     @Override
-    public void insertDistrict() throws IOException {
+    public void insertDistrict(String fileName) throws IOException {
+        HistoryCsvReaderUtil.fileName = fileName;
         Set<String> set = HistoryCsvReaderUtil.readDistrict(cityMapper);
         for (String str : set) {
             String[] split = str.split(" ");
             int cId = Integer.parseInt(split[1]);
-            System.out.println(str);
-//            districtMapper.insertDistrict(split[0], cId);
+            districtMapper.insertDistrict(split[0], cId);
         }
     }
 
     @Override
-    public void insertStreet() throws IOException {
+    public void insertStreet(String fileName) throws IOException {
+        HistoryCsvReaderUtil.fileName = fileName;
         Set<String> set = HistoryCsvReaderUtil.readStreet(cityMapper, districtMapper);
         for (String str : set) {
             String[] split = str.split(" ");
             int dId = Integer.parseInt(split[1]);
-            System.out.println(str);
-//            streetMapper.insertStreet(split[0], dId);
+            streetMapper.insertStreet(split[0], dId);
         }
     }
 
     @Override
-    public void insertCommunity() throws IOException {
+    public void insertCommunity(String fileName) throws IOException {
+        HistoryCsvReaderUtil.fileName = fileName;
         Set<String> set = CommunityCsvReaderUtil.readCommunity(cityMapper, districtMapper, streetMapper);
         for (String str : set) {
             String[] split = str.split(" ");
@@ -94,7 +95,8 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     @Override
-    public void insertStreetMonthPrice() throws IOException {
+    public void insertStreetMonthPrice(String fileName) throws IOException {
+        HistoryCsvReaderUtil.fileName = fileName;
         Set<String> set = HistoryCsvReaderUtil.readStreetMonthPrice(cityMapper, districtMapper, streetMapper);
         for (String str : set) {
             String[] split = str.split(" ");
@@ -108,7 +110,8 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     @Override
-    public void insertDistrictMonthPrice() {
+    public void insertDistrictMonthPrice(String fileName) {
+        HistoryCsvReaderUtil.fileName = fileName;
         List<DistrictMonthPrice> list = districtMonthPriceMapper.getDistrictMonthPriceFromOthers();
         for (DistrictMonthPrice dmp : list) {
             System.out.println(dmp);
@@ -117,7 +120,8 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     @Override
-    public void insertCityMonthPrice() {
+    public void insertCityMonthPrice(String fileName) {
+        HistoryCsvReaderUtil.fileName = fileName;
         List<CityMonthPrice> list = cityMonthPriceMapper.getCityMonthPriceFromOthers();
         for (CityMonthPrice cmp : list) {
             System.out.println(cmp);
@@ -126,17 +130,20 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     @Override
-    public void updateCityPrice() {
+    public void updateCityPrice(String fileName) {
+        HistoryCsvReaderUtil.fileName = fileName;
 //        cityMapper.updateCityPrice(2);
     }
 
     @Override
-    public void updateDistrictPrice() {
+    public void updateDistrictPrice(String fileName) {
+        HistoryCsvReaderUtil.fileName = fileName;
 //        districtMapper.updateDistrictPrice(2);
     }
 
     @Override
-    public void updateStreetPrice() {
+    public void updateStreetPrice(String fileName) {
+        HistoryCsvReaderUtil.fileName = fileName;
 //        streetMapper.updateStreetPrice(2);
     }
 }

@@ -10,24 +10,24 @@ import java.io.IOException;
 
 public interface ImportDataService {
 
-    void insertCity() throws IOException;
+    void insertCity(String fileName) throws IOException;
 
-    void insertDistrict() throws IOException;
+    void insertDistrict(String fileName) throws IOException;
 
-    void insertStreet() throws IOException;
+    void insertStreet(String fileName) throws IOException;
 
-    void insertCommunity() throws IOException;
+    void insertCommunity(String fileName) throws IOException;
 
-    void insertStreetMonthPrice() throws IOException;
+    void insertStreetMonthPrice(String fileName) throws IOException;
 
-    void insertDistrictMonthPrice();
+    void insertDistrictMonthPrice(String fileName);
 
-    void insertCityMonthPrice();
+    void insertCityMonthPrice(String fileName);
 
-    void updateCityPrice();
+    void updateCityPrice(String fileName);
 
-    void updateDistrictPrice();
+    void updateDistrictPrice(String fileName);
 
-    void updateStreetPrice();
+    void updateStreetPrice(String fileName);
 
 }
