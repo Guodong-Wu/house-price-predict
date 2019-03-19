@@ -20,14 +20,20 @@ public interface ImportDataService {
 
     void insertStreetMonthPrice(String fileName) throws IOException;
 
-    void insertDistrictMonthPrice(String fileName);
+    void insertDistrictMonthPrice();
 
-    void insertCityMonthPrice(String fileName);
+    void insertCityMonthPrice();
 
-    void updateCityPrice(String fileName);
+    void updateCityPrice();
 
-    void updateDistrictPrice(String fileName);
+    void updateDistrictPrice();
 
-    void updateStreetPrice(String fileName);
+    void updateStreetPrice();
+
+    void insertStreetYearPrice(String fileName) throws IOException;
+
+    void insertDistrictYearPrice();
+
+    void insertCityYearPrice();
 
 }

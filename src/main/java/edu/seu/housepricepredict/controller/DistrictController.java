@@ -61,16 +61,21 @@ public class DistrictController {
     public List<DistrictMonthPrice> getDistrictMonthPrice(@PathVariable("id") String id) {
         List<DistrictMonthPrice> monthPriceList = districtService.getDistrictMonthPriceBydId(Integer.parseInt(id));
 
-        //将2019年1月和2月移动到表尾
+        //将2019年1月、2月、3月移动到表尾
         DistrictMonthPrice dmp1 = monthPriceList.get(0);
         DistrictMonthPrice dmp2 = monthPriceList.get(1);
-        if (dmp1.getMonth() < 3) {
+        DistrictMonthPrice dmp3 = monthPriceList.get(2);
+        if (dmp1.getMonth() < 4) {
             monthPriceList.remove(dmp1);
             monthPriceList.add(dmp1);
         }
-        if (dmp2.getMonth() < 3) {
+        if (dmp2.getMonth() < 4) {
             monthPriceList.remove(dmp2);
             monthPriceList.add(dmp2);
+        }
+        if (dmp3.getMonth() < 4) {
+            monthPriceList.remove(dmp3);
+            monthPriceList.add(dmp3);
         }
 
         return monthPriceList;
