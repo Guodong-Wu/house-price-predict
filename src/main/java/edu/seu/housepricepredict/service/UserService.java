@@ -1,6 +1,9 @@
 package edu.seu.housepricepredict.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.seu.housepricepredict.domain.user.User;
+
+import java.util.List;
 
 
 /**
@@ -18,4 +21,6 @@ public interface UserService {
     User getUserByName(String userName);
 
     User getUserByEmail(String userEmail);
+
+    PageInfo getUserList(int pageNo);
 }

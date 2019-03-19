@@ -70,7 +70,7 @@
             if (data != "no") {
                 $("#sidenav").append("<a href=/user/" + data + ">修改信息</a>")
                 $("#sidenav").append("<a href='/user/quit' " +
-                    "onclick=\"{if(confirm('确定退出吗?')){this.document.formname.submit();return true;}return false;}\">退出登录</a>")
+                    "onclick=\\\"{if(confirm('确定退出吗?')){this.document.formname.submit();return true;}return false;}\">退出登录</a>")
             } else {
                 $("#sidenav").append("<a href=/user/login>登录</a>")
                 $("#sidenav").append("<a href=/user/register>注册</a>")

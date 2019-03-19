@@ -28,8 +28,13 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
+#pageHelper分页配置
 #设置项目名
 #server:
 #  context-path: /prediction
 
-
+pagehelper:
+  reasonable: true
+  helperDialect: mysql
+  support-methods-arguments: true
+  params: countsql

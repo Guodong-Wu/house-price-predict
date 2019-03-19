@@ -1,9 +1,13 @@
 package edu.seu.housepricepredict.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.seu.housepricepredict.domain.Value;
 import edu.seu.housepricepredict.domain.user.User;
+import edu.seu.housepricepredict.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -189,86 +193,59 @@ public class TestController {
         return "user/mIndex";
     }
 
-    /**
-     * 分页显示用户映射
-     * @param number
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="/testfenye")
-    public String fenye(@RequestParam(value="number",defaultValue = "1") long number,
-                        Model model){
-//        List<Person> person=personRepository.findAll();
+
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping("/users")
+    public String toUsers(){
+        return "index";
+    }
+
+    public List<User> getUser(){
         List<User> users = new ArrayList<>();
-        for (int i = 1; i <= 200; i++){
+        for (int i = 1; i < 51; i++) {
             User user = new User();
             user.setUserId(i);
-            user.setUserName("name" + i);
             users.add(user);
         }
-//        long top=(long) person.size();
-//        long top1=top/5+1;
-        long top = users.size();
-        long top1 = top % 5 != 0 ? top/ 5 + 1 : top / 5;
-        if(number==0)
-            number=1L;
-        if(number==top1+1)
-            number=top1;
-        long di=(number-1)*5;
-        long gao=number*5;
-//        List<Person> persons=personRepository.findByIdBetween(di,gao);
-//        model.addAttribute("persons",persons);
-        List<User> user = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++){
-            if (i < gao && i >= di){
-                user.add(users.get(i));
-            }
-        }
-        model.addAttribute("number",number);
-        model.addAttribute("persons",user);
-        model.addAttribute("top1",top1);
-        System.out.println(number);
+        return users;
+    }
+
+    /**
+     *  查询用户信息并进入用户管理界面
+     * @param map
+     * @return
+     */
+    @RequestMapping("/touserList/{pageNo}")
+    public String toUserList(@PathVariable(value = "pageNo") int pageNo, ModelMap map) {
+        PageInfo pageInfo = userService.getUserList(pageNo);
+        map.put("pageInfo", pageInfo);
         return "user/userList";
     }
 
     /**
-     * 根据关键词搜索相关用户映射
-     * @param number
-     * @param model
+     * 根据传来的用户名关键词进行查询并将结果返回
      * @param key
+     * @param map
      * @return
      */
-    @RequestMapping(value="/select/{key}")
-    public String chaxun(@RequestParam(value="number",defaultValue = "1") long number,
-                        Model model,@PathVariable("key") String key){
-        System.out.println(key);
-        List<User> users = new ArrayList<>();
-        for (int i = 1; i <= 20; i++){
-            User user = new User();
-            user.setUserName("name" + i);
-            user.setUserId(i);
-            users.add(user);
-        }
-        long top = users.size();
-        long top1 = top % 5 != 0 ? top/ 5 + 1 : top / 5;
-        if(number==0)
-            number=1L;
-        if(number==top1+1)
-            number=top1;
-        long di=(number-1)*5;
-        long gao=number*5;
-//        List<Person> persons=personRepository.findByIdBetween(di,gao);
-//        model.addAttribute("persons",persons);
-        List<User> user = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++){
-            if (i < gao && i >= di){
-                user.add(users.get(i));
-            }
-        }
-        model.addAttribute("persons",user);
-        model.addAttribute("number",number);
-        model.addAttribute("top1",top1);
-        System.out.println(number);
+    @RequestMapping("/select/{key}")
+    public String select(@PathVariable("key") String key, ModelMap map){
+
+        PageInfo pageInfo = userService.getUserList(1);
+        map.put("pageInfo", pageInfo);
         return "user/userList";
     }
+    @RequestMapping("/delete/{userId}")
+    public String delete(@PathVariable("userId") String userId, ModelMap map){
+        System.out.println("删除用户");
+        PageInfo pageInfo = userService.getUserList(1);
+        map.put("pageInfo", pageInfo);
+        return "user/userList";
+    }
+
+
+
+
 }

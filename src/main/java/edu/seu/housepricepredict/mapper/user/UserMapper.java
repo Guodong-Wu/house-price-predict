@@ -14,6 +14,12 @@ import java.util.List;
 public interface UserMapper {
 
     /**
+     * 查询全部用户信息
+     */
+    @Select("SELECT * FROM user")
+    List<User> getUserList();
+
+    /**
      * 根据用户名模糊查询，分页查询
      */
     @Select("SELECT * FROM user LIMIT #{startIndex}, #{pageSize} " +
