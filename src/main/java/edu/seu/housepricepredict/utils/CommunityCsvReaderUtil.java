@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class CommunityCsvReaderUtil {
 
-    public static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\数据\\江苏-去重-第二版\\江苏省总数据.csv";
+    public static String fileName = "";
 
     /**
      * 判断两个区域是否相等
@@ -66,6 +66,9 @@ public class CommunityCsvReaderUtil {
         boolean streetIsExist = false;
 
         while (csvReader.readRecord()) {
+            if (csvReader.get(3).matches(".* .*")) {
+                continue;
+            }
             //读取城市名, 数据库可能不存在该城市
             String cName = csvReader.get(0);
             if (!precName.equals(cName)) {

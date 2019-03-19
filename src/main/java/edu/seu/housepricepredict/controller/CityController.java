@@ -65,17 +65,23 @@ public class CityController {
     public List<CityMonthPrice> getCityMonthPrice(@PathVariable("id") String id) {
         List<CityMonthPrice> monthPriceList = cityService.getCityMonthPriceBycId(Integer.parseInt(id));
 
-        //将2019年1月和2月，移动到表末尾
+        //将2019年1月、2月、3月，移动到表末尾
         CityMonthPrice cmp1 = monthPriceList.get(0);
         CityMonthPrice cmp2 = monthPriceList.get(1);
-        if (cmp1.getMonth() < 3) {
+        CityMonthPrice cmp3 = monthPriceList.get(2);
+        if (cmp1.getMonth() < 4) {
             monthPriceList.remove(cmp1);
             monthPriceList.add(cmp1);
         }
-        if (cmp2.getMonth() < 3) {
+        if (cmp2.getMonth() < 4) {
             monthPriceList.remove(cmp2);
             monthPriceList.add(cmp2);
         }
+        if (cmp3.getMonth() < 4) {
+            monthPriceList.remove(cmp3);
+            monthPriceList.add(cmp3);
+        }
+
 
         return monthPriceList;
     }
