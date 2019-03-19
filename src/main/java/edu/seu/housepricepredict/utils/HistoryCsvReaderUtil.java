@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class HistoryCsvReaderUtil {
 
-    private static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\week1部分数据汇总\\江苏\\jiangsu_street.csv";
+    public static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\week1部分数据汇总\\江苏\\jiangsu_street.csv";
 
     /**
      * 读取城市名、区名或街道名

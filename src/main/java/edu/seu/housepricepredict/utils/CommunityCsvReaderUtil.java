@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class CommunityCsvReaderUtil {
 
-    private static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\数据\\江苏-去重-第二版\\江苏省总数据.csv";
+    public static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\数据\\江苏-去重-第二版\\江苏省总数据.csv";
 
     /**
      * 判断两个区域是否相等
