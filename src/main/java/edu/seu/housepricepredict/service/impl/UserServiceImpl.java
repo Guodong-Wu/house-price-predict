@@ -8,6 +8,7 @@ import edu.seu.housepricepredict.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
-
 
     @Override
     public User getUserByNameAndPassword(User user) {
@@ -47,12 +47,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo getUserList(int pageNo){
-        PageHelper.startPage(pageNo, 10);
+    public PageInfo<User> getUserList(int currentPage) {
+        PageHelper.startPage(currentPage, 10);
         List<User> list = userMapper.getUserList();
-        PageInfo pageInfo = new PageInfo(list);
+        PageInfo<User> pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
+    @Override
+    public PageInfo<User> getUserPageByName(int currentPage, String userName) {
+        PageHelper.startPage(currentPage, 10);
+        List<User> list = new ArrayList<>();
+        User user = userMapper.getUserByName(userName);
+        if (user != null && user.getIsAdmin() != 1) {
+            list.add(user);
+        }
+        PageInfo<User> pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public int deleteUserById(int id) {
+        return userMapper.deleteUserById(id);
+    }
 
 }

@@ -74,10 +74,15 @@ public class HousePricePredictApplicationTests {
 //        importDataService.insertStreetYearPrice(fileName);
 //    }
 
-//    @Test
-//    public void test() {
-//        importDataService.insertCityYearPrice();
-//    }
+    @Test
+    public void test() {
+        String s = "user/";
+        String[] split = s.split("/");
+        System.out.println(split.length);
+        for (String s1 : split) {
+            System.out.println(s1);
+        }
+    }
 
 
 }
