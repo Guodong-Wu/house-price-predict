@@ -219,6 +219,10 @@ public class TestController {
         return "user/userList";
     }
 
+    @RequestMapping("/-error")
+    public String error(){
+        return "error";
+    }
 
 
 
