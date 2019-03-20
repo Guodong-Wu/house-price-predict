@@ -11,38 +11,72 @@
     <script type="text/javascript" src="../js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/ckform.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
+    <!--<style type="text/css">-->
+        <!--body {-->
+            <!--padding-top: 40px;-->
+            <!--padding-bottom: 40px;-->
+            <!--background-image: url('../img/bgimg.jpg');-->
+        <!--}-->
+        <!--.form-signin {-->
+            <!--max-width: 400px;-->
+            <!--padding: 19px 29px 29px;-->
+            <!--margin: 0 auto 20px;-->
+            <!--background-color: #fff;-->
+            <!--border: 1px solid #e5e5e5;-->
+            <!-- -webkit-border-radius: 5px;-->
+            <!-- -moz-border-radius: 5px;-->
+            <!--border-radius: 5px;-->
+            <!-- -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);-->
+            <!-- -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);-->
+            <!--box-shadow: 0 1px 2px rgba(0, 0, 0, .05);-->
+        <!--}-->
+
+        <!--.form-signin .form-signin-heading,-->
+        <!--.form-signin .checkbox {-->
+            <!--margin-bottom: 10px;-->
+        <!--}-->
+
+        <!--.form-signin input[type="text"],-->
+        <!--.form-signin input[type="password"] {-->
+            <!--font-size: 16px;-->
+            <!--height: auto;-->
+            <!--margin-bottom: 15px;-->
+            <!--padding: 7px 9px;-->
+        <!--}-->
+
+    <!--</style>-->
     <style type="text/css">
         body {
             padding-top: 40px;
             padding-bottom: 40px;
-            background-color: #f5f5f5;
+            background-image: url('../img/bgimg.jpg');
         }
         .form-signin {
-            max-width: 300px;
+            max-width: 400px;
             padding: 19px 29px 29px;
             margin: 0 auto 20px;
             background-color: #fff;
             border: 1px solid #e5e5e5;
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
-            border-radius: 5px;
+            border-radius: 8px;
             -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
         }
 
-        .form-signin .form-signin-heading,
-        .form-signin .checkbox {
-            margin-bottom: 10px;
-        }
+        <!--.form-signin .form-signin-heading,-->
+        <!--.form-signin .checkbox {-->
+            <!--margin-bottom: 10px;-->
+            <!--}-->
 
-        .form-signin input[type="text"],
-        .form-signin input[type="password"] {
-            font-size: 16px;
-            height: auto;
-            margin-bottom: 15px;
-            padding: 7px 9px;
-        }
+        <!--.form-signin input[type="text"],-->
+        <!--.form-signin input[type="password"] {-->
+            <!--font-size: 16px;-->
+            <!--height: auto;-->
+            <!--margin-bottom: 15px;-->
+            <!--padding: 7px 9px;-->
+            <!--}-->
 
     </style>
     
@@ -113,14 +147,49 @@
 <body>
 <div class="container">
     <form id="userForm" class="form-signin" method="post" action="/user/register">
+
         <h2 class="form-signin-heading" style="text-align: center">注册</h2>
-        <input id="userName" type="text" name="userName" class="input-block-level" placeholder="用户名">
-        <input id="userEmail" type="text" name="userEmail" class="input-block-level" placeholder="邮件">
-        <input id="userPassword" type="password" name="userPassword" class="input-block-level" placeholder="密码">
-        <input id="confirmPassword" type="password" name="password"  class="input-block-level" placeholder="确认密码">
+        <br/>
+        <br/>
+        <div class="input-group input-group-lg">
+            <!--<span class="input-group-addon" style="height: 45px" ><img src="../img/user.png"></span>-->
+
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 45px"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></p>
+			</span>
+            <input id="userName" style="height: 45px;font-size: 18px; border-radius: 3px" type="text" name="userName" class="form-control" placeholder="用户名">
+        </div>
+        <br/>
+        <br/>
+        <div class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 45px"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></p>
+			</span>
+            <input id="userPassword" style="height: 45px;font-size: 18px"   type="password" name="userPassword" class="form-control" placeholder="密码">
+        </div>
+
+
+        <br/>
+        <br/>
+        <div class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 45px"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></p>
+			</span>
+            <input id="confirmPassword" style="height: 45px;font-size: 18px" type="password" name="password"  class="form-control" placeholder="确认密码">
+        </div>
+        <br>
+        <br/>
+        <div class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 45px"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></p>
+			</span>
+            <input id="userEmail" style="height: 45px;font-size: 18px" type="text" name="userEmail" class="form-control" placeholder="邮件">
+        </div>
+        <br/>
+        <br/>
         <div style="text-align: center">
-            <input id="userSubmit" class="btn btn-primary" type="button" value="注册">&nbsp;&nbsp;&nbsp;
-            <a href="/index" class="btn btn-default">取消</a>
+            <input id="userSubmit" class="btn btn-primary " style="height: 45px;width: 90px;font-size: 18px" type="button" value="注册">&nbsp;&nbsp;&nbsp;
+            <a href="/index" class="btn btn-default" style="height: 45px;width:90px;font-size: 18px">取消</a>
         </div>
 
     </form>

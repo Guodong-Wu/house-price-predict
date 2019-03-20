@@ -20,4 +20,6 @@ public interface UserService {
     User getUserByEmail(String userEmail);
 
     int updateUser(User user);
+
+    public PageInfo getUserList(int pageNo);
 }

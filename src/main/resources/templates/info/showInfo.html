@@ -136,16 +136,16 @@
         <!--})-->
     <!--</script>-->
     <!--选择要对比的小区名js-->
-    <!--<script>-->
-        <!--$(function () {-->
-            <!--$.post("/getCityNames", function(data) {-->
-                <!--$(data).each(function (index, value) {//index是索引，n是值-->
-                    <!--$("#commName1").append("<option value=" + value + ">" + value + "</option>")-->
-                    <!--$("#commName2").append("<option value=" + value + ">" + value + "</option>")-->
-                <!--})-->
-            <!--},"json");-->
-        <!--})-->
-    <!--</script>-->
+    <script>
+        $(function () {
+            $.post("/getCityNames", function(data) {
+                $(data).each(function (index, value) {//index是索引，n是值
+                    $("#commName1").append("<option value=" + value + ">" + value + "</option>")
+                    $("#commName2").append("<option value=" + value + ">" + value + "</option>")
+                })
+            },"json");
+        })
+    </script>
 </head>
 
 <!--2.22-->
@@ -159,7 +159,7 @@
     <br>
     <div class="city_search">
         <div class="con">
-            <a href="../index.html"><span class="logo"><img href="../img/logo.png"></span></a>
+            <a href="/index"><span class="logo"><img href="../img/logo.png"></span></a>
         </div>
         <!--<div class="search_wrapper">-->
             <!--&lt;!&ndash;<form id="search" action="/searchCity">&ndash;&gt;-->
@@ -174,7 +174,7 @@
         <div class="search" >
             <form id="search" action="/searchCity">
                 <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
-                <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>
+                <button  type="submit" style="width:100px;height:50px;color:white;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px">搜索</button>
             </form>
         </div>
     </div>
@@ -198,19 +198,19 @@
                 </li>
             </ul>
         </div>
-        <!--<div>-->
-            <!--&lt;!&ndash;选择要进行房价对比的两个小区&ndash;&gt;-->
-            <!--<form action="/lineChart">-->
-                <!--请选择要进行对比的小区：-->
-                <!--<select id="commName1" name="commName1" >-->
-                    <!--<option value="0">请选择</option>-->
-                <!--</select>-->
-                <!--<select id="commName2" name="commName2" >-->
-                    <!--<option>请选择</option>-->
-                <!--</select>-->
-                <!--<input type="submit" value="确认对比">-->
-            <!--</form>-->
-        <!--</div>-->
+        <div>
+            <!--选择要进行房价对比的两个小区-->
+            <form style="font-size: 16px" action="/lineChart">
+                请选择要进行对比的小区：
+                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default"   id="commName1" name="commName1">
+                    <option value="0">请选择</option>
+                </select>
+                <select style="font-size: 14px;background-color:#FFFFFF!important;"  class="btn btn-default" id="commName2" name="commName2" >
+                    <option>请选择</option>
+                </select>
+                <input style="font-size: 14px;" class="btn btn-success" type="submit" value="确认对比">
+            </form>
+        </div>
     </div>
 </div>
 

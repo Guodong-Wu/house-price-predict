@@ -47,8 +47,8 @@
                 <tbody th:each="user : ${pageInfo.list}">
                     <tr>
                         <td th:text="${user.userId}">id</td>
-                        <td th:text="${user.userPassword}">Username</td>
-                        <td th:href="${user.userEmail}">Email</td>
+                        <td th:text="${user.userName}">Username</td>
+                        <td th:text="${user.userEmail}">Email</td>
                         <td>
                             <a class="btn btn-success" th:href="@{/delete/}+${user.userId}" onclick="if (confirm('确定要删除该用户吗')==false)return false ">
                             删除
