@@ -50,7 +50,7 @@ public class LoginController {
             if (u.getIsAdmin() == 1) {
                 request.getSession().setAttribute("user", u);
                 //为防止表单重复提交, 重定向，需要在配置类中配置视图映射
-                return "redirect:/adminIndex";
+                return "redirect:/mIndex";
             } else {
                 //如果是普通用户，则返回首页，并保存到session中
                 request.getSession().setAttribute("user", u);
@@ -103,8 +103,6 @@ public class LoginController {
     @GetMapping("/user/quit")
     public String userQuit(HttpSession session) {
         session.removeAttribute("user");
-        return "index";
+        return "redirect:/index";
     }
-
-
 }

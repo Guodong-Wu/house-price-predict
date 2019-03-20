@@ -91,10 +91,6 @@ public class CityController {
      */
     @GetMapping("/city/{id}")
     public String showCityInfo(@PathVariable("id") String id, String keyword, Model model) {
-        //如果id为空，则赋值为13
-        if (id == null) {
-            id = "13";
-        }
         String cName = cityService.getCityNameBycId(Integer.parseInt(id));
         //将城市传到前端页面
         model.addAttribute("areaId", id);

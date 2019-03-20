@@ -1,5 +1,6 @@
 package edu.seu.housepricepredict.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.seu.housepricepredict.domain.user.User;
 
 
@@ -21,5 +22,9 @@ public interface UserService {
 
     int updateUser(User user);
 
-    public PageInfo getUserList(int pageNo);
+    PageInfo<User> getUserList(int currentPage);
+
+    PageInfo<User> getUserPageByName(int currentPage, String userName);
+
+    int deleteUserById(int id);
 }

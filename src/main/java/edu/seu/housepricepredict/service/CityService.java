@@ -14,8 +14,6 @@ public interface CityService {
 
     int getCityIdBycName(String cName);
 
-//    CityAreaVo getCityAreaBycId(int cId);
-
     List<CityMonthPrice> getCityMonthPriceBycId(int cId);
 
     String getCityNameBycId(int cId);

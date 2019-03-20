@@ -1,15 +1,15 @@
 package edu.seu.housepricepredict.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.seu.housepricepredict.domain.user.User;
 import edu.seu.housepricepredict.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author guodonwu@163.com
@@ -68,6 +68,37 @@ public class UserController {
         request.getSession().setAttribute("user", user);
         request.setAttribute("msg", "修改成功，请重新登录");
         return "user/login";
+    }
+
+    /**
+     * 来到用户列表页面,查询用户信息
+     */
+    @GetMapping("/users/{currentPage}")
+    public String getUserList(@PathVariable("currentPage") String currentPage, ModelMap map) {
+        PageInfo<User> pageInfo = userService.getUserList(Integer.parseInt(currentPage));
+        map.put("pageInfo", pageInfo);
+        map.put("isAll", "yes");
+        return "user/userList";
+    }
+
+    /**
+     * 根据用户名，查询用户信息
+     */
+    @GetMapping("/select")
+    public String getUserPageByName(String userName, ModelMap map) {
+        PageInfo<User> pageInfo = userService.getUserPageByName(1, userName);
+        map.put("pageInfo", pageInfo);
+        map.put("isAll", "no");
+        return "user/userList";
+    }
+
+    @DeleteMapping("/user/{id}")
+    public String deleteUserById(@PathVariable("id") String id, ModelMap map) {
+        userService.deleteUserById(Integer.parseInt(id));
+        PageInfo pageInfo = userService.getUserList(1);
+        map.put("pageInfo", pageInfo);
+        map.put("isAll", "yes");
+        return "user/userList";
     }
 
 }
