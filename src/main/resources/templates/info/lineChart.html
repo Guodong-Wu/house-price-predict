@@ -81,7 +81,6 @@
                     datay2.push(value.dataOfy2);
                 })
             },"json");
-
             // 折线图绘制
             var lineChartData = {
                 // labels: ["January", "February", "March", "April", "May", "June", "July"],//横坐标
@@ -106,11 +105,22 @@
                 ]
             };
             var ctx = document.getElementById("lines-graph").getContext("2d");
-            var LineChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'line',
                 data: lineChartData,
                 responsive : true
             });
+        })
+    </script>
+    <!--选择要对比的小区名js-->
+    <script>
+        $(function () {
+            $.post("/getCityNames", function(data) {
+                $(data).each(function (index, value) {//index是索引，n是值
+                    $("#commName1").append("<option value=" + value + ">" + value + "</option>")
+                    $("#commName2").append("<option value=" + value + ">" + value + "</option>")
+                })
+            },"json");
         })
     </script>
     <!--查看用户是否登录js来添加修改用户信息-->
@@ -125,13 +135,13 @@
     <br>
     <div class="city_search">
         <div class="con">
-            <a href="../index.html"><span class="logo"><img href="../img/logo.png"></span></a>
+            <a href="/index"><span class="logo"><img href="../img/logo.png"></span></a>
         </div>
 
         <div class="search" >
             <form id="search" action="/searchCity">
                 <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
-                <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>
+                <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px;color: white">搜索</button>
             </form>
         </div>
     </div>
@@ -162,16 +172,16 @@
             </ul>
         </div>
         <div>
-            <!--选择要进行房价对比的两个小区-->
-            <form action="/lineChart">
+            <form style="font-size: 16px" action="/lineChart">
                 请选择要进行对比的小区：
-                <select id="commName1" name="commName1" >
+                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default"   id="commName1" name="commName1">
                     <option value="0">请选择</option>
                 </select>
-                <select id="commName2" name="commName2" >
-                    <option>请选择</option>
+                <select style="font-size: 14px;background-color:#FFFFFF!important;"  class="btn btn-default" id="commName2" name="commName2" >
+                    <option value="0">请选择</option>
                 </select>
-                <input type="submit" value="确认对比">
+                <input style="font-size: 14px;" class="btn btn-success" type="submit" value="确认对比">
+            </form>
             </form>
         </div>
     </div>
@@ -182,8 +192,10 @@
 <br>
 <br>
 <div class="container">
-        <h2 >[[${commName1}]]-[[${commName2}]]房价对比折线图</h2>
-    <br>
+        <h2 style="font-size: 35px" >[[${commName1}]]-[[${commName2}]]房价对比折线图</h2>
+    <br/>
+    <br/>
+    <br/>
         <canvas id="lines-graph"></canvas>
 </div>
 

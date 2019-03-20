@@ -1,5 +1,6 @@
 package edu.seu.housepricepredict.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.seu.housepricepredict.domain.Value;
 import edu.seu.housepricepredict.domain.user.User;
@@ -184,20 +185,6 @@ public class TestController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/users")
-    public String toUsers(){
-        return "index";
-    }
-
-    public List<User> getUser(){
-        List<User> users = new ArrayList<>();
-        for (int i = 1; i < 51; i++) {
-            User user = new User();
-            user.setUserId(i);
-            users.add(user);
-        }
-        return users;
-    }
 
     /**
      *  查询用户信息并进入用户管理界面

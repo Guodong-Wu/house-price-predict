@@ -1,5 +1,7 @@
 package edu.seu.housepricepredict.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.seu.housepricepredict.domain.user.User;
 import edu.seu.housepricepredict.mapper.user.UserMapper;
 import edu.seu.housepricepredict.service.UserService;
@@ -42,6 +44,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(User user) {
         return userMapper.updateUser(user);
+    }
+
+    @Override
+    public PageInfo getUserList(int pageNo){
+        PageHelper.startPage(pageNo, 10);
+        List<User> list = userMapper.getUserList();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
 

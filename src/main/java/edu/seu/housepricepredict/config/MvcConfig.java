@@ -43,6 +43,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns("/adminIndex");
         //注册用户拦截器
         registry.addInterceptor(new UserHandlerInterceptor()).addPathPatterns("/user/**").
-                excludePathPatterns("/user/login", "/user/register");
+                excludePathPatterns("/user/login", "/user/register", "/user/quit");
     }
 }

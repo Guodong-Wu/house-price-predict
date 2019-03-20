@@ -14,12 +14,12 @@
         body {
             padding-top: 40px;
             padding-bottom: 40px;
-            background-color: #f5f5f5;
+            background-image: url('../img/bgimg.jpg');
         }
         .form-signin {
-            max-width: 400px;
+            max-width: 450px;
             height:auto;
-            padding: 19px 29px 29px;
+            padding: 19px 10px 19px 29px;
             margin: 0 auto 20px;
             background-color: #fff;
             border: 1px solid #e5e5e5;
@@ -30,18 +30,18 @@
             -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
         }
-        .form-signin .form-signin-heading,
-        .form-signin .checkbox {
-            margin-bottom: 10px;
-        }
-        .comm1{
-            font-size:17px;
-        }
-        .comm2{
-            width:300px;
-            height:30px;
-            margin-bottom:15px;
-        }
+        /*.form-signin .form-signin-heading,*/
+        /*.form-signin .checkbox {*/
+            /*margin-bottom: 10px;*/
+        /*}*/
+        /*.comm1{*/
+            /*font-size:17px;*/
+        /*}*/
+        /*.comm2{*/
+            /*width:250px;*/
+            /*height:30px;*/
+            /*margin-bottom:15px;*/
+        /*}*/
     </style>
 
     <script th:inline="javascript">
@@ -115,28 +115,42 @@
 </head>
 <body>
 <div>
-    <form id="userForm" action="#" method="post" class="form-signin">
+    <form id="userForm" style="font-size: 19px" action="#" method="post" class="form-signin">
         <!-- 以put方式提交表单 -->
         <input type="hidden" name="_method" value="put"/>
         <h2 class="form-signin-heading" style="text-align: center">用户信息修改</h2>
         <br>
-        <br>
         <input id="userId" type="hidden" name="userId" th:value="${session.user.userId}" >
-        <span class="comm1">用户名：&nbsp;&nbsp;&nbsp;</span>
-        <input type="text" id="userName" name="userName" th:value="${session.user.userName}"  class="input-block-level comm2" placeholder="用户名" >
+        <div  class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 46px"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></p>
+			</span>
+            <input type="text" id="userName" name="userName" style="width: 280px" th:value="${session.user.userName}"  class="form-control" placeholder="用户名" >
+        </div>
         <br>
-        <span class="comm1">email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <input type="text" id="userEmail" name="userEmail" th:value="${session.user.userEmail}" class="input-block-level comm2" placeholder="邮件">
+        <div class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 46px"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></p>
+			</span>            <input type="password" id="confirmPassword" name="confirmPassword" style="width: 280px" th:value="${session.user.userPassword}" class="form-control" placeholder="确认密码">
+        </div>
         <br>
-        <span class="comm1">密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <input type="password" id="userPassword" name="userPassword" th:value="${session.user.userPassword}" class="input-block-level comm2" placeholder="密码">
+        <div class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 46px"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></p>
+			</span>        <!--密&nbsp;&nbsp;码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+        <input type="password" class="form-control" id="userPassword" name="userPassword" style="width: 280px" th:value="${session.user.userPassword}"  placeholder="密码">
+        </div >
         <br>
-        <span class="comm1">确认密码：</span>
-        <input type="password" id="confirmPassword" name="confirmPassword" th:value="${session.user.userPassword}" class="input-block-level comm2" placeholder="确认密码">
-        <br><br>
+        <div class="input-group input-group-lg">
+            <span class="input-group-btn" >
+				<p class="btn btn-default" href="#" style="height: 46px"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></p>
+			</span>
+            <input type="text" id="userEmail" name="userEmail" style="width: 280px" th:value="${session.user.userEmail}" class="form-control" placeholder="邮件">
+        </div>
+        <br>
         <div style="text-align: center">
-            <input id="userSubmit" type="button" value="确定" class="btn btn-primary">&nbsp;&nbsp;&nbsp;
-            <a href="/index" class="btn btn-default">取消</a>
+            <input id="userSubmit" type="button" value="确定" style="height:45px;width: 90px;font-size: 18px" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/index" style="height:45px;width: 90px;font-size: 18px;padding-top: 8px" class="btn btn-default">取消</a>
         </div>
     </form>
 </div>
