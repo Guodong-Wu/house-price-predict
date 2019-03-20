@@ -14,20 +14,10 @@ import java.util.List;
 public interface UserMapper {
 
     /**
-     * 查询全部用户信息
+     * 根据用户名，模糊查询用户
      */
-    @Select("SELECT * FROM user")
+    @Select("SELECT * FROM user WHERE is_admin != 1")
     List<User> getUserList();
-
-    /**
-     * 根据用户名模糊查询，分页查询
-     */
-    @Select("SELECT * FROM user LIMIT #{startIndex}, #{pageSize} " +
-            "WHERE user_name LIKE CONCAT('%', #{userName}, '%')")
-    List<User> getUserListByPage(@Param("startIndex") int startIndex,
-                                 @Param("pageSize") int pageSize,
-                                 @Param("userName") String userName);
-
 
     /**
      * 根据用户名和密码，获取用户
