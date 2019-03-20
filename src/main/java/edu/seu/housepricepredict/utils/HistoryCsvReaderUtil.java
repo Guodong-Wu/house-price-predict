@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class HistoryCsvReaderUtil {
 
-    private static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\week1部分数据汇总\\江苏\\jiangsu_street.csv";
+    public static String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\week1部分数据汇总\\江苏\\jiangsu_street.csv";
 
     /**
      * 读取城市名、区名或街道名
@@ -167,14 +167,100 @@ public class HistoryCsvReaderUtil {
             //获取日期
             String date = csvReader.get(3);
             String[] split = date.split("/");
-            //去掉2018年1月和2月的数据
-            if (split[0].equals("2018") && (split[1].equals("1") || split[1].equals("2"))) {
-                continue;
+            //如果房价日期为2018或2019
+            if (split[0].equals("2018") || split[0].equals("2019")) {
+                //去掉2018年1月、2月和3月的数据
+                if (split[0].equals("2018") &&
+                        (split[1].equals("1") || split[1].equals("2") || split[1].equals("3"))) {
+                    continue;
+                }
+                //将街道id，月份，房价加入到结果集中，用空格分割
+                set.add(sId + " " + split[1] + " " + csvReader.get(4));
             }
-            //将街道id，月份，房价加入到结果集中，用空格分割
-            set.add(sId + " " + split[1] + " " + csvReader.get(4));
         }
         return set;
     }
 
+    public static Set<String> readStreetYearPrice
+            (CityMapper cityMapper, DistrictMapper districtMapper, StreetMapper streetMapper) throws IOException {
+        //结果集
+        Set<String> set = new HashSet<>();
+        CsvReader csvReader = new CsvReader(fileName, ',', Charset.forName("UTF-8"));
+
+        //以下变量，为防止重复调用函数
+        int cId = 0;
+        int dId = 0;
+        int sId = 0;
+        String precName = "";
+        String predName = "";
+        String presName = "";
+        String preYear = "";
+
+        int count = 0;
+        int sum = 0;
+
+        while (csvReader.readRecord()) {
+            //读取城市名
+            String cName = csvReader.get(0);
+            if (!precName.equals(cName)) {
+                //根据城市名查询cid
+                cId = cityMapper.getCityIdBycName(cName);
+                precName = cName;
+            }
+            //读取行政区名
+            String dName = csvReader.get(1);
+            if (!predName.equals(dName)) {
+                //根据行政区名和城市id，查询行did
+                dId = districtMapper.getdIdBydNameAndcId(dName, cId);
+                predName = dName;
+            }
+            //读取街道名
+            String sName = csvReader.get(2);
+            //获取日期
+            String date = csvReader.get(3);
+            String[] split = date.split("/");
+
+            //如果街道发生了改变，或者年份发生了改变
+            if (!sName.equals(presName) || !preYear.equals(split[0])) {
+                //如果是第一行的话
+                if (presName.equals("")) {
+                    //根据街道名和行政区id，查询sid
+                    sId = streetMapper.getsIdBysNameAnddId(sName, dId);
+                    presName = sName;
+                    preYear = split[0];
+                } else {
+                    //将街道id，年份，年均价存到set里
+                    set.add(sId + " " + preYear + " " + sum/count);
+
+                    //如果街道没有发生变化，而是年份发生了变化
+                    if (presName.equals(sName) && !preYear.equals(split[0])) {
+                        preYear = split[0];
+                    //如果街道发生了变化，而年份没有发生变化
+                    } else if (!presName.equals(sName) && presName.equals(split[0])) {
+                        sId = streetMapper.getsIdBysNameAnddId(sName, dId);
+                        //更新街道名
+                        presName = sName;
+                    //如果街道名和年份名都发生了变化
+                    } else {
+                        //更新街道id
+                        sId = streetMapper.getsIdBysNameAnddId(sName, dId);
+                        //更新街道名
+                        presName = sName;
+                        //更新年份
+                        preYear = split[0];
+                    }
+                    //将月份数清0
+                    count = 0;
+                    //将总房价清0
+                    sum = 0;
+                }
+            }
+            count++;
+            sum += Integer.parseInt(csvReader.get(4));
+        }
+
+        //读到了最后一行
+        set.add(sId + " " + preYear + " " + sum/count);
+        return set;
+    }
 }

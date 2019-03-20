@@ -63,14 +63,20 @@ public class StreetController {
         //将2019年1月和2月移动到表尾
         StreetMonthPrice smp1 = monthPriceList.get(0);
         StreetMonthPrice smp2 = monthPriceList.get(1);
-        if (smp1.getMonth() < 3) {
+        StreetMonthPrice smp3 = monthPriceList.get(2);
+        if (smp1.getMonth() < 4) {
             monthPriceList.remove(smp1);
             monthPriceList.add(smp1);
         }
-        if (smp2.getMonth() < 3) {
+        if (smp2.getMonth() < 4) {
             monthPriceList.remove(smp2);
             monthPriceList.add(smp2);
         }
+        if (smp3.getMonth() < 4) {
+            monthPriceList.remove(smp3);
+            monthPriceList.add(smp3);
+        }
+
 
         return monthPriceList;
     }

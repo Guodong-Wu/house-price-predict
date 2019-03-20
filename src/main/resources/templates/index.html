@@ -64,18 +64,26 @@
         })
     </script>
     <!--查看用户是否登录js来添加修改用户信息-->
-    <script th:fragment="addinfojs">
+    <script th:inline="javascript" th:fragment="addinfojs">
     $(function () {
-        $.get("/session/user", function (data) {
-            if (data != "no") {
-                $("#sidenav").append("<a href=/user/" + data + ">修改信息</a>")
+        $.get("/session/user", function (user) {
+            if (user.userName != null) {
+                $("#sidenav").append("<p style='border-bottom: medium none;\n" +
+                    "    color: #c4c4c4;\n" +
+                    "    font-family: \"asapregular\";\n" +
+                    "    font-size: 25px;\n" +
+                    "    padding: 15px 25px;'>"+user.userName+"</p>");
+
+                $("#sidenav").append("<a href=/index >首页</a>");
+                $("#sidenav").append("<a href=/user/" + user.userId + ">修改信息</a>");
                 $("#sidenav").append("<a href='/user/quit' " +
                     "onclick=\\\"{if(confirm('确定退出吗?')){this.document.formname.submit();return true;}return false;}\">退出登录</a>")
             } else {
-                $("#sidenav").append("<a href=/user/login>登录</a>")
-                $("#sidenav").append("<a href=/user/register>注册</a>")
+                $("#sidenav").append("<a href=/index >首页</a>");
+                $("#sidenav").append("<a href=/user/login>登录</a>");
+                $("#sidenav").append("<a href=/user/register>注册</a>");
             }
-        })
+        },"json")
     })
 </script>
 </head>
@@ -97,7 +105,6 @@
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-
 <!--=========================
     Start area for Header
 ============================== -->
@@ -122,7 +129,7 @@
                         <img src="../img/logo.png" alt="" />
                         </div>
                         <div class="col-md-1">
-                        <a href="/info/city"><p><img height="16" width="16" src="../img/location.png"><span style="color:black;" id="atCity"></span></p></a>
+                        <a href="/city"><p><img height="16" width="16" src="../img/location.png"><span style="color:black;" id="atCity"></span></p></a>
                         </div>
                         <div class="col-md-9"></div>
                         </div>
@@ -140,7 +147,7 @@
                         <br>
                         <br>
                         <div class="search" >
-                            <form id="search" action="/city/13" method="get" >
+                            <form id="search" action="/city/38" method="get" >
                                 <input name="keyword" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
                                 <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>
                             </form>

@@ -7,7 +7,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://47.102.133.91:3306/house_price_prediction?useSSL=false
+    url: jdbc:mysql://47.102.133.91:3306/house_price_prediction_007?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     #数据源其他配置

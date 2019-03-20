@@ -133,19 +133,6 @@ public class TestController {
         return "user/updateUserInfo";
     }
 
-    /**
-     * 修改用户信息：在前台已经对数据进行验证（用户名、密码、邮箱不为空，两次密码一致，邮箱符合标准），
-     * 只需将传入数据保存返回首页即可
-     * @param userId
-     * @param user
-     * @return
-     */
-    @RequestMapping("/update/{userId}")
-    public String updateInfo(@PathVariable("userId") Integer userId, User user){
-        System.out.println("update user info");
-        System.out.println(user);
-        return "index";
-    }
 
 
     /**

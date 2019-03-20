@@ -47,7 +47,7 @@
     </style>
     <script>
         $(function () {
-            $("#submit").click(function () {
+            $("#userSubmit").click(function () {
                 if ($("#userName").val() == ""){
                     alert("用户名不能为空！")
                     return false;
@@ -69,7 +69,10 @@
         <input id="userName" type="text" name="userName" class="input-block-level" placeholder="用户名">
         <input id="userPassword" type="password" name="userPassword" class="input-block-level" placeholder="密码">
         <!--<p style="text-align: center"><input id="submit" class="btn btn-large btn-primary" type="submit">登录</input></p>-->
-        <input id="submit" class="btn btn-large btn-primary center-block" type="submit" value="登录"></form>
+        <div style="text-align: center">
+            <input id="userSubmit" class="btn btn-primary" type="submit" value="登录">&nbsp;&nbsp;&nbsp;
+            <a href="/index" class="btn btn-default">取消</a>
+        </div>
     </form>
 </div>
 

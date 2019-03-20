@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.config;
 
 import edu.seu.housepricepredict.interceptor.AdminHandlerInterceptor;
+import edu.seu.housepricepredict.interceptor.UserHandlerInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -26,7 +27,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/index").setViewName("index");
 
         //跳转至城市页面
-        registry.addViewController("/info/city").setViewName("info/city");
+        registry.addViewController("/city").setViewName("info/city");
 
         //后台登录页面
         registry.addViewController("/adminIndex").setViewName("user/adminIndex");
@@ -41,5 +42,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         //注册管理员拦截器，并设置拦截地址
         registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns("/adminIndex");
         //注册用户拦截器
+        registry.addInterceptor(new UserHandlerInterceptor()).addPathPatterns("/user/**").
+                excludePathPatterns("/user/login", "/user/register");
     }
 }
