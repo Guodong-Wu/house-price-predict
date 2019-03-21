@@ -77,7 +77,6 @@ public class UserController {
     public String getUserList(@PathVariable("currentPage") String currentPage, ModelMap map) {
         PageInfo<User> pageInfo = userService.getUserList(Integer.parseInt(currentPage));
         map.put("pageInfo", pageInfo);
-        map.put("isAll", "yes");
         return "user/userList";
     }
 
@@ -97,8 +96,7 @@ public class UserController {
         userService.deleteUserById(Integer.parseInt(id));
         PageInfo pageInfo = userService.getUserList(1);
         map.put("pageInfo", pageInfo);
-        map.put("isAll", "yes");
-        return "user/userList";
+        return "redirect:/users/1";
     }
 
 }
