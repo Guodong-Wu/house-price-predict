@@ -10,30 +10,6 @@
     <link href="/static/favicon.ico" type="image/x-icon" rel=icon>
     <link href="/static/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" href="../css/test.css">
-    <!--二级联动-->
-    <script>
-        cities = new Object();
-        cities['北京']=new Array('北京');
-        cities['上海']=new Array('上海');
-        cities['广东']=new Array('东莞', '佛山', '广州', '惠州', '江门', '清远', '深圳','珠海','湛江','中山');
-        function set_city(province, city)
-        {
-            var pv, cv;
-            var i, ii;
-            pv=province.value;
-            cv=city.value;
-            city.length=1;
-            if(pv=='0') return;
-            if(typeof(cities[pv])=='undefined') return;
-            for(i=0; i<cities[pv].length; i++)
-            {
-                ii = i+1;
-                city.options[ii] = new Option();
-                city.options[ii].text = cities[pv][i];
-                city.options[ii].value = cities[pv][i];
-            }
-        }
-    </script>
 
     <!--改变session中的cityName，class=“changeCity”-->
     <script>
@@ -41,7 +17,16 @@
             $(".changeCity").click(function () {
                 var cityName = this.text.trim() + "市";
                 // 城市名改变，将城市名放到Session中
-                $.post("/session/cityName", {"cityName":cityName});
+                $.ajax({
+                    type : "post",
+                    url : "/session/cityName",
+                    data : {"cityName":cityName},
+                    //同步
+                    async : false,
+                    success : function(){
+                        $("#cityForm").submit();
+                    }
+                });
             });
         });
     </script>
@@ -71,15 +56,16 @@
     </div>
 </div>
 <div class="city_selection_section">
+    <form id="cityForm" method="get" action="/">
     <div>
         <div class="city_recommend c_b">
             <div class="city_recommend_tit">
                 热门城市
             </div>
             <ul class="city_recommend_list">
-                <li><a class="changeCity" href="/">北京&nbsp;&nbsp;&nbsp;</a></li>
-                <li><a class="changeCity" href="/">上海&nbsp;&nbsp;&nbsp;</a></li>
-                <li><a class="changeCity" href="/">苏州</a></li>
+                <li><a class="changeCity" href="#">北京</a></li>&nbsp;&nbsp;&nbsp;
+                <li><a class="changeCity" href="#">上海</a></li>&nbsp;&nbsp;&nbsp;
+                <li><a class="changeCity" href="#">苏州</a></li>
             </ul>
         </div>
         <!--<div class="city_recommend c_b">-->
@@ -122,8 +108,8 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">安徽</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">安庆</a></li>
-                                    <li><a class="changeCity" href="/">合肥</a></li>
+                                    <li><a class="changeCity" href="#">安庆</a></li>
+                                    <li><a class="changeCity" href="#">合肥</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -138,7 +124,7 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">北京</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">北京</a></li>
+                                    <li><a class="changeCity" href="#">北京</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -153,7 +139,7 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">重庆</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">重庆</a></li>
+                                    <li><a class="changeCity" href="#">重庆</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -168,10 +154,10 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">福建</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">福州</a></li>
-                                    <li><a class="changeCity" href="/">泉州</a></li>
-                                    <li><a class="changeCity" href="/">厦门</a></li>
-                                    <li><a class="changeCity" href="/">漳州</a></li>
+                                    <li><a class="changeCity" href="#">福州</a></li>
+                                    <li><a class="changeCity" href="#">泉州</a></li>
+                                    <li><a class="changeCity" href="#">厦门</a></li>
+                                    <li><a class="changeCity" href="#">漳州</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -186,36 +172,36 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">广东</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">佛山</a></li>
-                                    <li><a class="changeCity" href="/">广州</a></li>
-                                    <li><a class="changeCity" href="/">惠州</a></li>
-                                    <li><a class="changeCity" href="/">深圳</a></li>
-                                    <li><a class="changeCity" href="/">珠海</a></li>
-                                    <li><a class="changeCity" href="/">湛江</a></li>
+                                    <li><a class="changeCity" href="#">佛山</a></li>
+                                    <li><a class="changeCity" href="#">广州</a></li>
+                                    <li><a class="changeCity" href="#">惠州</a></li>
+                                    <li><a class="changeCity" href="#">深圳</a></li>
+                                    <li><a class="changeCity" href="#">珠海</a></li>
+                                    <li><a class="changeCity" href="#">湛江</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">贵州</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">贵阳</a></li>
+                                    <li><a class="changeCity" href="#">贵阳</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">广西</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">北海</a></li>
-                                    <li><a class="changeCity" href="/">桂林</a></li>
-                                    <li><a class="changeCity" href="/">柳州</a></li>
-                                    <li><a class="changeCity" href="/">南宁</a></li>
+                                    <li><a class="changeCity" href="#">北海</a></li>
+                                    <li><a class="changeCity" href="#">桂林</a></li>
+                                    <li><a class="changeCity" href="#">柳州</a></li>
+                                    <li><a class="changeCity" href="#">南宁</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">甘肃</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">兰州</a></li>
+                                    <li><a class="changeCity" href="#">兰州</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -230,47 +216,47 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">湖北</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">武汉</a></li>
-                                    <li><a class="changeCity" href="/">襄阳</a></li>
+                                    <li><a class="changeCity" href="#">武汉</a></li>
+                                    <li><a class="changeCity" href="#">襄阳</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">湖南</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">长沙</a></li>
-                                    <li><a class="changeCity" href="/">株洲</a></li>
+                                    <li><a class="changeCity" href="#">长沙</a></li>
+                                    <li><a class="changeCity" href="#">株洲</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">河北</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">廊坊</a></li>
-                                    <li><a class="changeCity" href="/">石家庄</a></li>
+                                    <li><a class="changeCity" href="#">廊坊</a></li>
+                                    <li><a class="changeCity" href="#">石家庄</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">海南</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">海口</a></li>
+                                    <li><a class="changeCity" href="#">海口</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">河南</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">洛阳</a></li>
-                                    <li><a class="changeCity" href="/">许昌</a></li>
-                                    <li><a class="changeCity" href="/">郑州</a></li>
+                                    <li><a class="changeCity" href="#">洛阳</a></li>
+                                    <li><a class="changeCity" href="#">许昌</a></li>
+                                    <li><a class="changeCity" href="#">郑州</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">黑龙江</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">哈尔滨</a></li>
+                                    <li><a class="changeCity" href="#">哈尔滨</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -285,15 +271,15 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">江苏</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">常州</a></li>
-                                    <li><a class="changeCity" href="/">泰州</a></li>
-                                    <li><a class="changeCity" href="/">南京</a></li>
-                                    <li><a class="changeCity" href="/">南通</a></li>
-                                    <li><a class="changeCity" href="/">苏州</a></li>
-                                    <li><a class="changeCity" href="/">无锡</a></li>
-                                    <li><a class="changeCity" href="/">徐州</a></li>
-                                    <li><a class="changeCity" href="/">镇江</a></li>
-                                    <li><a class="changeCity" href="/">扬州</a></li>
+                                    <li><a class="changeCity" href="#">常州</a></li>
+                                    <li><a class="changeCity" href="#">泰州</a></li>
+                                    <li><a class="changeCity" href="#">南京</a></li>
+                                    <li><a class="changeCity" href="#">南通</a></li>
+                                    <li><a class="changeCity" href="#">苏州</a></li>
+                                    <li><a class="changeCity" href="#">无锡</a></li>
+                                    <li><a class="changeCity" href="#">徐州</a></li>
+                                    <li><a class="changeCity" href="#">镇江</a></li>
+                                    <li><a class="changeCity" href="#">扬州</a></li>
                                 </ul>
                             </div>
                             <!--<div class="city_province">-->
@@ -327,9 +313,9 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">辽宁</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">大连</a></li>
-                                    <li><a class="changeCity" href="/">丹东</a></li>
-                                    <li><a class="changeCity" href="/">沈阳</a></li>
+                                    <li><a class="changeCity" href="#">大连</a></li>
+                                    <li><a class="changeCity" href="#">丹东</a></li>
+                                    <li><a class="changeCity" href="#">沈阳</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -344,14 +330,14 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">内蒙古</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">呼和浩特</a></li>
+                                    <li><a class="changeCity" href="#">呼和浩特</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">宁夏</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">银川</a></li>
+                                    <li><a class="changeCity" href="#">银川</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -366,24 +352,24 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">上海</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">上海</a></li>
+                                    <li><a class="changeCity" href="#">上海</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">四川</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">成都</a></li>
+                                    <li><a class="changeCity" href="#">成都</a></li>
                                 </ul>
                             </div>
                             <div class="city_province">
                                 <i></i>
                                 <div class="city_list_tit c_b">山东</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">济南</a></li>
-                                    <li><a class="changeCity" href="/">潍坊</a></li>
-                                    <li><a class="changeCity" href="/">烟台</a></li>
-                                    <li><a class="changeCity" href="/">淄博</a></li>
+                                    <li><a class="changeCity" href="#">济南</a></li>
+                                    <li><a class="changeCity" href="#">潍坊</a></li>
+                                    <li><a class="changeCity" href="#">烟台</a></li>
+                                    <li><a class="changeCity" href="#">淄博</a></li>
                                 </ul>
                             </div>
                             <!--<div class="city_province">-->
@@ -400,7 +386,7 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">山西</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">太原</a></li>
+                                    <li><a class="changeCity" href="#">太原</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -415,7 +401,7 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">天津</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">天津</a></li>
+                                    <li><a class="changeCity" href="#">天津</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -430,8 +416,8 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">云南</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">大理</a></li>
-                                    <li><a class="changeCity" href="/">昆明</a></li>
+                                    <li><a class="changeCity" href="#">大理</a></li>
+                                    <li><a class="changeCity" href="#">昆明</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -446,10 +432,10 @@
                                 <i></i>
                                 <div class="city_list_tit c_b">浙江</div>
                                 <ul>
-                                    <li><a class="changeCity" href="/">杭州</a></li>
-                                    <li><a class="changeCity" href="/">湖州</a></li>
-                                    <li><a class="changeCity" href="/">宁波</a></li>
-                                    <li><a class="changeCity" href="/">台州</a></li>
+                                    <li><a class="changeCity" href="#">杭州</a></li>
+                                    <li><a class="changeCity" href="#">湖州</a></li>
+                                    <li><a class="changeCity" href="#">宁波</a></li>
+                                    <li><a class="changeCity" href="#">台州</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -458,13 +444,11 @@
             </div>
         </div>
     </div>
+    </form>
 </div>
 <div class="top-cities clear">
 </div>
-<!--页面底部-->
-<div class="footer">
-    房价预测-007
-</div>
+
 
 </body>
 </html>

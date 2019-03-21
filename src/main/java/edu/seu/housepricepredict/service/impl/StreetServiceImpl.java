@@ -2,8 +2,10 @@ package edu.seu.housepricepredict.service.impl;
 
 import edu.seu.housepricepredict.domain.area.Street;
 import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
+import edu.seu.housepricepredict.domain.year.StreetYearPrice;
 import edu.seu.housepricepredict.mapper.area.StreetMapper;
 import edu.seu.housepricepredict.mapper.month.StreetMonthPriceMapper;
+import edu.seu.housepricepredict.mapper.year.StreetYearPriceMapper;
 import edu.seu.housepricepredict.service.StreetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,9 @@ public class StreetServiceImpl implements StreetService {
     @Autowired
     private StreetMonthPriceMapper streetMonthPriceMapper;
 
+    @Autowired
+    private StreetYearPriceMapper streetYearPriceMapper;
+
     @Override
     public List<Street> getStreetListBydId(int dId) {
         return streetMapper.getStreetListBydId(dId);
@@ -40,5 +45,10 @@ public class StreetServiceImpl implements StreetService {
     @Override
     public List<StreetMonthPrice> getStreetMonthPriceBysId(int sId) {
         return streetMonthPriceMapper.getStreetMonthPriceBysId(sId);
+    }
+
+    @Override
+    public List<StreetYearPrice> getStreetYearPriceBysId(int sId) {
+        return streetYearPriceMapper.getStreetYearPriceBysId(sId);
     }
 }

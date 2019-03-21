@@ -12,6 +12,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
         $(function () {
+            //判断用户是否登录
+            $.get("/session/user", function (user) {
+                //如果登录
+                if (user.userName != null) {
+                    $("#prediction").show();
+                }
+            },"json");
+
             //获取区域名，设置柱状图和折线图标题
             var name = [[${areaName}]];
             var barGraphName;
@@ -29,7 +37,7 @@
             }
 
             $("#barGraphHead").html(barGraphName.toString());
-            $("#lineGraphHead").html(name.toString() + "历史房价折线图");
+            $("#lineGraphHead").html(name.toString() + "历史月份房价走势");
 
             //区域房价柱状图 填充数据
             $.get("/" + [[${areaLevel}]] + "Area/" + [[${areaId}]], function(areaList) {
@@ -85,10 +93,10 @@
                 var monthPrice = new Array();
                 //填充数组
                 $(monthPriceList).each(function (index, data) {
-                    if (data.month < 10) {
-                        monthList.push("0"+data.month+"月");
+                    if (data.month < 4) {
+                        monthList.push("2019年"+data.month+"月");
                     } else {
-                        monthList.push(data.month+"月");
+                        monthList.push("2018年"+data.month+"月");
                     }
                     monthPrice.push(data.price);
                 })
@@ -116,36 +124,114 @@
                     responsive : true
                 });
             },"json");
+
+
+            $("#monthPrice").click(function () {
+                $("#lineGraphHead").html(name.toString() + "历史月份房价走势");
+                //历史房价折线图，填充数据
+                $.get("/" + [[${areaLevel}]] + "MonthPrice/" + [[${areaId}]], function(monthPriceList) {
+                    //月份
+                    var monthList = new Array();
+                    //每月房价数据
+                    var monthPrice = new Array();
+                    //填充数组
+                    $(monthPriceList).each(function (index, data) {
+                        if (data.month < 4) {
+                            monthList.push("2019年"+data.month+"月");
+                        } else {
+                            monthList.push("2018年"+data.month+"月");
+                        }
+                        monthPrice.push(data.price);
+                    })
+
+                    //设置数据集
+                    var barChartData = {
+                        labels: monthList,//横坐标
+                        datasets: [
+                            {
+                                label: "每月房价",
+                                backgroundColor: 'rgba(255, 0, 0, 0)',
+                                borderColor: "#1e90ff",
+                                borderWidth: 1,
+                                data: monthPrice//数据
+                            }
+                        ]
+                    };
+
+                    //获取折线图上下文元素
+                    var ctx = document.getElementById("lineGraph").getContext("2d");
+                    //创建折线图
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: barChartData,
+                        responsive : true
+                    });
+                },"json");
+            });
+
+
+            $("#yearPrice").click(function () {
+                $("#lineGraphHead").html(name.toString() + "历史年份房价走势");
+                //历史房价折线图，填充数据
+                $.get("/" + [[${areaLevel}]] + "YearPrice/" + [[${areaId}]], function(yearPriceList) {
+                    //年份
+                    var yearList = new Array();
+                    //每年房价数据
+                    var yearPrice = new Array();
+                    //填充数组
+                    $(yearPriceList).each(function (index, data) {
+                        yearList.push(data.year+"年")
+                        yearPrice.push(data.price);
+                    });
+
+                    //设置数据集
+                    var barChartData = {
+                        labels: yearList,//横坐标
+                        datasets: [
+                            {
+                                label: "每年房价",
+                                backgroundColor: 'rgba(255, 0, 0, 0)',
+                                borderColor: "#1e90ff",
+                                borderWidth: 1,
+                                data: yearPrice//数据
+                            }
+                        ]
+                    };
+
+                    //获取折线图上下文元素
+                    var ctx = document.getElementById("lineGraph").getContext("2d");
+                    //创建折线图
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: barChartData,
+                        responsive : true
+                    });
+                },"json");
+            });
+
+
+            $("#futurePrice").click(function () {
+                $("#lineGraphHead").html(name.toString() + "未来半年房价走势");
+            });
+
+
+
         })
     </script>
     <!--查看用户是否登录js来添加修改用户信息-->
     <script th:replace="index::addinfojs"></script>
 
+    <!--选择要对比的小区名js-->
     <!--<script>-->
         <!--$(function () {-->
-            <!--// 获取热门房市（可以暂取房价前五）,返回值为城市名数组 访问URL：getHotCity-->
-            <!--$.post("/getHotCity", function(citynames) {-->
-                <!--$("#hotcity").append("热门房市&nbsp;")-->
-                <!--$(citynames).each(function (index, value) {-->
-                    <!--// $("#hot" + index).html(value.toString());-->
-                    <!--$("#hotcity").append("<a href='#'>" + value + "</a>&nbsp;")-->
+            <!--$.post("/getCityNames", function(data) {-->
+                <!--$(data).each(function (index, value) {//index是索引，n是值-->
+                    <!--$("#commName1").append("<option value=" + value + ">" + value + "</option>")-->
+                    <!--$("#commName2").append("<option value=" + value + ">" + value + "</option>")-->
                 <!--})-->
-
-                <!--//     alert(cityname);-->
             <!--},"json");-->
         <!--})-->
     <!--</script>-->
-    <!--选择要对比的小区名js-->
-    <script>
-        $(function () {
-            $.post("/getCityNames", function(data) {
-                $(data).each(function (index, value) {//index是索引，n是值
-                    $("#commName1").append("<option value=" + value + ">" + value + "</option>")
-                    $("#commName2").append("<option value=" + value + ">" + value + "</option>")
-                })
-            },"json");
-        })
-    </script>
 </head>
 
 <!--2.22-->
@@ -161,16 +247,7 @@
         <div class="con">
             <a href="/index"><span class="logo"><img href="../img/logo.png"></span></a>
         </div>
-        <!--<div class="search_wrapper">-->
-            <!--&lt;!&ndash;<form id="search" action="/searchCity">&ndash;&gt;-->
-                <!--<input name="keyWord" class="sug-input" type="text" placeholder="搜索城市">-->
-                <!--<a class="btn btn_blue search_btn" style="color: #FFFFFF;text-align: center;padding-top: 2px" >搜索</a>-->
-                <!--&lt;!&ndash;<button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;">搜索</button>&ndash;&gt;-->
-            <!--&lt;!&ndash;</form>&ndash;&gt;-->
 
-            <!--<i class="icon icon_search"></i>-->
-            <!--<div id="city_sug"></div>-->
-        <!--</div>-->
         <div class="search" >
             <form id="search" action="/searchCity">
                 <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
@@ -223,7 +300,33 @@
     <div  class="col-md-2"></div>
 </div>
 
-<br/>
+
+<div class="city_selection_section">
+    <ul class="city_recommend_list">
+        <li class="city_list_li city_list_li_selected">
+            <div class="city_list">
+                <div class="city_province">
+                    <ul class="row">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li>
+                            <button class="btn btn-primary" id="monthPrice">历史月份房价走势</button>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li>
+                            <button class="btn btn-primary" id="yearPrice">历史年份房价走势</button>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div id="prediction" style="display: none">
+                            <li>
+                                <button class="btn btn-success" id="futurePrice">未来半年房价走势</button>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
 
 <!-- 折线图div -->
 <div id="div02" class="container" style="width: 1200px; height: 500px;margin:0 auto ">
@@ -233,6 +336,8 @@
     </div>
     <div  class="col-md-2"></div>
 </div>
+
+
 
 
 </body>

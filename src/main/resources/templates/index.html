@@ -55,9 +55,17 @@
                 } else {
                     //显示城市名
                     atCity.innerHTML = data + "市";
-                    $.post("/session/cityName", {"cityName":data+"市"}, function (id) {
-                        //更新表单提交地址
-                        $("#search").attr("action", "/city/"+id);
+
+                    $.ajax({
+                        type : "post",
+                        url : "/session/cityName",
+                        data : {"cityName":data+"市"},
+                        //同步
+                        async : false,
+                        success : function(id){
+                            //更新表单提交地址
+                            $("#search").attr("action", "/city/"+id);
+                        }
                     });
                 }
             });
@@ -128,10 +136,10 @@
                         <div class="col-md-1">
                         <img src="../img/logo.png" alt="" />
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-4">
                         <a href="/cities"><p><img height="16" width="16" src="../img/location.png"><span style="color:black;" id="atCity"></span></p></a>
                         </div>
-                        <div class="col-md-9"></div>
+                        <div class="col-md-6"></div>
                         </div>
                 </div><!-- End Logo -->
 

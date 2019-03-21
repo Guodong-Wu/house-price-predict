@@ -29,8 +29,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         //跳转至城市页面
         registry.addViewController("/cities").setViewName("info/city");
 
-        //后台登录页面
-        registry.addViewController("/mIndex").setViewName("user/mIndex");
     }
 
     /**
@@ -40,7 +38,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //注册管理员拦截器，并设置拦截地址
-        registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns("/mIndex", "/users/**", "/select");
+        registry.addInterceptor(new AdminHandlerInterceptor()).addPathPatterns("/users/**", "/select");
         //注册用户拦截器
         registry.addInterceptor(new UserHandlerInterceptor()).addPathPatterns("/user/**").
                 excludePathPatterns("/user/login", "/user/register", "/user/quit");

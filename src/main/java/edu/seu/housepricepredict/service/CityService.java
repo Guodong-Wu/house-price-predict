@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.service;
 
 import edu.seu.housepricepredict.domain.month.CityMonthPrice;
+import edu.seu.housepricepredict.domain.year.CityYearPrice;
 
 import java.util.List;
 
@@ -17,5 +18,8 @@ public interface CityService {
     List<CityMonthPrice> getCityMonthPriceBycId(int cId);
 
     String getCityNameBycId(int cId);
+
+    List<CityYearPrice> getCityYearPriceBycId(int cId);
+
 
 }

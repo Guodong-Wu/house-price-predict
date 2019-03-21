@@ -2,8 +2,10 @@ package edu.seu.housepricepredict.service.impl;
 
 import edu.seu.housepricepredict.domain.area.District;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
+import edu.seu.housepricepredict.domain.year.DistrictYearPrice;
 import edu.seu.housepricepredict.mapper.area.DistrictMapper;
 import edu.seu.housepricepredict.mapper.month.DistrictMonthPriceMapper;
+import edu.seu.housepricepredict.mapper.year.DistrictYearPriceMapper;
 import edu.seu.housepricepredict.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class DistrictServiceImpl implements DistrictService {
     @Autowired
     private DistrictMonthPriceMapper districtMonthPriceMapper;
 
+    @Autowired
+    private DistrictYearPriceMapper districtYearPriceMapper;
+
     @Override
     public List<District> getDistrictListBycId(int cId) {
         return districtMapper.getDistrictListBycId(cId);
@@ -39,6 +44,11 @@ public class DistrictServiceImpl implements DistrictService {
     @Override
     public List<DistrictMonthPrice> getDistrictMonthPriceBydId(int dId) {
         return districtMonthPriceMapper.getDistrictMonthPriceBydId(dId);
+    }
+
+    @Override
+    public List<DistrictYearPrice> getDistrictYearPriceBydId(int dId) {
+        return districtYearPriceMapper.getDistrictYearPriceBydId(dId);
     }
 
 }
