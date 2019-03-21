@@ -1,8 +1,10 @@
 package edu.seu.housepricepredict.service.impl;
 
 import edu.seu.housepricepredict.domain.month.CityMonthPrice;
+import edu.seu.housepricepredict.domain.year.CityYearPrice;
 import edu.seu.housepricepredict.mapper.area.CityMapper;
 import edu.seu.housepricepredict.mapper.month.CityMonthPriceMapper;
+import edu.seu.housepricepredict.mapper.year.CityYearPriceMapper;
 import edu.seu.housepricepredict.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private CityMonthPriceMapper cityMonthPriceMapper;
 
+    @Autowired
+    private CityYearPriceMapper cityYearPriceMapper;
+
 
     @Override
     public int getCityIdBycName(String cName) {
@@ -40,6 +45,11 @@ public class CityServiceImpl implements CityService {
     @Override
     public String getCityNameBycId(int cId) {
         return cityMapper.getCityNameBycId(cId);
+    }
+
+    @Override
+    public List<CityYearPrice> getCityYearPriceBycId(int cId) {
+        return cityYearPriceMapper.getCityYearPriceBycId(cId);
     }
 
     //    @Override

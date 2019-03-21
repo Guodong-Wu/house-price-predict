@@ -2,6 +2,7 @@ package edu.seu.housepricepredict.controller;
 
 import edu.seu.housepricepredict.domain.area.Street;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
+import edu.seu.housepricepredict.domain.year.DistrictYearPrice;
 import edu.seu.housepricepredict.service.DistrictService;
 import edu.seu.housepricepredict.service.StreetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,14 @@ public class DistrictController {
         }
 
         return monthPriceList;
+    }
+
+    /**
+     * 根据行政区id 返回行政区年份历史房价(json)
+     */
+    @GetMapping("/districtYearPrice/{id}")
+    @ResponseBody
+    public List<DistrictYearPrice> getDistrictYearPrice(@PathVariable("id") String id) {
+        return districtService.getDistrictYearPriceBydId(Integer.parseInt(id));
     }
 }
