@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>result not found</title>
+    <!--<script src="../js/jquery.js"></script>-->
+    <!--公共页面的js和样式表引入-->
+    <div th:replace="common/common::commonjs"></div>
+    <div th:replace="common/common::commonstyle"></div>
+    <link rel="stylesheet" href="../css/test.css">
+    <!--查看用户是否登录js来添加修改用户信息-->
+    <script th:replace="index::addinfojs"></script>
+</head>
+<body>
+<!--右侧用户公共nav页面引用-->
+<div style="height:30px"></div>
+<nav th:replace="common/common::sidenav" ></nav>
+
+<!--用户菜单按钮引用-->
+<div th:replace="common/common::meaubutton" ></div>
+<div class="wrapper">
+    <br>
+    <div class="city_search">
+        <div class="con">
+            <a href="/index"><span class="logo"><img href="../img/logo.png"></span></a>
+        </div>
+        <div class="search" >
+            <form id="search" action="/city/38" method="get" >
+                <input name="keyword" type="text" placeholder="搜索城市" style="width:1000px;height:50px;float:left;font-size:16px">
+                <button  type="submit" style="width:100px;height:50px;color:white;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px">搜索</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <br/>
+    <p1 style="font-size: 25px;font-weight: bold">共查询到<span style="color: #00ae66;font-family: 'tahoma';">0</span>个结果</p1>
+    <br/>
+    <hr>
+    <div class="" style="text-align:center;">
+        <p1 style="font-size: 20px;"><text>
+            没有找到相关搜索结果，您可以重新搜索或者<a href="/index" style="color: #1155CC">返回首页</a>
+        </text></p1>
+    </div>
+</div>
+
+</body>
+</html>

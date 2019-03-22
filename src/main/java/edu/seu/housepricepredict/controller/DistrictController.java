@@ -1,10 +1,12 @@
 package edu.seu.housepricepredict.controller;
 
+import edu.seu.housepricepredict.domain.area.District;
 import edu.seu.housepricepredict.domain.area.Street;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 import edu.seu.housepricepredict.domain.year.DistrictYearPrice;
 import edu.seu.housepricepredict.service.DistrictService;
 import edu.seu.housepricepredict.service.StreetService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -89,5 +92,32 @@ public class DistrictController {
     @ResponseBody
     public List<DistrictYearPrice> getDistrictYearPrice(@PathVariable("id") String id) {
         return districtService.getDistrictYearPriceBydId(Integer.parseInt(id));
+    }
+
+    /**
+     * 根据行政区id 返回行政区未来房价(json)
+     */
+    @GetMapping("/districtPredictPrice/{id}")
+    @ResponseBody
+    public List<DistrictMonthPrice> getDistrictPredictPrice(@PathVariable("id") String id) {
+        return districtService.getDistrictPredictPriceBydId(Integer.parseInt(id));
+    }
+
+    /**
+     * 根据街道名或行政区名，和城市id，查询城市信息
+     */
+    @GetMapping("/search/{id}")
+    public String search(String keyword, @PathVariable("id") String id) {
+        Street street = streetService.getStreetBysNameAndcId(keyword.trim(), Integer.parseInt(id));
+        if (street == null) {
+            District district = districtService.getDistrictBydNameAndcId(keyword.trim(), Integer.parseInt(id));
+            if (district == null) {
+                return "redirect:/notFound";
+            } else {
+                return "redirect:/district/"+district.getId();
+            }
+        } else {
+            return "redirect:/street/"+street.getId();
+        }
     }
 }

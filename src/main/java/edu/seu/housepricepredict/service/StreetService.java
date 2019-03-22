@@ -21,4 +21,8 @@ public interface StreetService {
     List<StreetMonthPrice> getStreetMonthPriceBysId(int sId);
 
     List<StreetYearPrice> getStreetYearPriceBysId(int sId);
+
+    Street getStreetBysNameAndcId(String sName, int cId);
+
+    List<StreetMonthPrice> getStreetPredictPriceBysId(int sId);
 }

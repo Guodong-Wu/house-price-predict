@@ -91,4 +91,14 @@ public class StreetController {
         return streetService.getStreetYearPriceBysId(Integer.parseInt(id));
     }
 
+    /**
+     * 根据街道id 返回街道未来房价(json)
+     */
+    @GetMapping("/streetPredictPrice/{id}")
+    @ResponseBody
+    public List<StreetMonthPrice> getStreetPredictPrice(@PathVariable("id") String id) {
+        return streetService.getStreetPredictPriceBysId(Integer.parseInt(id));
+    }
+    
+
 }

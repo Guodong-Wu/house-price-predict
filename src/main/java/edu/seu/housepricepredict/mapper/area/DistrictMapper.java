@@ -31,6 +31,12 @@ public interface DistrictMapper {
     int getdIdBydNameAndcId(@Param("dName")String dName, @Param("cId")int cId);
 
     /**
+     * 根据行政区名和城市id，查询行政区
+     */
+    @Select("SELECT id, name, price FROM district WHERE name = #{dName} AND c_id = #{cId}")
+    District getDistrictBydNameAndcId(@Param("dName")String dName, @Param("cId")int cId);
+
+    /**
      * 插入行政区信息
      */
     @Options(useGeneratedKeys = true, keyColumn = "id")

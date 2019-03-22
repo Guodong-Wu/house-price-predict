@@ -51,4 +51,14 @@ public class StreetServiceImpl implements StreetService {
     public List<StreetYearPrice> getStreetYearPriceBysId(int sId) {
         return streetYearPriceMapper.getStreetYearPriceBysId(sId);
     }
+
+    @Override
+    public Street getStreetBysNameAndcId(String sName, int cId) {
+        return streetMapper.getStreetBysNameAndcId(sName, cId);
+    }
+
+    @Override
+    public List<StreetMonthPrice> getStreetPredictPriceBysId(int sId) {
+        return streetMonthPriceMapper.getStreetPredictPriceBysId(sId);
+    }
 }

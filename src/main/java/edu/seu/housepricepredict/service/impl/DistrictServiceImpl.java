@@ -51,4 +51,14 @@ public class DistrictServiceImpl implements DistrictService {
         return districtYearPriceMapper.getDistrictYearPriceBydId(dId);
     }
 
+    @Override
+    public District getDistrictBydNameAndcId(String dName, int cId) {
+        return districtMapper.getDistrictBydNameAndcId(dName, cId);
+    }
+
+    @Override
+    public List<DistrictMonthPrice> getDistrictPredictPriceBydId(int dId) {
+        return districtMonthPriceMapper.getDistrictPredictPriceBydId(dId);
+    }
+
 }

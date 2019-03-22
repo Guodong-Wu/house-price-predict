@@ -21,5 +21,7 @@ public interface CityService {
 
     List<CityYearPrice> getCityYearPriceBycId(int cId);
 
+    List<CityMonthPrice> getCityPredictPriceBycId(int cId);
+
 
 }
