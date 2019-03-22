@@ -44,14 +44,23 @@
 <div class="wrapper">
     <br>
     <div class="city_search">
+        <!--<div class="con">-->
+            <!--<span class="logo"><img href="../img/logo.png"></span>-->
+        <!--</div>-->
         <div class="con">
-            <span class="logo"><img href="../img/logo.png"></span>
+            <a href="/index"><span class="logo"><img href="../img/logo.png"></span></a>
         </div>
-        <div class="search_wrapper">
-            <input class="sug-input" type="text" placeholder="搜索城市">
-            <a class="btn btn_blue search_btn">搜索</a>
-            <i class="icon icon_search"></i>
-            <div id="city_sug"></div>
+        <!--<div class="search_wrapper">-->
+            <!--<input class="sug-input" type="text" placeholder="搜索城市">-->
+            <!--<a class="btn btn_blue search_btn">搜索</a>-->
+            <!--<i class="icon icon_search"></i>-->
+            <!--<div id="city_sug"></div>-->
+        <!--</div>-->
+        <div class="search" >
+            <form id="search" action="/city/38" method="get" >
+                <input name="keyword" type="text" placeholder="搜索城市" style="width:1000px;height:50px;float:left;font-size:16px">
+                <button  type="submit" style="width:100px;height:50px;color:white;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px">搜索</button>
+            </form>
         </div>
     </div>
 </div>
