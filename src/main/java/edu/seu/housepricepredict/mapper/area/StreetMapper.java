@@ -26,6 +26,13 @@ public interface StreetMapper {
     int getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
 
     /**
+     * 根据城市id和街道名，查询街道
+     */
+    @Select("SELECT s.id AS id, s.name AS name, s.price AS price FROM city c, district d, street s " +
+            "WHERE c.id = d.c_id AND d.id = s.d_id AND s.name = #{sName} AND c.id = #{cId}")
+    Street getStreetBysNameAndcId(@Param("sName")String sName, @Param("cId")int cId);
+
+    /**
      * 根据街道id，返回街道名
      */
     @Select("SELECT name FROM street WHERE id = #{sId}")

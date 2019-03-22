@@ -33,4 +33,23 @@ public interface CityMonthPriceMapper {
     @Insert("INSERT INTO city_month_price VALUES(#{cId}, #{month}, #{price})")
     int insertCityMonthPrice(CityMonthPrice cityMonthPrice);
 
+    /**
+     * 从其他表获取所有城市未来房价
+     */
+    @Select("SELECT c_id, month, AVG(dpp.price) AS price FROM district d, district_predict_price dpp " +
+            "WHERE d.id = dpp.d_id GROUP BY c_id, month")
+    List<CityMonthPrice> getCityPredictPriceFromOthers();
+
+    /**
+     * 根据cid，获取指定城市未来房价
+     */
+    @Select("SELECT * FROM city_predict_price WHERE c_id = #{cId}")
+    List<CityMonthPrice> getCityPredictPriceBycId(int cId);
+
+    /**
+     * 插入城市未来房价
+     */
+    @Insert("INSERT INTO city_predict_price VALUES(#{cId}, #{month}, #{price})")
+    int insertCityPredictPrice(CityMonthPrice cityMonthPrice);
+
 }

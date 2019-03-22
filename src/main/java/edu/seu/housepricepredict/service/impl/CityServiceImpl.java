@@ -52,6 +52,11 @@ public class CityServiceImpl implements CityService {
         return cityYearPriceMapper.getCityYearPriceBycId(cId);
     }
 
+    @Override
+    public List<CityMonthPrice> getCityPredictPriceBycId(int cId) {
+        return cityMonthPriceMapper.getCityPredictPriceBycId(cId);
+    }
+
     //    @Override
 //    public CityAreaVo getCityAreaBycId(int cId) {
 //        return cityMapper.getCityAreaBycId(cId);

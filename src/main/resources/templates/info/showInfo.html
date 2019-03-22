@@ -32,12 +32,13 @@
                 barGraphName = name.toString() + "各街道当前月房价柱状图";
                 subAreaLevel = "street";
             } else {
+                $("#areaSelect").hide();
                 barGraphName = name.toString() + "各小区当前月房价柱状图";
                 subAreaLevel = "community";
             }
 
             $("#barGraphHead").html(barGraphName.toString());
-            $("#lineGraphHead").html(name.toString() + "历史月份房价走势");
+            $("#lineGraphHead1").html(name.toString() + "历史月份房价走势");
 
             //区域房价柱状图 填充数据
             $.get("/" + [[${areaLevel}]] + "Area/" + [[${areaId}]], function(areaList) {
@@ -116,7 +117,7 @@
                 };
 
                 //获取折线图上下文元素
-                var ctx = document.getElementById("lineGraph").getContext("2d");
+                var ctx = document.getElementById("lineGraph1").getContext("2d");
                 //创建折线图
                 new Chart(ctx, {
                     type: 'line',
@@ -127,7 +128,10 @@
 
 
             $("#monthPrice").click(function () {
-                $("#lineGraphHead").html(name.toString() + "历史月份房价走势");
+                $("#lineGraphHead1").html(name.toString() + "历史月份房价走势");
+                $("#div02").show();
+                $("#div03").hide();
+                $("#div04").hide();
                 //历史房价折线图，填充数据
                 $.get("/" + [[${areaLevel}]] + "MonthPrice/" + [[${areaId}]], function(monthPriceList) {
                     //月份
@@ -142,7 +146,7 @@
                             monthList.push("2018年"+data.month+"月");
                         }
                         monthPrice.push(data.price);
-                    })
+                    });
 
                     //设置数据集
                     var barChartData = {
@@ -159,7 +163,7 @@
                     };
 
                     //获取折线图上下文元素
-                    var ctx = document.getElementById("lineGraph").getContext("2d");
+                    var ctx = document.getElementById("lineGraph1").getContext("2d");
                     //创建折线图
                     new Chart(ctx, {
                         type: 'line',
@@ -171,7 +175,10 @@
 
 
             $("#yearPrice").click(function () {
-                $("#lineGraphHead").html(name.toString() + "历史年份房价走势");
+                $("#lineGraphHead2").html(name.toString() + "历史年份房价走势");
+                $("#div02").hide();
+                $("#div03").show();
+                $("#div04").hide();
                 //历史房价折线图，填充数据
                 $.get("/" + [[${areaLevel}]] + "YearPrice/" + [[${areaId}]], function(yearPriceList) {
                     //年份
@@ -199,7 +206,7 @@
                     };
 
                     //获取折线图上下文元素
-                    var ctx = document.getElementById("lineGraph").getContext("2d");
+                    var ctx = document.getElementById("lineGraph2").getContext("2d");
                     //创建折线图
                     new Chart(ctx, {
                         type: 'line',
@@ -209,12 +216,88 @@
                 },"json");
             });
 
-
+            //导入未来房价数据
             $("#futurePrice").click(function () {
-                $("#lineGraphHead").html(name.toString() + "未来半年房价走势");
+                $("#div02").hide();
+                $("#div03").hide();
+                $("#div04").show();
+                $("#lineGraphHead3").html(name.toString() + "未来半年房价走势");
+                //历史房价折线图，填充数据
+                $.ajax({
+                    type : "get",
+                    url : "/" + [[${areaLevel}]] + "MonthPrice/" + [[${areaId}]],
+                    dataType : "json",
+                    async : false,
+                    success : function (monthPriceList) {
+                        //预测月份
+                        var predictList = new Array();
+                        //预测月份房价
+                        var predictPrice = new Array();
+                        //填充数组
+                        $(monthPriceList).each(function (index, data) {
+                            if (data.month < 4) {
+                                predictList.push("2019年"+data.month+"月");
+                                predictPrice.push(data.price);
+                            } else {
+                                if (data.month >= 10 ) {
+                                    predictList.push("2018年"+data.month+"月");
+                                    predictPrice.push(data.price);
+                                }
+                            }
+                        });
+                        //读取未来房价
+                        $.ajax({
+                            type : "get",
+                            url : "/" + [[${areaLevel}]] + "PredictPrice/" + [[${areaId}]],
+                            dataType : "json",
+                            async : false,
+                            success : function (predictPriceList) {
+                                //填充数组
+                                $(predictPriceList).each(function (index, data) {
+                                    predictList.push("2019年"+data.month+"月")
+                                    predictPrice.push(data.price);
+                                });
+                            }
+                        });
+                        //设置数据集
+                        var barChartData = {
+                            labels: predictList,//横坐标
+                            datasets: [
+                                {
+                                    label: "未来房价",
+                                    backgroundColor: 'rgba(255, 0, 0, 0)',
+                                    borderColor: "#1e90ff",
+                                    borderWidth: 1,
+                                    data: predictPrice//数据
+                                }
+                            ]
+                        };
+
+                        //获取折线图上下文元素
+                        var ctx = document.getElementById("lineGraph3").getContext("2d");
+                        //创建折线图
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: barChartData,
+                            responsive : true
+                        });
+                    }
+                });
             });
 
-
+            $.get("/session/cityName",function (data) {
+                $.ajax({
+                    type: "post",
+                    url: "/session/cityName",
+                    data: {"cityName": data + "市"},
+                    //同步
+                    async: false,
+                    success: function (id) {
+                        //更新表单提交地址
+                        $("#search").attr("action", "/city/" + id);
+                    }
+                });
+            });
 
         })
     </script>
@@ -249,8 +332,8 @@
         </div>
 
         <div class="search" >
-            <form id="search" action="/searchCity">
-                <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
+            <form id="search" action="/city/38" method="get" >
+                <input name="keyword" type="text" placeholder="输入区域或街道名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
                 <button  type="submit" style="width:100px;height:50px;color:white;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px">搜索</button>
             </form>
         </div>
@@ -260,7 +343,7 @@
 <div class="city_selection_section">
     <div>
         <div class="city_recommend c_b">
-            <div class="city_recommend_tit">
+            <div id="areaSelect" class="city_recommend_tit">
                 区域选择
             </div>
             <ul class="city_recommend_list">
@@ -331,8 +414,24 @@
 <!-- 折线图div -->
 <div id="div02" class="container" style="width: 1200px; height: 500px;margin:0 auto ">
     <div class="col-md-10" style="text-align: center">
-        <h2 id="lineGraphHead" class="text-center"></h2>
-        <canvas id="lineGraph" height="480px" width="1200px "></canvas>
+        <h2 id="lineGraphHead1" class="text-center"></h2>
+        <canvas id="lineGraph1" height="480px" width="1200px "></canvas>
+    </div>
+    <div  class="col-md-2"></div>
+</div>
+
+<div id="div03" class="container" style="width: 1200px; height: 500px;margin:0 auto ; display: none">
+    <div class="col-md-10" style="text-align: center">
+        <h2 id="lineGraphHead2" class="text-center"></h2>
+        <canvas id="lineGraph2" height="480px" width="1200px "></canvas>
+    </div>
+    <div  class="col-md-2"></div>
+</div>
+
+<div id="div04" class="container" style="width: 1200px; height: 500px;margin:0 auto; display: none ">
+    <div class="col-md-10" style="text-align: center">
+        <h2 id="lineGraphHead3" class="text-center"></h2>
+        <canvas id="lineGraph3" height="480px" width="1200px "></canvas>
     </div>
     <div  class="col-md-2"></div>
 </div>

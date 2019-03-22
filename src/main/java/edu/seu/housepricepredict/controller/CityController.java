@@ -97,10 +97,23 @@ public class CityController {
     }
 
     /**
+     * 根据城市id 返回城市未来房价(json)
+     */
+    @GetMapping("/cityPredictPrice/{id}")
+    @ResponseBody
+    public List<CityMonthPrice> getCityPredictPrice(@PathVariable("id") String id) {
+        return cityService.getCityPredictPriceBycId(Integer.parseInt(id));
+    }
+
+    /**
      * 跳转至显示页面，并将城市id和城市名传过去
      */
     @GetMapping("/city/{id}")
     public String showCityInfo(@PathVariable("id") String id, String keyword, Model model) {
+        if (!keyword.trim().equals("")) {
+            return "forward:/search/"+id;
+        }
+
         String cName = cityService.getCityNameBycId(Integer.parseInt(id));
         //将城市传到前端页面
         model.addAttribute("areaId", id);

@@ -22,4 +22,8 @@ public interface DistrictService {
 
     List<DistrictYearPrice> getDistrictYearPriceBydId(int dId);
 
+    District getDistrictBydNameAndcId(String dName, int cId);
+
+    List<DistrictMonthPrice> getDistrictPredictPriceBydId(int dId);
+
 }

@@ -29,6 +29,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         //跳转至城市页面
         registry.addViewController("/cities").setViewName("info/city");
 
+        //搜索失败页面
+        registry.addViewController("/notFound").setViewName("info/notFound");
+
     }
 
     /**

@@ -25,4 +25,16 @@ public interface StreetMonthPriceMapper {
      */
     @Insert("INSERT INTO street_month_price VALUES(#{sId}, #{month}, #{price})")
     int insertStreetMonthPrice(StreetMonthPrice streetMonthPrice);
+
+    /**
+     * 根据sid，获取指定街道的未来房价
+     */
+    @Select("SELECT * FROM street_predict_price WHERE s_id = #{sId}")
+    List<StreetMonthPrice> getStreetPredictPriceBysId(int sId);
+
+    /**
+     * 插入街道未来房价
+     */
+    @Insert("INSERT INTO street_predict_price VALUES(#{sId}, #{month}, #{price})")
+    int insertStreetPredictPrice(StreetMonthPrice streetMonthPrice);
 }
