@@ -183,4 +183,34 @@ public class ImportDataServiceImpl implements ImportDataService {
             cityYearPriceMapper.insertCityYearPrice(cyp);
         }
     }
+
+    @Override
+    public void insertStreetPredictPrice(String fileName) throws IOException {
+        HistoryCsvReaderUtil.fileName = fileName;
+        Set<String> set = HistoryCsvReaderUtil.readStreetMonthPrice(cityMapper, districtMapper, streetMapper);
+        for (String str : set) {
+            String[] split = str.split(" ");
+            StreetMonthPrice smp = new StreetMonthPrice();
+            smp.setsId(Integer.parseInt(split[0]));
+            smp.setMonth(Integer.parseInt(split[1]));
+            smp.setPrice(Integer.parseInt(split[2]));
+            streetMonthPriceMapper.insertStreetPredictPrice(smp);
+        }
+    }
+
+    @Override
+    public void insertDistrictPredictPrice() {
+        List<DistrictMonthPrice> list = districtMonthPriceMapper.getDistrictPredictPriceFromOthers();
+        for (DistrictMonthPrice dmp : list) {
+            districtMonthPriceMapper.insertDistrictPredictPrice(dmp);
+        }
+    }
+
+    @Override
+    public void insertCityPredictPrice() {
+        List<CityMonthPrice> list = cityMonthPriceMapper.getCityPredictPriceFromOthers();
+        for (CityMonthPrice cmp : list) {
+            cityMonthPriceMapper.insertCityPredictPrice(cmp);
+        }
+    }
 }

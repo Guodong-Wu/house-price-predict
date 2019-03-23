@@ -23,7 +23,7 @@ public interface StreetMapper {
      * 根据街道名和行政区id，查询街道id
      */
     @Select("SELECT id FROM street WHERE name = #{sName} AND d_id = #{dId}")
-    int getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
+    Integer getsIdBysNameAnddId(@Param("sName")String sName, @Param("dId")int dId);
 
     /**
      * 根据城市id和街道名，查询街道

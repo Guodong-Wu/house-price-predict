@@ -136,8 +136,8 @@ public class HistoryCsvReaderUtil {
 
         //以下变量，为防止重复调用函数
         int cId = 0;
-        int dId = 0;
-        int sId = 0;
+        Integer dId = 0;
+        Integer sId = 0;
         String precName = "";
         String predName = "";
         String presName = "";
@@ -157,6 +157,11 @@ public class HistoryCsvReaderUtil {
                 dId = districtMapper.getdIdBydNameAndcId(dName, cId);
                 predName = dName;
             }
+            //若行政区不存在
+            if (dId == null) {
+                System.out.println(cName + "," + dName);
+                continue;
+            }
             //读取街道名
             String sName = csvReader.get(2);
             if (!sName.equals(presName)) {
@@ -164,19 +169,26 @@ public class HistoryCsvReaderUtil {
                 sId = streetMapper.getsIdBysNameAnddId(sName, dId);
                 presName = sName;
             }
+            //若街道不存在
+            if (sId == null) {
+                System.out.println(cName + "," + dName + "," + sName);
+                continue;
+            }
             //获取日期
             String date = csvReader.get(3);
             String[] split = date.split("/");
             //如果房价日期为2018或2019
-            if (split[0].equals("2018") || split[0].equals("2019")) {
-                //去掉2018年1月、2月和3月的数据
-                if (split[0].equals("2018") &&
-                        (split[1].equals("1") || split[1].equals("2") || split[1].equals("3"))) {
-                    continue;
-                }
-                //将街道id，月份，房价加入到结果集中，用空格分割
-                set.add(sId + " " + split[1] + " " + csvReader.get(4));
-            }
+//            if (split[0].equals("2018") || split[0].equals("2019")) {
+//                //去掉2018年1月、2月和3月的数据
+//                if (split[0].equals("2018") &&
+//                        (split[1].equals("1") || split[1].equals("2") || split[1].equals("3"))) {
+//                    continue;
+//                }
+//                //将街道id，月份，房价加入到结果集中，用空格分割
+//                set.add(sId + " " + split[1] + " " + csvReader.get(4));
+//            }
+            int price = (int) Double.parseDouble(csvReader.get(4));
+            set.add(sId + " " + split[1] + " " + price);
         }
         return set;
     }

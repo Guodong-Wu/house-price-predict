@@ -28,7 +28,7 @@ public interface DistrictMapper {
      * 根据行政区名和城市id，查询行政区id
      */
     @Select("SELECT id FROM district WHERE name = #{dName} AND c_id = #{cId}")
-    int getdIdBydNameAndcId(@Param("dName")String dName, @Param("cId")int cId);
+    Integer getdIdBydNameAndcId(@Param("dName")String dName, @Param("cId")int cId);
 
     /**
      * 根据行政区名和城市id，查询行政区

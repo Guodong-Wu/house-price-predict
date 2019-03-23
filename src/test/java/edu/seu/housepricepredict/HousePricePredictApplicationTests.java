@@ -74,15 +74,11 @@ public class HousePricePredictApplicationTests {
 //        importDataService.insertStreetYearPrice(fileName);
 //    }
 
-    @Test
-    public void test() {
-        String s = "user/";
-        String[] split = s.split("/");
-        System.out.println(split.length);
-        for (String s1 : split) {
-            System.out.println(s1);
-        }
-    }
+//    @Test
+//    public void test() throws IOException {
+//        String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\数据\\汇总\\house_predict.csv";
+//        importDataService.insertCityPredictPrice();
+//    }
 
 
 }
