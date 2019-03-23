@@ -36,4 +36,10 @@ public interface ImportDataService {
 
     void insertCityYearPrice();
 
+    void insertStreetPredictPrice(String fileName) throws IOException;
+
+    void insertDistrictPredictPrice();
+
+    void insertCityPredictPrice();
+
 }
