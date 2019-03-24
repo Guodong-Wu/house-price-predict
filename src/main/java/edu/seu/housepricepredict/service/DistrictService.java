@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.service;
 
 import edu.seu.housepricepredict.domain.area.District;
+import edu.seu.housepricepredict.domain.increase.DistrictIncrease;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 import edu.seu.housepricepredict.domain.year.DistrictYearPrice;
 
@@ -26,4 +27,5 @@ public interface DistrictService {
 
     List<DistrictMonthPrice> getDistrictPredictPriceBydId(int dId);
 
+    List<DistrictIncrease> getDistrictIncreaseBydId(int dId);
 }

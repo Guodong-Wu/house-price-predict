@@ -30,8 +30,8 @@ spring:
 
 #pageHelper分页配置
 #设置项目名
-#server:
-#  context-path: /prediction
+server:
+  context-path: /prediction
 
 pagehelper:
   reasonable: true

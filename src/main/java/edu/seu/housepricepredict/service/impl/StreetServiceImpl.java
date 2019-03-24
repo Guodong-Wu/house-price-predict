@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.service.impl;
 
 import edu.seu.housepricepredict.domain.area.Street;
+import edu.seu.housepricepredict.domain.increase.StreetIncrease;
 import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 import edu.seu.housepricepredict.domain.year.StreetYearPrice;
 import edu.seu.housepricepredict.mapper.area.StreetMapper;
@@ -60,5 +61,10 @@ public class StreetServiceImpl implements StreetService {
     @Override
     public List<StreetMonthPrice> getStreetPredictPriceBysId(int sId) {
         return streetMonthPriceMapper.getStreetPredictPriceBysId(sId);
+    }
+
+    @Override
+    public List<StreetIncrease> getStreetIncreaseBysId(int sId) {
+        return streetMonthPriceMapper.getStreetIncreaseBysId(sId);
     }
 }

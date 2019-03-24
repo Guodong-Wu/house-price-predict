@@ -2,6 +2,7 @@ package edu.seu.housepricepredict.controller;
 
 import edu.seu.housepricepredict.domain.area.District;
 import edu.seu.housepricepredict.domain.area.Street;
+import edu.seu.housepricepredict.domain.increase.DistrictIncrease;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 import edu.seu.housepricepredict.domain.year.DistrictYearPrice;
 import edu.seu.housepricepredict.service.DistrictService;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 /**
@@ -94,6 +97,39 @@ public class DistrictController {
     @ResponseBody
     public List<DistrictYearPrice> getDistrictYearPrice(@PathVariable("id") String id) {
         return districtService.getDistrictYearPriceBydId(Integer.parseInt(id));
+    }
+
+    /**
+     * 根据行政区id，返回增长率
+     */
+    @GetMapping("/districtIncrease/{id}")
+    @ResponseBody
+    public List<DistrictIncrease> getDistrictIncrease(@PathVariable("id") String id) {
+        List<DistrictIncrease> list = districtService.getDistrictIncreaseBydId(Integer.parseInt(id));
+        for (DistrictIncrease di : list) {
+            double d = di.getIncrease();
+            d *= 100;
+            di.setIncrease(Double.parseDouble(String.format("%.2f", d)));
+        }
+
+        //将2019年1月、2月、3月移动到表尾
+        DistrictIncrease di1 = list.get(0);
+        DistrictIncrease di2 = list.get(1);
+        DistrictIncrease di3 = list.get(2);
+        if (di1.getMonth() < 4) {
+            list.remove(di1);
+            list.add(di1);
+        }
+        if (di2.getMonth() < 4) {
+            list.remove(di2);
+            list.add(di2);
+        }
+        if (di3.getMonth() < 4) {
+            list.remove(di3);
+            list.add(di3);
+        }
+
+        return list;
     }
 
     /**
