@@ -26,9 +26,11 @@
             //下级区域等级
             var subAreaLevel;
             if ([[${areaLevel}]] == "city") {
+                $("#compare").show();
                 barGraphName = name.toString() + "各区当前月房价柱状图";
                 subAreaLevel = "district";
             } else if ([[${areaLevel}]] == "district") {
+                $("#compare").show();
                 barGraphName = name.toString() + "各街道当前月房价柱状图";
                 subAreaLevel = "street";
             } else {
@@ -58,6 +60,11 @@
                         $("#areaList").append("<li><a href='/"+subAreaLevel+"/"+area.id+"'>"+area.name+"</a></li>")
                         // <li><a href="">安庆</a></li>
                     }
+                    if ([[${areaLevel}]] == "city" || [[${areaLevel}]] == "district") {
+                        $("#selectArea1").append("<option value='"+area.id+"'>"+area.name+"</option>");
+                        $("#selectArea2").append("<option value='"+area.id+"'>"+area.name+"</option>");
+
+                    }
                 });
 
                 //设置数据集
@@ -66,11 +73,12 @@
                     datasets: [
                         {
                             label: "区域房价",
-                            backgroundColor: 'rgba(30, 144, 255, 0)',
-                            borderColor: "#1e90ff",
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: '#1e90ff',
                             borderWidth: 1,
                             data: monthPrice//数据
                         }
+
                     ]
                 };
 
@@ -285,6 +293,21 @@
                 });
             });
 
+            $("#confirmButton").click(function () {
+                var area1 = $('#selectArea1 option:selected').val();
+                var area2 = $('#selectArea2 option:selected').val();
+                if (area1 == 0 || area2 == 0) {
+                    alert("请选择区域进行对比");
+                    return false;
+                }
+                if (area1 == area2) {
+                    alert("请选择两个不同区域进行对比");
+                    return false;
+                }
+                $("#areaLevel").val(subAreaLevel);
+                $("#compareForm").submit();
+            });
+
             $.get("/session/cityName",function (data) {
                 $.ajax({
                     type: "post",
@@ -304,20 +327,8 @@
     <!--查看用户是否登录js来添加修改用户信息-->
     <script th:replace="index::addinfojs"></script>
 
-    <!--选择要对比的小区名js-->
-    <!--<script>-->
-        <!--$(function () {-->
-            <!--$.post("/getCityNames", function(data) {-->
-                <!--$(data).each(function (index, value) {//index是索引，n是值-->
-                    <!--$("#commName1").append("<option value=" + value + ">" + value + "</option>")-->
-                    <!--$("#commName2").append("<option value=" + value + ">" + value + "</option>")-->
-                <!--})-->
-            <!--},"json");-->
-        <!--})-->
-    <!--</script>-->
 </head>
 
-<!--2.22-->
 <body>
 <!--右侧用户公共nav页面引用-->
 <div style="height:30px"></div>
@@ -333,7 +344,7 @@
 
         <div class="search" >
             <form id="search" action="/city/38" method="get" >
-                <input name="keyword" type="text" placeholder="输入区域或街道名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
+                <input name="keyword" type="text" placeholder="输入区域或街道名查询房价" autocomplete="off" style="width:1000px;height:50px;float:left;font-size:16px">
                 <button  type="submit" style="width:100px;height:50px;color:white;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px">搜索</button>
             </form>
         </div>
@@ -358,17 +369,18 @@
                 </li>
             </ul>
         </div>
-        <div>
+        <div id="compare" style="display: none">
             <!--选择要进行房价对比的两个小区-->
-            <form  style="font-size: 16px;float: right" action="/lineChart">
-                请选择要进行对比的小区：
-                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default"   id="commName1" name="commName1">
+            <form  id="compareForm" style="font-size: 16px;float: right" action="/compare" method="post">
+                请选择要进行对比的区域：
+                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default" id="selectArea1" name="area1">
                     <option value="0">请选择</option>
-                </select>
-                <!--<select style="font-size: 14px;background-color:#FFFFFF!important;"  class="btn btn-default" id="commName2" name="commName2" >-->
-                    <!--<option>请选择</option>-->
-                <!--</select>-->
-                <input style="font-size: 14px;" class="btn btn-success" type="submit" value="确认对比">
+                </select>&nbsp;&nbsp;
+                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default" id="selectArea2" name="area2">
+                    <option value="0">请选择</option>
+                </select>&nbsp;&nbsp;
+                <input id="areaLevel" name="areaLevel" type="hidden">
+                <input id="confirmButton" style="font-size: 14px;" class="btn btn-success" type="button" value="确认对比">
             </form>
         </div>
     </div>

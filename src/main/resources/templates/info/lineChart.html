@@ -12,122 +12,107 @@
     <link rel="stylesheet" href="../css/test.css">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Hello, World</title>
-    <!--地图样式-->
-    <style type="text/css">
-        html{height:90%}
-        body{height:90%;margin:0px;padding:0px}
-        #allmap{height:90%}
-    </style>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=nrdcDfWI5090AxFeGrRdDzym0XCfh4a6"></script>
-    <!--地图js-->
-    <script type="text/javascript">
-        // 根据位置显示附近地图
+    <title>房价对比</title>
+
+    <script type="text/javascript" th:inline="javascript">
         $(function () {
-            // 百度地图API功能
-            var map = new BMap.Map("allmap");
-            var point = new BMap.Point(116.331398,39.897445);
-            map.centerAndZoom(point,12);
-            // map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
-            map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
-            // 获取城市名
-            var cityName = "";
-            $.post("/getCityName", function(data) {
-                $(data).each(function (index, value) {
-                    cityName = value
-                    alert(value)
-                })
-                // 获取详细地址：街道名+区名。
-                var address = "";
-                $.post("/getAddress", function (data) {
-                    $(data).each(function (value) {
-                        address = data;
-                        alert(address)
-                        // 创建地址解析器实例
-                        var myGeo = new BMap.Geocoder();
-                        // 将地址解析结果显示在地图上,并调整地图视野
-                        myGeo.getPoint(address, function(point){
-                            if (point) {
-                                map.centerAndZoom(point, 16);
-                                map.addOverlay(new BMap.Marker(point));
-                            }else{
-                                alert("您选择地址没有解析到结果!");
-                            }
-                        }, cityName);
-                    })
-                }, "json")
-            },"json");
-        })
-    </script>
-    <!--折线图js-->
-    <script th:inline="javascript">
-        // 获取两个小区的历史房价，并以折线图的方式显示出来。
-        $(function () {
-            // alert([[${city1}]])
-            //两个小区的小区名
-            var comm1 = [[${commName1}]];
-            var comm2 = [[${commName2}]];
-            //对比折线图横坐标，即月份
-            var labels = new Array();
-            //对比折线图纵坐标数据1，即第一个小区的房价数据
-            var datay1 = new Array();
-            //对比折线图纵坐标数据2，即第二个小区的房价数据
-            var datay2 = new Array();
-            //根据传入的小区名获取该2个小区的历史房价
-            $.post("/getPriceOfComm", {"comm1" : comm1, "comm2" : comm2}, function(data) {
-                $(data).each(function (index, value) {//index是索引，n是值
-                    labels.push(value.dataOfx);
-                    datay1.push(value.dataOfy1);
-                    datay2.push(value.dataOfy2);
-                })
-            },"json");
-            // 折线图绘制
-            var lineChartData = {
-                // labels: ["January", "February", "March", "April", "May", "June", "July"],//横坐标
-                labels: labels,
-                datasets: [
-                    {
-                        label: comm1 + "房价",
-                        backgroundColor: 'rgba(255, 0, 0, 0)',
-                        borderColor: 'rgba(255, 0, 0, 1)',
-                        borderWidth: 1,
-                        // data: [65, 59, 80, 81, 56, 55, 40],//数据
-                        data: datay1,
-                    },
-                    {
-                        label: comm2 + "房价",
-                        backgroundColor: 'rgba(0, 0, 255, 0)',
-                        borderColor: 'rgba(0,0,255,1)',
-                        borderWidth: 1,
-                        // data: [75, 49, 90, 71, 66, 45, 50],//数据
-                        data: datay2,
-                    }
-                ]
-            };
-            var ctx = document.getElementById("lines-graph").getContext("2d");
-            new Chart(ctx, {
-                type: 'line',
-                data: lineChartData,
-                responsive : true
+            //获取区域名，设置标题
+            var name1 = [[${areaName1}]];
+            var name2 = [[${areaName2}]];
+
+            $("#lineGraphHead1").html(name1.toString() + "、" + name2.toString() + "历史月份房价对比");
+            $("#lineGraphHead2").html(name1.toString() + "、" + name2.toString() + "房价增长率对比");
+
+            $.ajax({
+                type : "get",
+                url : "/" + [[${areaLevel}]] + "MonthPrice/" + [[${areaId1}]],
+                dataType : "json",
+                async : false,
+                success : function (monthPriceList1) {
+                    $.ajax({
+                        type : "get",
+                        url : "/" + [[${areaLevel}]] + "MonthPrice/" + [[${areaId2}]],
+                        dataType : "json",
+                        async : false,
+                        success : function (monthPriceList2) {
+                            //月份
+                            var monthList = new Array();
+                            //区域1房价数据
+                            var monthPrice1 = new Array();
+                            //区域2房价数据
+                            var monthPrice2 = new Array();
+                            //填充数组
+                            $(monthPriceList1).each(function (index, data) {
+                                if (data.month < 4) {
+                                    monthList.push("2019年"+data.month+"月");
+                                } else {
+                                    monthList.push("2018年"+data.month+"月");
+                                }
+                                monthPrice1.push(data.price);
+                            });
+                            $(monthPriceList2).each(function (index, data) {
+                                monthPrice2.push(data.price);
+                            });
+
+                            // 折线图绘制
+                            var lineChartData = {
+                                labels: monthList,
+                                datasets: [
+                                    {
+                                        label: name1 + "房价",
+                                        backgroundColor: 'rgba(255, 0, 0, 0)',
+                                        borderColor: 'rgba(255, 0, 0, 1)',
+                                        borderWidth: 1,
+                                        data: monthPrice1
+                                    },
+                                    {
+                                        label: name2 + "房价",
+                                        backgroundColor: 'rgba(0, 0, 255, 0)',
+                                        borderColor: 'rgba(0,0,255,1)',
+                                        borderWidth: 1,
+                                        data: monthPrice2
+                                    }
+                                ]
+                            };
+
+                            var ctx = document.getElementById("lineGraph1").getContext("2d");
+                            new Chart(ctx, {
+                                type: 'line',
+                                data: lineChartData,
+                                responsive : true
+                            });
+                        }
+                    });
+                }
             });
+
+
+            //搜索框
+            $.get("/session/cityName",function (data) {
+                $.ajax({
+                    type: "post",
+                    url: "/session/cityName",
+                    data: {"cityName": data + "市"},
+                    //同步
+                    async: false,
+                    success: function (id) {
+                        //更新表单提交地址
+                        $("#search").attr("action", "/city/" + id);
+                    }
+                });
+            });
+
         })
     </script>
+
     <!--选择要对比的小区名js-->
-    <script>
-        $(function () {
-            $.post("/getCityNames", function(data) {
-                $(data).each(function (index, value) {//index是索引，n是值
-                    $("#commName1").append("<option value=" + value + ">" + value + "</option>")
-                    $("#commName2").append("<option value=" + value + ">" + value + "</option>")
-                })
-            },"json");
-        })
-    </script>
     <!--查看用户是否登录js来添加修改用户信息-->
     <script th:replace="index::addinfojs"></script>
 </head>
 <body>
+
 <!--右侧用户公共nav页面引用-->
+<div style="height:30px"></div>
 <nav th:replace="common/common::sidenav" ></nav>
 <!--用户菜单按钮引用-->
 <div th:replace="common/common::meaubutton" ></div>
@@ -139,64 +124,31 @@
         </div>
 
         <div class="search" >
-            <form id="search" action="/searchCity">
-                <input name="keyWord" type="text" placeholder="输入区域、街道或者小区名查询房价" style="width:1000px;height:50px;float:left;font-size:16px">
-                <button  type="submit" style="width:100px;height:50px;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px;color: white">搜索</button>
+            <form id="search" action="/city/38" method="get" >
+                <input name="keyword" type="text" placeholder="输入区域或街道名查询房价" autocomplete="off" style="width:1000px;height:50px;float:left;font-size:16px">
+                <button  type="submit" style="width:100px;height:50px;color:white;background-color: #2ec06c;outline:none;border-style:none;font-size: 18px">搜索</button>
             </form>
         </div>
     </div>
 </div>
-<div class="city_selection_section">
-    <div>
-        <div class="city_recommend c_b">
-            <div class="city_recommend_tit">
-                区域选择
-            </div>
-            <ul class="city_recommend_list">
-                <li class="city_list_li city_list_li_selected">
-                    <div class="city_list">
-                        <div class="city_province">
-                            <ul id="areaList">
-                               <li><a href="/district/75">常熟</a></li>
-                                <li><a href="/district/84">吴中</a></li>
-                                <li><a href="/district/87">张家港</a></li>
-                                <li><a href="/district/96">姑苏</a></li>
-                                <li><a href="/district/99">相城</a></li>
-                                <li><a href="/district/105">虎丘</a></li>
-                                <li><a href="/district/706">吴江</a></li>
-                                <li><a href="/district/108">太仓</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <form style="font-size: 16px" action="/lineChart">
-                请选择要进行对比的小区：
-                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default"   id="commName1" name="commName1">
-                    <option value="0">请选择</option>
-                </select>
-                <select style="font-size: 14px;background-color:#FFFFFF!important;"  class="btn btn-default" id="commName2" name="commName2" >
-                    <option value="0">请选择</option>
-                </select>
-                <input style="font-size: 14px;" class="btn btn-success" type="submit" value="确认对比">
-            </form>
-            </form>
-        </div>
+
+<br/>
+<br/>
+
+<div id="div01" class="container" style="width: 1200px; height: 500px;margin:0 auto ">
+    <div class="col-md-10" style="text-align: center">
+        <h1 id="lineGraphHead1" class="text-center"></h1>
+        <canvas id="lineGraph1" height="480px" width="1200px "></canvas>
     </div>
+    <div  class="col-md-2"></div>
 </div>
-<br>
-<div id="allmap"></div>
-<br>
-<br>
-<br>
-<div class="container">
-        <h2 style="font-size: 35px" >[[${commName1}]]-[[${commName2}]]房价对比折线图</h2>
-    <br/>
-    <br/>
-    <br/>
-        <canvas id="lines-graph"></canvas>
+
+<div id="div02" class="container" style="width: 1200px; height: 500px;margin:0 auto ">
+    <div class="col-md-10" style="text-align: center">
+        <h1 id="lineGraphHead2" class="text-center"></h1>
+        <canvas id="lineGraph2" height="480px" width="1200px "></canvas>
+    </div>
+    <div  class="col-md-2"></div>
 </div>
 
 </body>

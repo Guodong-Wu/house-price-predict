@@ -22,7 +22,7 @@ public interface CityMapper {
      * 根据城市名，获取城市id
      */
     @Select("SELECT id FROM city WHERE name = #{cName}")
-    int getCityIdBycName(String cName);
+    Integer getCityIdBycName(String cName);
 
     /**
      * 根据城市名，获取城市
