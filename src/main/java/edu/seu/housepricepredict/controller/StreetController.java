@@ -1,6 +1,8 @@
 package edu.seu.housepricepredict.controller;
 
 import edu.seu.housepricepredict.domain.area.Community;
+import edu.seu.housepricepredict.domain.increase.DistrictIncrease;
+import edu.seu.housepricepredict.domain.increase.StreetIncrease;
 import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 import edu.seu.housepricepredict.domain.year.StreetYearPrice;
 import edu.seu.housepricepredict.service.CommunityService;
@@ -99,6 +101,38 @@ public class StreetController {
     public List<StreetMonthPrice> getStreetPredictPrice(@PathVariable("id") String id) {
         return streetService.getStreetPredictPriceBysId(Integer.parseInt(id));
     }
-    
+
+    /**
+     * 根据街道id，返回增长率
+     */
+    @GetMapping("/streetIncrease/{id}")
+    @ResponseBody
+    public List<StreetIncrease> getDistrictIncrease(@PathVariable("id") String id) {
+        List<StreetIncrease> list = streetService.getStreetIncreaseBysId(Integer.parseInt(id));
+        for (StreetIncrease ci : list) {
+            double d = ci.getIncrease();
+            d *= 100;
+            ci.setIncrease(Double.parseDouble(String.format("%.2f", d)));
+        }
+
+        //将2019年1月、2月、3月移动到表尾
+        StreetIncrease si1 = list.get(0);
+        StreetIncrease si2 = list.get(0);
+        StreetIncrease si3 = list.get(0);
+        if (si1.getMonth() < 4) {
+            list.remove(si1);
+            list.add(si1);
+        }
+        if (si2.getMonth() < 4) {
+            list.remove(si2);
+            list.add(si2);
+        }
+        if (si3.getMonth() < 4) {
+            list.remove(si3);
+            list.add(si3);
+        }
+
+        return list;
+    }
 
 }

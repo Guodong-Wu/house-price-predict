@@ -1,6 +1,7 @@
 package edu.seu.housepricepredict.service;
 
 import edu.seu.housepricepredict.domain.area.Street;
+import edu.seu.housepricepredict.domain.increase.StreetIncrease;
 import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 import edu.seu.housepricepredict.domain.year.StreetYearPrice;
 
@@ -25,4 +26,6 @@ public interface StreetService {
     Street getStreetBysNameAndcId(String sName, int cId);
 
     List<StreetMonthPrice> getStreetPredictPriceBysId(int sId);
+
+    List<StreetIncrease> getStreetIncreaseBysId(int sId);
 }

@@ -1,5 +1,6 @@
 package edu.seu.housepricepredict.mapper.month;
 
+import edu.seu.housepricepredict.domain.increase.DistrictIncrease;
 import edu.seu.housepricepredict.domain.month.DistrictMonthPrice;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -51,5 +52,11 @@ public interface DistrictMonthPriceMapper {
      */
     @Insert("INSERT INTO district_predict_price VALUES(#{dId}, #{month}, #{price})")
     int insertDistrictPredictPrice(DistrictMonthPrice districtMonthPrice);
+
+    @Select("SELECT dmp1.d_id AS id, dmp1.month AS month, (dmp1.price-dmp2.price)/dmp2.price AS increase " +
+            "FROM district_month_price dmp1, district_month_price dmp2 " +
+            "WHERE dmp1.d_id = dmp2.d_id AND (dmp1.month - dmp2.month = 1 OR (dmp1.month = 1 AND dmp2.month = 12)) AND dmp1.month != 4 " +
+            "AND dmp1.d_id = #{dId}")
+    List<DistrictIncrease> getDistrictIncreaseBydId(int dId);
 
 }

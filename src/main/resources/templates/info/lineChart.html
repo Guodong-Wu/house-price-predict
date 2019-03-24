@@ -6,7 +6,6 @@
     <!--公共页面的js和样式表引入-->
     <div th:replace="common/common::commonjs"></div>
     <div th:replace="common/common::commonstyle"></div>
-    <title>Chart.js - Html5 chart plugins</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/test.css">
@@ -66,7 +65,7 @@
                                         data: monthPrice1
                                     },
                                     {
-                                        label: name2 + "房价",
+                                         label: name2 + "房价",
                                         backgroundColor: 'rgba(0, 0, 255, 0)',
                                         borderColor: 'rgba(0,0,255,1)',
                                         borderWidth: 1,
@@ -80,6 +79,88 @@
                                 type: 'line',
                                 data: lineChartData,
                                 responsive : true
+                            });
+                        }
+                    });
+                }
+            });
+
+            $.ajax({
+                type : "get",
+                url : "/" + [[${areaLevel}]] + "Increase/" + [[${areaId1}]],
+                dataType : "json",
+                async : false,
+                success : function (increaseList1) {
+                    $.ajax({
+                        type : "get",
+                        url : "/" + [[${areaLevel}]] + "Increase/" + [[${areaId2}]],
+                        dataType : "json",
+                        async : false,
+                        success : function (increaseList2) {
+                            //月份
+                            var monthList = new Array();
+                            //区域1增长率
+                            var increase1 = new Array();
+                            //区域2增长率
+                            var increase2 = new Array();
+                            //填充数组
+                            $(increaseList1).each(function (index, data) {
+                                if (data.month < 4) {
+                                    monthList.push("2019年"+data.month+"月");
+                                } else {
+                                    monthList.push("2018年"+data.month+"月");
+                                }
+                                increase1.push(data.increase);
+                            });
+                            $(increaseList2).each(function (index, data) {
+                                increase2.push(data.increase);
+                            });
+
+                            // 折线图绘制
+                            var lineChartData = {
+                                labels: monthList,
+                                datasets: [
+                                    {
+                                        label: name1 + "增长率",
+                                        backgroundColor: 'rgba(255, 0, 0, 0)',
+                                        borderColor: 'rgba(255, 0, 0, 1)',
+                                        borderWidth: 1,
+                                        data: increase1
+                                    },
+                                    {
+                                        label: name2 + "增长率",
+                                        backgroundColor: 'rgba(0, 0, 255, 0)',
+                                        borderColor: 'rgba(0,0,255,1)',
+                                        borderWidth: 1,
+                                        data: increase2
+                                    }
+                                ]
+                            };
+
+                            var ctx = document.getElementById("lineGraph2").getContext("2d");
+                            new Chart(ctx, {
+                                type: 'line',
+                                data: lineChartData,
+                                options: {
+                                    responsive : true,
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                callback: function (label, index, labels) {
+                                                    return Math.floor(label) + '%';
+                                                }
+                                            }
+                                        }]
+                                    },
+                                    tooltips: {
+                                        callbacks: {
+                                            label: function (tooltipItem, chart) {
+                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                return datasetLabel + ':' + tooltipItem.yLabel + "%";
+                                            }
+                                        }
+                                    }
+                                }
                             });
                         }
                     });
