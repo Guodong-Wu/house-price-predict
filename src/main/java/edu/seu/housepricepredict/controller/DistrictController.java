@@ -9,9 +9,11 @@ import edu.seu.housepricepredict.service.StreetService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -119,5 +121,28 @@ public class DistrictController {
         } else {
             return "redirect:/street/"+street.getId();
         }
+    }
+
+    @PostMapping("/compare")
+    public String compareArea(int area1, int area2, String areaLevel, Model model) {
+        String areaName1 = "", areaName2 = "";
+        if ("district".equals(areaLevel)) {
+            areaName1 = districtService.getDistrictNameById(area1);
+            areaName2 = districtService.getDistrictNameById(area2);
+        } else if ("street".equals(areaLevel)) {
+            areaName1 = streetService.getStreetNameById(area1);
+            areaName2 = streetService.getStreetNameById(area2);
+        }
+
+        //传递区域id
+        model.addAttribute("areaId1", area1);
+        model.addAttribute("areaId2", area2);
+        //传递区域名
+        model.addAttribute("areaName1", areaName1);
+        model.addAttribute("areaName2", areaName2);
+        //传递地区等级
+        model.addAttribute("areaLevel", areaLevel);
+
+        return "/info/lineChart";
     }
 }
