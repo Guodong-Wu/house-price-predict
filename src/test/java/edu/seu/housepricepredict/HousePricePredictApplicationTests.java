@@ -74,11 +74,10 @@ public class HousePricePredictApplicationTests {
 //        importDataService.insertStreetYearPrice(fileName);
 //    }
 
-//    @Test
-//    public void test() throws IOException {
-//        String fileName = "C:\\Users\\DELL\\Desktop\\项目实训\\数据\\汇总\\house_predict.csv";
-//        importDataService.insertCityPredictPrice();
-//    }
+    @Test
+    public void test() {
+
+    }
 
 
 }

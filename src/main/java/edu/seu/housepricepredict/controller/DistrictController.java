@@ -179,6 +179,6 @@ public class DistrictController {
         //传递地区等级
         model.addAttribute("areaLevel", areaLevel);
 
-        return "/info/lineChart";
+        return "info/lineChart";
     }
 }

@@ -336,7 +336,6 @@
 <!--用户菜单按钮引用-->
 <div th:replace="common/common::meaubutton" ></div>
 <div class="wrapper">
-    <br>
     <div class="city_search">
         <div class="con">
             <a href="/index"><span class="logo"><img href="../img/logo.png"></span></a>
@@ -352,37 +351,37 @@
 </div>
 
 <div class="city_selection_section">
-    <div>
-        <div class="city_recommend c_b">
-            <div id="areaSelect" class="city_recommend_tit">
-                区域选择
-            </div>
-            <ul class="city_recommend_list">
-                <li class="city_list_li city_list_li_selected">
-                    <div class="city_list">
-                        <div class="city_province">
-                            <ul id="areaList">
+    <div class="city_recommend c_b">
+        <div id="areaSelect" class="city_recommend_tit">
+            区域选择
+        </div>
+        <ul class="city_recommend_list">
+            <li class="city_list_li city_list_li_selected">
+                <div class="city_list">
+                    <div class="city_province">
+                        <ul id="areaList">
 
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
-                </li>
-            </ul>
-        </div>
-        <div id="compare" style="display: none">
-            <!--选择要进行房价对比的两个小区-->
-            <form  id="compareForm" style="font-size: 16px;float: right" action="/compare" method="post">
-                请选择要进行对比的区域：
-                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default" id="selectArea1" name="area1">
-                    <option value="0">请选择</option>
-                </select>&nbsp;&nbsp;
-                <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default" id="selectArea2" name="area2">
-                    <option value="0">请选择</option>
-                </select>&nbsp;&nbsp;
-                <input id="areaLevel" name="areaLevel" type="hidden">
-                <input id="confirmButton" style="font-size: 14px;" class="btn btn-success" type="button" value="确认对比">
-            </form>
-        </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="compare" style="display: none">
+        <!--选择要进行房价对比的两个小区-->
+        <form id="compareForm" style="font-size: 16px;float: right" action="/compare" method="post">
+            请选择要进行对比的区域：
+            <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default" id="selectArea1"
+                    name="area1">
+                <option value="0">请选择</option>
+            </select>&nbsp;&nbsp;
+            <select style="font-size: 14px;background-color:#FFFFFF!important;" class="btn btn-default" id="selectArea2"
+                    name="area2">
+                <option value="0">请选择</option>
+            </select>&nbsp;&nbsp;
+            <input id="areaLevel" name="areaLevel" type="hidden">
+            <input id="confirmButton" style="font-size: 14px;" class="btn btn-success" type="button" value="确认对比">
+        </form>
     </div>
 </div>
 
