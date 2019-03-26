@@ -39,19 +39,20 @@
             // 访问URL：getCityNameOfSession。返回值为true表示已有城市名，无需定位
             $.get("/session/cityName",function (data) {
                 if (data == "") {
-                    // 百度地图API功能
-                    var map = new BMap.Map("bdMapBox");
-                    var nowCity = new BMap.LocalCity();
-                    nowCity.get(bdGetPosition);
-                    function bdGetPosition(result){
-                        var cityName = result.name; //当前的城市名
-                        atCity.innerHTML = cityName;
-                        // 将城市名放到Session。
-                        $.post("/session/cityName", {"cityName":cityName}, function (id) {
-                            //更新搜索表单提交地址
+                    atCity.innerHTML = "苏州市";
+                    // 将城市名放到Session。
+                    $.ajax({
+                        type : "post",
+                        url : "/session/cityName",
+                        data : {"cityName":"苏州市"},
+                        //同步
+                        async : false,
+                        success : function(id){
+                            //更新表单提交地址
                             $("#search").attr("action", "/city/"+id);
-                        });
-                    }
+                        }
+                    });
+
                 } else {
                     //显示城市名
                     atCity.innerHTML = data + "市";
