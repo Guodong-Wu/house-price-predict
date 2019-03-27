@@ -1,7 +1,6 @@
 package edu.seu.housepricepredict.interceptor;
 
 import edu.seu.housepricepredict.domain.user.User;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

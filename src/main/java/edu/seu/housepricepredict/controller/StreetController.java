@@ -1,7 +1,6 @@
 package edu.seu.housepricepredict.controller;
 
 import edu.seu.housepricepredict.domain.area.Community;
-import edu.seu.housepricepredict.domain.increase.DistrictIncrease;
 import edu.seu.housepricepredict.domain.increase.StreetIncrease;
 import edu.seu.housepricepredict.domain.month.StreetMonthPrice;
 import edu.seu.housepricepredict.domain.year.StreetYearPrice;
@@ -117,8 +116,8 @@ public class StreetController {
 
         //将2019年1月、2月、3月移动到表尾
         StreetIncrease si1 = list.get(0);
-        StreetIncrease si2 = list.get(0);
-        StreetIncrease si3 = list.get(0);
+        StreetIncrease si2 = list.get(1);
+        StreetIncrease si3 = list.get(2);
         if (si1.getMonth() < 4) {
             list.remove(si1);
             list.add(si1);
